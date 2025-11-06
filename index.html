@@ -1,217 +1,424 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <link rel="stylesheet" href="style.css">
-    <title>Responsive NFT Website</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ChanohtJakkawan — Solar System Set</title>
+  <meta name="description" content="Be the owner of the entire Solar System Set! Explore features and discover items. Buy now or order single planets.">
+  <link rel="icon" href="assets/img/logo.png" />
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" />
+  <!-- Page CSS -->
+  <link rel="stylesheet" href="assets/css/index.css" />
 </head>
+<body class="page-index d-flex flex-column min-vh-100">
+  <!-- ===================== NAVBAR ===================== -->
+  <header class="site-header sticky-top" aria-label="Main Navigation">
+    <nav class="navbar navbar-expand-lg navbar-dark py-3" id="navbar">
+      <div class="container">
+        <a class="navbar-brand d-flex align-items-center" href="index.html" aria-label="ChanohtJakkawan Home">
+          <img src="assets/img/logo.png" alt="Site logo" width="32" height="32" class="me-2">
+          <span class="fw-bold">ChanohtJakkawan</span>
+        </a>
 
-<body>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu" aria-controls="navMenu" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
 
-    <nav>
-        <a href="#" class="logo">AsmrProg</a>
-        <div class="links">
-            <a href="#">Home</a>
-            <a href="#">Features</a>
-            <a href="#">Blog</a>
-            <a href="#">About Us</a>
+        <div class="collapse navbar-collapse" id="navMenu">
+          <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
+            <li class="nav-item"><a class="nav-link" href="#top" data-scroll>Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="#features" data-scroll>Features</a></li>
+            <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
+            <li class="nav-item ms-lg-2 my-2 my-lg-0">
+              <a class="btn btn-primary cta-order" href="order.html">Order Now</a>
+            </li>
+            <li class="nav-item ms-lg-1">
+              <a class="btn btn-outline-light cta-login" href="login.html">Login</a>
+            </li>
+          </ul>
         </div>
-        <div class="login">
-            <button class="signup">Get Started</button>
-            <button>Login</button>
-        </div>
+      </div>
     </nav>
+  </header>
 
-    <header>
-        <div class="left">
-            <h1>Let's Buy Some <span>AsmrGraph</span></h1>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque, eaque harum. Nobis ipsam magni labore?
-            </p>
-            <a href="#">
-                <i class='bx bx-basket'></i>
-                <span>Buy Now</span>
-            </a>
+  <main id="top" class="flex-grow-1">
+    <!-- ===================== HERO ===================== -->
+    <section id="hero" class="py-5 py-lg-6 position-relative overflow-hidden">
+      <div class="container">
+        <div class="row align-items-center g-5">
+          <!-- Hero Left -->
+          <div class="col-12 col-lg-6 order-2 order-lg-1">
+            <h1 class="display-5 fw-bold lh-1 mb-3">Be the owner of the entire Solar System Set!</h1>
+            <p class="lead mb-4">TextTextTextTextText TextTextTextTextText TextTextTextTextText.</p>
+            <div class="d-flex gap-3">
+              <a href="order.html" class="btn btn-primary btn-lg hero-buy">Buy Now</a>
+              <a href="#features" class="btn btn-outline-light btn-lg" data-scroll>Learn More</a>
+            </div>
+          </div>
+          <!-- Hero Right -->
+          <div class="col-12 col-lg-6 text-center order-1 order-lg-2">
+            <figure class="hero-figure mb-3">
+              <img src="assets/img/Solar.png" class="img-fluid hero-img" alt="Solar System overview" loading="eager" />
+            </figure>
+            <a href="view.html" class="btn btn-secondary hero-view">View</a>
+          </div>
         </div>
-        <img src="assets/header.png">
-    </header>
+      </div>
+    </section>
 
-    <h2 class="separator">
-        Sell Your NFTs
-    </h2>
+    <!-- ===================== FEATURES ===================== -->
+    <section id="features" class="py-5 py-lg-6">
+      <div class="container">
+        <div class="row mb-4">
+          <div class="col-12 text-center">
+            <h2 class="section-title">Key Features</h2>
+            <p class="section-subtitle">TextTextTextTextText TextTextTextTextText.</p>
+          </div>
+        </div>
+        <div class="row g-4">
+          <!-- Feature 1 -->
+          <div class="col-12 col-md-6 col-lg-3">
+            <div class="feature-card text-center h-100 p-4">
+              <img src="assets/img/Features1.png" class="feature-icon mb-3" alt="Feature 1" width="80" height="80" />
+              <h3 class="h5 mb-2">Feature One</h3>
+              <p class="mb-0">TextTextTextTextText TextTextTextTextText.</p>
+            </div>
+          </div>
+          <!-- Feature 2 -->
+          <div class="col-12 col-md-6 col-lg-3">
+            <div class="feature-card text-center h-100 p-4">
+              <img src="assets/img/Features2.png" class="feature-icon mb-3" alt="Feature 2" width="80" height="80" />
+              <h3 class="h5 mb-2">Feature Two</h3>
+              <p class="mb-0">TextTextTextTextText TextTextTextTextText.</p>
+            </div>
+          </div>
+          <!-- Feature 3 -->
+          <div class="col-12 col-md-6 col-lg-3">
+            <div class="feature-card text-center h-100 p-4">
+              <img src="assets/img/Features3.png" class="feature-icon mb-3" alt="Feature 3" width="80" height="80" />
+              <h3 class="h5 mb-2">Feature Three</h3>
+              <p class="mb-0">TextTextTextTextText TextTextTextTextText.</p>
+            </div>
+          </div>
+          <!-- Feature 4 -->
+          <div class="col-12 col-md-6 col-lg-3">
+            <div class="feature-card text-center h-100 p-4">
+              <img src="assets/img/Features4.png" class="feature-icon mb-3" alt="Feature 4" width="80" height="80" />
+              <h3 class="h5 mb-2">Feature Four</h3>
+              <p class="mb-0">TextTextTextTextText TextTextTextTextText.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-    <div class="sell-nft">
-        <div class="item">
-            <div class="header">
-                <i class='bx bx-wallet-alt'></i>
-                <h5>Connect Wallet</h5>
-            </div>
-            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iste modi ab sunt dolores ex dolor, suscipit
-                fuga sed earum.</p>
+    <!-- ===================== DISCOVER / PRODUCTS ===================== -->
+    <section id="discover" class="py-5 py-lg-6">
+      <div class="container">
+        <div class="row align-items-end mb-4 g-3">
+          <div class="col-12 col-lg-8">
+            <h2 class="section-title">Solar System Objects</h2>
+            <p class="section-subtitle mb-0">Want just a single planet? Check below… TextTextTextTextText.</p>
+          </div>
         </div>
-        <div class="item">
-            <div class="header">
-                <i class='bx bx-cart-alt'></i>
-                <h5>NFT Marketplace</h5>
-            </div>
-            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iste modi ab sunt dolores ex dolor, suscipit
-                fuga sed earum.</p>
+
+        <!-- Highlighted Sun Card -->
+        <div class="row g-4 mb-2">
+          <div class="col-12">
+            <article class="product-card featured d-flex flex-column flex-md-row align-items-stretch">
+              <div class="product-media">
+                <img src="assets/img/Sun.png" alt="Sun" class="img-fluid" loading="lazy">
+                <a href="sun.html" class="card-overlay-btn" aria-label="View Sun">View</a>
+              </div>
+              <div class="product-body p-4 flex-fill d-flex flex-column">
+                <h3 class="h4 mb-2">Sun</h3>
+                <p class="mb-3">TextTextTextTextText TextTextTextTextText.</p>
+                <div class="mt-auto d-flex align-items-center justify-content-between">
+                  <span class="price h5 mb-0">$Text</span>
+                  <a href="order.html" class="btn btn-primary">Buy</a>
+                </div>
+              </div>
+            </article>
+          </div>
         </div>
-        <div class="item">
-            <div class="header">
-                <i class='bx bx-grid-alt'></i>
-                <h5>Launch DApps</h5>
-            </div>
-            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iste modi ab sunt dolores ex dolor, suscipit
-                fuga sed earum.</p>
+
+        <!-- Terrestrial Planets -->
+        <div class="row mt-4 mb-2">
+          <div class="col-12"><h3 class="category-title">Terrestrial Planets</h3></div>
         </div>
+        <div class="row g-4">
+          <!-- Mercury -->
+          <div class="col-12 col-sm-6 col-lg-3">
+            <article class="product-card h-100">
+              <div class="product-media">
+                <img src="assets/img/Mercury.png" alt="Mercury" class="img-fluid" loading="lazy">
+                <a href="mercury.html" class="card-overlay-btn" aria-label="View Mercury">View</a>
+              </div>
+              <div class="product-body p-3 d-flex flex-column">
+                <h4 class="h6 mb-1">Mercury</h4>
+                <p class="small flex-grow-1">TextTextTextText</p>
+                <div class="d-flex align-items-center justify-content-between">
+                  <span class="price mb-0">$Text</span>
+                  <a href="order.html" class="btn btn-sm btn-primary">Buy</a>
+                </div>
+              </div>
+            </article>
+          </div>
+          <!-- Venus -->
+          <div class="col-12 col-sm-6 col-lg-3">
+            <article class="product-card h-100">
+              <div class="product-media">
+                <img src="assets/img/Venus.png" alt="Venus" class="img-fluid" loading="lazy">
+                <a href="venus.html" class="card-overlay-btn" aria-label="View Venus">View</a>
+              </div>
+              <div class="product-body p-3 d-flex flex-column">
+                <h4 class="h6 mb-1">Venus</h4>
+                <p class="small flex-grow-1">TextTextTextText</p>
+                <div class="d-flex align-items-center justify-content-between">
+                  <span class="price mb-0">$Text</span>
+                  <a href="order.html" class="btn btn-sm btn-primary">Buy</a>
+                </div>
+              </div>
+            </article>
+          </div>
+          <!-- Earth -->
+          <div class="col-12 col-sm-6 col-lg-3">
+            <article class="product-card h-100">
+              <div class="product-media">
+                <img src="assets/img/Earth.png" alt="Earth" class="img-fluid" loading="lazy">
+                <a href="earth.html" class="card-overlay-btn" aria-label="View Earth">View</a>
+              </div>
+              <div class="product-body p-3 d-flex flex-column">
+                <h4 class="h6 mb-1">Earth</h4>
+                <p class="small flex-grow-1">TextTextTextText</p>
+                <div class="d-flex align-items-center justify-content-between">
+                  <span class="price mb-0">$Text</span>
+                  <a href="order.html" class="btn btn-sm btn-primary">Buy</a>
+                </div>
+              </div>
+            </article>
+          </div>
+          <!-- Mars -->
+          <div class="col-12 col-sm-6 col-lg-3">
+            <article class="product-card h-100">
+              <div class="product-media">
+                <img src="assets/img/Mars.png" alt="Mars" class="img-fluid" loading="lazy">
+                <a href="mars.html" class="card-overlay-btn" aria-label="View Mars">View</a>
+              </div>
+              <div class="product-body p-3 d-flex flex-column">
+                <h4 class="h6 mb-1">Mars</h4>
+                <p class="small flex-grow-1">TextTextTextText</p>
+                <div class="d-flex align-items-center justify-content-between">
+                  <span class="price mb-0">$Text</span>
+                  <a href="order.html" class="btn btn-sm btn-primary">Buy</a>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <!-- Gas Giants -->
+        <div class="row mt-5 mb-2">
+          <div class="col-12"><h3 class="category-title">Gas Giants</h3></div>
+        </div>
+        <div class="row g-4">
+          <!-- Jupiter -->
+          <div class="col-12 col-sm-6 col-lg-3">
+            <article class="product-card h-100">
+              <div class="product-media">
+                <img src="assets/img/Jupiter.png" alt="Jupiter" class="img-fluid" loading="lazy">
+                <a href="jupiter.html" class="card-overlay-btn" aria-label="View Jupiter">View</a>
+              </div>
+              <div class="product-body p-3 d-flex flex-column">
+                <h4 class="h6 mb-1">Jupiter</h4>
+                <p class="small flex-grow-1">TextTextTextText</p>
+                <div class="d-flex align-items-center justify-content-between">
+                  <span class="price mb-0">$Text</span>
+                  <a href="order.html" class="btn btn-sm btn-primary">Buy</a>
+                </div>
+              </div>
+            </article>
+          </div>
+          <!-- Saturn -->
+          <div class="col-12 col-sm-6 col-lg-3">
+            <article class="product-card h-100">
+              <div class="product-media">
+                <img src="assets/img/Saturn.png" alt="Saturn" class="img-fluid" loading="lazy">
+                <a href="saturn.html" class="card-overlay-btn" aria-label="View Saturn">View</a>
+              </div>
+              <div class="product-body p-3 d-flex flex-column">
+                <h4 class="h6 mb-1">Saturn</h4>
+                <p class="small flex-grow-1">TextTextTextText</p>
+                <div class="d-flex align-items-center justify-content-between">
+                  <span class="price mb-0">$Text</span>
+                  <a href="order.html" class="btn btn-sm btn-primary">Buy</a>
+                </div>
+              </div>
+            </article>
+          </div>
+          <!-- Uranus -->
+          <div class="col-12 col-sm-6 col-lg-3">
+            <article class="product-card h-100">
+              <div class="product-media">
+                <img src="assets/img/Uranus.png" alt="Uranus" class="img-fluid" loading="lazy">
+                <a href="uranus.html" class="card-overlay-btn" aria-label="View Uranus">View</a>
+              </div>
+              <div class="product-body p-3 d-flex flex-column">
+                <h4 class="h6 mb-1">Uranus</h4>
+                <p class="small flex-grow-1">TextTextTextText</p>
+                <div class="d-flex align-items-center justify-content-between">
+                  <span class="price mb-0">$Text</span>
+                  <a href="order.html" class="btn btn-sm btn-primary">Buy</a>
+                </div>
+              </div>
+            </article>
+          </div>
+          <!-- Neptune -->
+          <div class="col-12 col-sm-6 col-lg-3">
+            <article class="product-card h-100">
+              <div class="product-media">
+                <img src="assets/img/Neptune.png" alt="Neptune" class="img-fluid" loading="lazy">
+                <a href="neptune.html" class="card-overlay-btn" aria-label="View Neptune">View</a>
+              </div>
+              <div class="product-body p-3 d-flex flex-column">
+                <h4 class="h6 mb-1">Neptune</h4>
+                <p class="small flex-grow-1">TextTextTextText</p>
+                <div class="d-flex align-items-center justify-content-between">
+                  <span class="price mb-0">$Text</span>
+                  <a href="order.html" class="btn btn-sm btn-primary">Buy</a>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== FAQ / Q&A ===================== -->
+    <section id="faq" class="py-5 py-lg-6">
+      <div class="container">
+        <div class="row mb-4">
+          <div class="col-12 text-center">
+            <h2 class="section-title">Questions & Answers</h2>
+            <p class="section-subtitle">TextTextTextTextText TextTextTextTextText.</p>
+          </div>
+        </div>
+
+        <div class="accordion" id="faqAccordion">
+          <!-- Item 1 -->
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="q1">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#a1" aria-expanded="false" aria-controls="a1">
+                How do I buy a single planet?
+              </button>
+            </h2>
+            <div id="a1" class="accordion-collapse collapse" aria-labelledby="q1" data-bs-parent="#faqAccordion">
+              <div class="accordion-body">TextTextTextTextText TextTextTextTextText TextTextTextTextText.</div>
+            </div>
+          </div>
+          <!-- Item 2 -->
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="q2">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#a2" aria-expanded="false" aria-controls="a2">
+                What is included in the full Solar System Set?
+              </button>
+            </h2>
+            <div id="a2" class="accordion-collapse collapse" aria-labelledby="q2" data-bs-parent="#faqAccordion">
+              <div class="accordion-body">TextTextTextTextText TextTextTextTextText TextTextTextTextText.</div>
+            </div>
+          </div>
+          <!-- Item 3 -->
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="q3">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#a3" aria-expanded="false" aria-controls="a3">
+                Can I pay via QR code?
+              </button>
+            </h2>
+            <div id="a3" class="accordion-collapse collapse" aria-labelledby="q3" data-bs-parent="#faqAccordion">
+              <div class="accordion-body">TextTextTextTextText TextTextTextTextText TextTextTextTextText.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="text-center mt-4">
+          <a href="about.html" class="btn btn-outline-light">Contact Us</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="mt-auto pt-5 pb-4">
+    <div class="container">
+      <div class="row g-4">
+        <!-- Brand -->
+        <div class="col-12 col-lg-4">
+          <div class="d-flex align-items-center mb-3">
+            <img src="assets/img/logo.png" alt="Footer logo" width="32" height="32" class="me-2">
+            <span class="fw-semibold">ChanohtJakkawan</span>
+          </div>
+          <p class="small mb-3">TextTextTextTextText TextTextTextTextText.</p>
+          <div class="d-flex align-items-center gap-2">
+            <a href="#" class="d-inline-block" aria-label="Download on the App Store"><img src="assets/img/appstore.png" alt="App Store" height="36"></a>
+            <a href="#" class="d-inline-block" aria-label="Get it on Google Play"><img src="assets/img/playstore.png" alt="Google Play" height="36"></a>
+          </div>
+        </div>
+
+        <!-- Useful Links -->
+        <div class="col-6 col-lg-2">
+          <h5 class="mb-3">Useful Links</h5>
+          <ul class="list-unstyled footer-links">
+            <li><a href="#top" data-scroll>Home</a></li>
+            <li><a href="#features" data-scroll>Features</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="order.html">Order Now</a></li>
+            <li><a href="login.html">Login</a></li>
+          </ul>
+        </div>
+
+        <!-- Contact -->
+        <div class="col-6 col-lg-3">
+          <h5 class="mb-3">Contact</h5>
+          <ul class="list-unstyled footer-contact">
+            <li><i class="bi bi-envelope me-2" aria-hidden="true"></i><a href="mailto:chanohtjakkawan@nft.com">chanohtjakkawan@nft.com</a></li>
+            <li><i class="bi bi-telephone me-2" aria-hidden="true"></i><a href="tel:+6612345678">+66 1 234 5678</a></li>
+            <li class="mt-2 d-flex gap-2" aria-label="Social media">
+              <a href="#" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+              <a href="#" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+              <a href="#" aria-label="Twitter"><i class="bi bi-twitter-x"></i></a>
+              <a href="#" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Small note -->
+        <div class="col-12 col-lg-3">
+          <h5 class="mb-3">About this site</h5>
+          <p class="small mb-0">TextTextTextTextText TextTextTextTextText.</p>
+        </div>
+      </div>
+
+      <hr class="my-4 opacity-25" />
+      <div class="d-flex flex-column flex-md-row align-items-center justify-content-between small">
+        <span>© <span id="year"></span> ChanohtJakkawan. All rights reserved.</span>
+        <ul class="list-inline mb-0">
+          <li class="list-inline-item"><a href="#">Privacy</a></li>
+          <li class="list-inline-item"><a href="#">Cooperation</a></li>
+          <li class="list-inline-item"><a href="#">Sponsorship</a></li>
+          <li class="list-inline-item"><a href="#">Contact</a></li>
+        </ul>
+      </div>
     </div>
+  </footer>
 
-    <h2 class="separator">
-        Super Hot NFTs
-    </h2>
+  <!-- Back to Top -->
+  <a href="#top" class="back-to-top" aria-label="Back to top"><i class="bi bi-arrow-up-short"></i></a>
 
-    <div class="nft-shop">
-        <div class="category">
-            <a href="#">AsmrGraph</a>
-            <a href="#">Abstract</a>
-            <a href="#">Monkey</a>
-            <a href="#">Cars</a>
-            <a href="#">Trending</a>
-        </div>
-
-        <div class="nft-list">
-            <div class="item">
-                <img src="assets/item-1.png">
-                <div class="info">
-                    <div>
-                        <h5>CryptoArt</h5>
-                        <div class="btc">
-                            <i class='bx bxl-bitcoin'></i>
-                            <p>0.29 BTC</p>
-                        </div>
-                    </div>
-                    <p>5 of 33</p>
-                </div>
-                <div class="bid">
-                    <p>2h 28m 1s</p>
-                    <a href="#">Place a Bid</a>
-                </div>
-            </div>
-            <div class="item">
-                <img src="assets/item-2.png">
-                <div class="info">
-                    <div>
-                        <h5>Abs-Art</h5>
-                        <div class="btc">
-                            <i class='bx bxl-bitcoin'></i>
-                            <p>0.21 BTC</p>
-                        </div>
-                    </div>
-                    <p>7 of 12</p>
-                </div>
-                <div class="bid">
-                    <p>1h 28m 1s</p>
-                    <a href="#">Place a Bid</a>
-                </div>
-            </div>
-            <div class="item">
-                <img src="assets/item-3.png">
-                <div class="info">
-                    <div>
-                        <h5>TestArt</h5>
-                        <div class="btc">
-                            <i class='bx bxl-bitcoin'></i>
-                            <p>0.21 BTC</p>
-                        </div>
-                    </div>
-                    <p>9 of 23</p>
-                </div>
-                <div class="bid">
-                    <p>4h 21m 1s</p>
-                    <a href="#">Place a Bid</a>
-                </div>
-            </div>
-            <div class="item">
-                <img src="assets/item-4.png">
-                <div class="info">
-                    <div>
-                        <h5>Art-4</h5>
-                        <div class="btc">
-                            <i class='bx bxl-bitcoin'></i>
-                            <p>0.45 BTC</p>
-                        </div>
-                    </div>
-                    <p>1 of 33</p>
-                </div>
-                <div class="bid">
-                    <p>0h 28m 1s</p>
-                    <a href="#">Place a Bid</a>
-                </div>
-            </div>
-        </div>
-
-    </div>
-
-    <div class="view-more">
-        <button>View More</button>
-    </div>
-
-    <h2 class="separator">
-        Best Sellers
-    </h2>
-
-    <div class="sellers">
-        <div class="item">
-            <img src="assets/profile-1.png">
-            <div class="info">
-                <h4>Jhone D</h4>
-                <p>15.2K</p>
-            </div>
-        </div>
-        <div class="item">
-            <img src="assets/profile-2.png">
-            <div class="info">
-                <h4>Gregory B</h4>
-                <p>12.7K</p>
-            </div>
-        </div>
-        <div class="item">
-            <img src="assets/profile-3.png">
-            <div class="info">
-                <h4>Stephen E</h4>
-                <p>7.9K</p>
-            </div>
-        </div>
-        <div class="item">
-            <img src="assets/profile-4.png">
-            <div class="info">
-                <h4>Russell M</h4>
-                <p>4.2K</p>
-            </div>
-        </div>
-    </div>
-
-    <footer>
-        <h3>Create, Explore & Collect Abstract NFTs</h3>
-        <div class="right">
-            <div class="links">
-                <a href="#">Privacy Policy</a>
-                <a href="#">Cooperation</a>
-                <a href="#">Sponsorship</a>
-                <a href="#">Contact Us</a>
-            </div>
-            <div class="social">
-                <i class='bx bxl-instagram'></i>
-                <i class='bx bxl-facebook-square'></i>
-                <i class='bx bxl-github'></i>
-            </div>
-            <p>Copyright © 2024 AsmrProg, All Rights Reserved.</p>
-        </div>
-    </footer>
-
+  <!-- Bootstrap Bundle + Page JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  <script src="assets/js/main.js"></script>
 </body>
-
 </html>
