@@ -1,11 +1,9 @@
 /* =========================================================
-   ChanohtJakkawan — main.js (shared for landing)
-   Responsibilities:
-   - Smooth scroll for in-page anchors
-   - Back-to-top visibility & keyboard focus support
-   - Navbar behaviors (shadow on scroll, auto-collapse on link click)
-   - Year auto-inject in footer
-   - Defensive (runs safely even if certain elements are missing)
+   ChanohtJakkawan — main.js (UPDATED per improvement spec)
+   Scope of changes:
+   - Back-to-Top: use .show/.hide classes for animated appear/disappear
+   - Keep previous behaviors: smooth scroll, navbar shadow, auto-collapse, a11y for overlay View
+   - Do not alter unrelated logic
    ========================================================= */
 
 (function () {
@@ -49,17 +47,53 @@
     }
   }));
 
-  // ---------- Back to Top visibility ----------
+  // ---------- Back to Top (enhanced animation control) ----------
   const backToTop = $('.back-to-top');
-  const toggleBackToTop = () => {
+  const threshold = 280;
+  let isShown = false;
+
+  const showBackToTop = () => {
     if (!backToTop) return;
-    const show = window.scrollY > 280;
-    backToTop.classList.toggle('d-none', !show);
+    if (!isShown) {
+      backToTop.classList.remove('hide');
+      backToTop.classList.add('show');
+      isShown = true;
+    }
   };
-  // Start hidden until user scrolls
-  if (backToTop) backToTop.classList.add('d-none');
-  on(window, 'scroll', throttle(toggleBackToTop, 100));
-  toggleBackToTop();
+
+  const hideBackToTop = () => {
+    if (!backToTop) return;
+    if (isShown) {
+      backToTop.classList.remove('show');
+      backToTop.classList.add('hide');
+      isShown = false;
+    }
+  };
+
+  const handleBackToTop = () => {
+    if (!backToTop) return;
+    if (window.scrollY > threshold) showBackToTop();
+    else hideBackToTop();
+  };
+
+  // Initialize back-to-top state
+  if (backToTop) {
+    backToTop.classList.add('hide'); // start hidden; CSS animates when toggled
+    on(window, 'scroll', throttle(handleBackToTop, 80));
+    handleBackToTop();
+  }
+
+  // Click on back-to-top should also focus #top (a11y)
+  if (backToTop) {
+    on(backToTop, 'click', (e) => {
+      const target = $('#top');
+      if (target) {
+        target.setAttribute('tabindex', '-1');
+        // Let browser jump via href; then focus after a tick
+        setTimeout(() => target.focus({ preventScroll: true }), 50);
+      }
+    });
+  }
 
   // ---------- Navbar shadow on scroll ----------
   const navbar = $('#navbar');
@@ -79,9 +113,10 @@
       if (bsCollapse) bsCollapse.hide();
     };
     $$('.navbar-nav .nav-link, .navbar .btn').forEach(el => on(el, 'click', () => {
-      // Collapse only if toggler is visible (mobile)
-      const togglerStyle = window.getComputedStyle($('.navbar-toggler'));
-      if (togglerStyle && togglerStyle.display !== 'none') collapse();
+      const toggler = $('.navbar-toggler');
+      if (!toggler) return;
+      const display = window.getComputedStyle(toggler).display;
+      if (display && display !== 'none') collapse();
     }));
   }
 
