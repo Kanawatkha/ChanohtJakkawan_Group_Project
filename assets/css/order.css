@@ -9,7 +9,7 @@
   #order-hero, #order-form { scroll-margin-top: 72px; }
 }
 
-/* Increase page/container side space on all sizes */
+/* Increase page/container side space on all sizes to match index */
 .order-container { padding-left: 2rem; padding-right: 2rem; }
 @media (max-width: 991.98px) { .order-container { padding-left: 1.5rem; padding-right: 1.5rem; } }
 @media (max-width: 575.98px) { .order-container { padding-left: 1.25rem; padding-right: 1.25rem; } }
@@ -35,8 +35,9 @@
   box-shadow: var(--shadow-soft);
   transition: transform var(--transition-fast), box-shadow var(--transition-fast);
 }
+/* Match index timing/feel; use existing shadow token */
 .hover-elevate:hover,
-.product-card:hover { transform: translateY(-2px) scale(1.01); box-shadow: var(--shadow-pop); }
+.product-card:hover { transform: translateY(-2px) scale(1.01); box-shadow: var(--shadow-strong); }
 
 /* Helper text color (secondary palette) */
 .form-hint { color: var(--text-500); font-size: .9rem; margin-top: .25rem; }
@@ -45,21 +46,10 @@
 .expandable[hidden] { display: block; max-height: 0; overflow: hidden; opacity: 0; }
 .expandable { max-height: 2000px; transition: max-height var(--transition-slow), opacity var(--transition-slow); opacity: 1; }
 
-/* Product select indentation — move whole inner block slightly to the right */
-.product-select {
-  padding-left: 3rem;              /* << เพิ่มระยะเยื้องขวาทั้งบล็อก */
-}
-/* Keep items visually tidy, a bit more inner padding per line */
-.product-select .form-check {
-  padding-left: .5rem;             /* << ย่อมุมเพิ่มเล็กน้อยต่อแถว */
-}
-/* If you previously had overrides that zeroed padding, neutralize them now */
-.product-select .px-2 {
-  padding-left: .5rem !important;  /* << จากเดิม 0 ปรับให้เยื้องขวาเล็กน้อย */
-  padding-right: 0 !important;
-}
-
-/* Indication for SelectAll active state is provided via JS by toggling .text-primary on label */
+/* Product select indentation — keep a comfortable right shift */
+.product-select { padding-left: 3rem; }
+.product-select .form-check { padding-left: .5rem; }
+.product-select .px-2 { padding-left: .5rem !important; padding-right: 0 !important; }
 
 /* Summary list spacing */
 #summaryList li { padding: .25rem 0; border-bottom: 1px dashed rgba(255,255,255,.08); }
