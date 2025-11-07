@@ -1,9 +1,9 @@
 /* =========================================================
-   ChanohtJakkawan — main.js (UPDATED: desktop-enabled FAB + anti-overlap)
+   ChanohtJakkawan — main.js (UPDATED: desktop-enabled FAB + anti-overlap + Payment total)
    Scope kept from baseline; changes:
-   - FAB (floating hamburger) now works on ALL viewports (desktop/tablet/mobile)
+   - FAB (floating hamburger) works on ALL viewports (desktop/tablet/mobile)
    - When FAB panel opens, temporarily hide/dim Back-to-Top to avoid overlap
-     on any size (restores automatically on close)
+   - NEW: Payment page total auto-population from localStorage (#payTotal)
    - All existing behaviors preserved: smooth scroll, navbar shadow, back-to-top
      animation, auto-collapse mobile nav, a11y for overlay View buttons
    ========================================================= */
@@ -232,5 +232,24 @@
 
   // Close panel when navigating via panel links
   $$('.fab-menu-panel .fab-link').forEach(link => on(link, 'click', () => closePanel()));
+
+  // =========================================================
+  // Payment page: populate total from localStorage (non-invasive)
+  // =========================================================
+  (function initPaymentTotal() {
+    const out = document.getElementById('payTotal');
+    if (!out) return; // not on payment page
+    try {
+      const raw  = localStorage.getItem('orderTotal');
+      const unit = localStorage.getItem('orderUnit'); // e.g., "million million million"
+      if (raw && !isNaN(Number(raw))) {
+        out.textContent = unit ? `${Number(raw)} ${unit}` : String(Number(raw));
+      } else {
+        out.textContent = '—';
+      }
+    } catch (e) {
+      out.textContent = '—';
+    }
+  })();
 
 })();
