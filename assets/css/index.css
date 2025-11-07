@@ -290,3 +290,42 @@ left: auto; /* ensure no left offset creeps in */
 overflow-x: hidden; /* no horizontal overflow inside panel */
 }
 }
+
+/* =========================================================
+   End of ChanohtJakkawan — index.css
+   ========================================================= */
+
+/* ==== Prevent horizontal scrolling on tablet/mobile ==== */
+/* html, body {
+  max-width: 100%;
+  overflow-x: hidden;             
+} */
+
+/* คลิปส่วนเกิน (เช่น เงา/แอนิเมชัน) ไม่ให้ดันหน้ากว้างเกินจอ */
+#hero, #deed, #objects, #faq, .site-header {
+  overflow-x: clip;
+}
+
+/* องค์ประกอบสื่อทั้งหมดต้องไม่เกินความกว้างจอ */
+img, svg, video, canvas {
+  max-width: 100%;
+  height: auto;
+}
+
+/* ปรับ floating menu panel ให้ไม่ล้นจอทุกเบรกพอยต์ (กัน overflow-x) */
+.fab-menu-panel {
+  max-width: calc(100vw - 2rem);
+  overflow-x: hidden;
+}
+
+/* เสริมความปลอดภัยสำหรับหน้าจอ ≤ 991.98px (tablet & mobile) */
+@media (max-width: 991.98px) {
+  .container, .container-fluid {
+    padding-left: 1rem;
+    padding-right: 1rem;          /* กันเคส padding รวมกับ gutter แล้วเกินจอ */
+  }
+  /* หากมีบล็อกการ์ด/คอนเทนต์ที่เคยกำหนดความกว้างตายตัว ให้บังคับไม่เกินจอ */
+  .surface-card, .product-card, .hero-figure, .deed-section figure {
+    max-width: 100%;
+  }
+}
