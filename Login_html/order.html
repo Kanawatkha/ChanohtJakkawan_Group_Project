@@ -16,7 +16,7 @@
   <link rel="stylesheet" href="../assets/css/order.css" />
 </head>
 <body class="page-order d-flex flex-column min-vh-100" id="top">
-  <!-- ===================== NAVBAR (trimmed to 3 links) ===================== -->
+  <!-- ===================== NAVBAR (kept; matches index patterns) ===================== -->
   <header class="site-header sticky-top" aria-label="Main Navigation">
     <nav class="navbar navbar-expand-lg navbar-dark py-3" id="navbar">
       <div class="container">
@@ -331,7 +331,7 @@
   <!-- Back to Top (kept) -->
   <a href="#top" class="back-to-top" aria-label="Back to top" data-animate="scale-fade"><i class="bi bi-arrow-up-short"></i></a>
 
-  <!-- =============== FLOATING HAMBURGER + MINI OVERLAY MENU (trimmed) =============== -->
+  <!-- =============== FLOATING HAMBURGER + MINI OVERLAY MENU (kept/matched to index) =============== -->
   <button id="fabMenuBtn" class="fab-menu hide" aria-label="Open menu" aria-controls="fabMenuPanel" aria-expanded="false">
     <i class="bi bi-list"></i>
   </button>
@@ -390,112 +390,91 @@
     }
 
     if (expandBtn && panel) {
-      panel.style.overflow = 'hidden';
-      panel.style.transition = 'max-height var(--transition-slow), opacity var(--transition-slow)';
+      // ensure there is a chevron icon present
+      const span = expandBtn.querySelector('span');
+      if (span && !expandBtn.querySelector('.bi-chevron-down') && !expandBtn.querySelector('.bi-chevron-up')) {
+        const i = document.createElement('i');
+        i.className = 'bi bi-chevron-down ms-2';
+        span.appendChild(i);
+      }
       expandBtn.addEventListener('click', () => {
-        const isOpen = !panel.hidden;
-        isOpen ? closePanel() : openPanel();
+        const expanded = expandBtn.getAttribute('aria-expanded') === 'true';
+        expanded ? closePanel() : openPanel();
       });
     }
 
-    // ===== Product selection and totals =====
-    const products = $$('.product');
+    // ===== Pricing / Selection state =====
     const selectAll = $('#selectAll');
     const selectAllLabel = $('#selectAllLabel');
-    const totalPriceEl = $('#totalPrice');
+    const products = $$('.product');
+    const totalEl = $('#totalPrice');
     const summaryList = $('#summaryList');
     const summaryTotal = $('#summaryTotal');
-    const requiredIds = ['fullName','email','phone','addr1','city','state','zip','country'];
-    const confirmBtn = $('#confirmBtn');
-    const payQR = $('#payQR');
     const accept = $('#accept');
+    const payQR = $('#payQR');
+    const confirmBtn = $('#confirmBtn');
 
-    function renderSelectAllVisual(allChecked, anyChecked) {
-      if (!selectAllLabel) return;
-      // Active color ONLY when all nine are selected
-      selectAllLabel.classList.toggle('text-primary', allChecked && anyChecked);
+    const UNIT = ' million million million';
+
+    function updateSelectAllVisual() {
+      const allChecked = products.every(p => p.checked);
+      selectAll.checked = allChecked;
+      selectAllLabel.classList.toggle('text-primary', allChecked);
     }
 
-    function syncSelectAllState() {
-      const allChecked = products.length > 0 && products.every(p => p.checked);
-      const anyChecked = products.some(p => p.checked);
-      if (selectAll) {
-        selectAll.checked = allChecked && anyChecked;
-        selectAll.indeterminate = !allChecked && anyChecked;
-      }
-      renderSelectAllVisual(allChecked, anyChecked);
-    }
-
-    function calcTotal() {
+    function recalc() {
       let total = 0;
       summaryList.innerHTML = '';
       products.forEach(p => {
         if (p.checked) {
           const price = Number(p.dataset.price || 0);
           total += price;
-          const label = document.querySelector('label[for="' + p.id + '"]');
+          const name = document.querySelector(`label[for="${p.id}"]`).textContent;
           const li = document.createElement('li');
-          li.textContent = label ? label.textContent : p.id;
+          li.textContent = name;
           summaryList.appendChild(li);
         }
       });
-      if (total > 0) {
-        totalPriceEl.textContent = total + ' million million million';
-        summaryTotal.textContent = total + ' million million million';
-      } else {
-        totalPriceEl.textContent = '0';
-        summaryTotal.textContent = '0';
-      }
-      syncSelectAllState();
+      totalEl.textContent = total > 0 ? (total + UNIT) : '0';
+      summaryTotal.textContent = total > 0 ? (total + UNIT) : '0';
+      updateSelectAllVisual();
       validate();
     }
 
-    products.forEach(p => p.addEventListener('change', calcTotal));
-
-    if (selectAll) {
-      selectAll.addEventListener('change', () => {
-        const val = selectAll.checked;
-        products.forEach(p => p.checked = val);
-        calcTotal();
-      });
-    }
-
-    function inputsValid() {
-      for (const id of requiredIds) {
-        const el = document.getElementById(id);
-        if (!el || !el.value || !el.value.trim()) return false;
-      }
-      const email = document.getElementById('email').value;
-      if (!email.includes('@')) return false;
-      if (!products.some(p => p.checked)) return false;
-      if (!payQR.checked || !accept.checked) return false;
-      return true;
-    }
-
-    function setBtnEnabled(enabled) {
-      confirmBtn.disabled = !enabled;
-      confirmBtn.setAttribute('aria-disabled', String(!enabled));
-    }
-
-    function validate() { setBtnEnabled(inputsValid()); }
-
-    ['input','change','keyup'].forEach(ev => {
-      document.addEventListener(ev, (e) => {
-        if (e.target && (e.target.matches('.form-control') || e.target.matches('.form-check-input'))) {
-          validate();
-        }
-      });
+    selectAll && selectAll.addEventListener('change', (e) => {
+      const checked = e.target.checked;
+      products.forEach(p => { p.checked = checked; });
+      recalc();
     });
 
-    // Initial
-    calcTotal();
+    products.forEach(p => p.addEventListener('change', recalc));
 
-    // Confirm: navigate to payment.html when enabled
-    confirmBtn.addEventListener('click', () => {
-      if (inputsValid()) {
+    function validate() {
+      const requiredFilled = $('#fullName').value.trim().length >= 1
+        && $('#email').value.includes('@')
+        && $('#phone').value.trim().length >= 1
+        && $('#addr1').value.trim().length >= 1
+        && $('#city').value.trim().length >= 1
+        && $('#state').value.trim().length >= 1
+        && $('#zip').value.trim().length >= 1
+        && $('#country').value.trim().length >= 1;
+      const anyProduct = products.some(p => p.checked);
+      const accepted = accept.checked && payQR.checked;
+      const enable = requiredFilled && anyProduct && accepted;
+      confirmBtn.disabled = !enable;
+      confirmBtn.setAttribute('aria-disabled', String(!enable));
+    }
+
+    $$('#order-form input, #order-form textarea').forEach(el => el.addEventListener('input', validate));
+
+    confirmBtn && confirmBtn.addEventListener('click', () => {
+      if (!confirmBtn.disabled) {
         window.location.href = 'payment.html';
       }
     });
+
+    // Init
+    recalc();
   })();
   </script>
 </body>
