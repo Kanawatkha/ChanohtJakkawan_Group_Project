@@ -46,7 +46,9 @@
 
 /* Base */
 html { scroll-behavior: smooth; }
-html, body { height: 100%; }
+html, body { 
+  height: 100%;
+}
 body {
   font-family: "Urbanist", system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   background: radial-gradient(1200px 800px at 20% -10%, #1a2544 0%, #0b1220 45%) fixed;
@@ -225,6 +227,10 @@ footer { background: linear-gradient(180deg, rgba(255,255,255,0.02) 0%, rgba(255
   transform: translateY(8px) scale(.96);
   opacity: 0; visibility: hidden; z-index: 1060;
   transition: opacity var(--transition-slow), visibility var(--transition-slow), transform var(--transition-slow);
+
+  max-width: calc(100vw - 2rem); /* << NEW */
+  overflow-x: hidden;            /* << NEW */
+  left: auto;                    /* << NEW (force right anchoring) */
 }
 .fab-menu-panel.open { opacity: 1; visibility: visible; transform: translateY(0) scale(1); }
 
@@ -242,7 +248,7 @@ footer { background: linear-gradient(180deg, rgba(255,255,255,0.02) 0%, rgba(255
   border-color: rgba(255,255,255,.18);
 }
 
-/* Desktop SUPPORT: shift FAB higher so it never overlaps Back-to-Top */
+/* ================= DESKTOP (≥992px) ================= */
 @media (min-width: 992px) {
   /* Back-to-Top stays at bottom: 1.25rem; FAB moves higher to clear it */
   .fab-menu { right: 1.5rem; bottom: 6.5rem; }
@@ -250,16 +256,37 @@ footer { background: linear-gradient(180deg, rgba(255,255,255,0.02) 0%, rgba(255
   .fab-menu-panel { right: 1.5rem; bottom: 11rem; width: 360px; max-height: 70vh; }
 }
 
-/* Small screens: tweak spacing so it doesn't collide with safe areas */
-@media (max-width: 575.98px) {
-  .fab-menu { 
-    right: 1rem; 
-    bottom: calc(6rem + env(safe-area-inset-bottom)); 
-  }
-  .fab-menu-panel { 
-    right: 1rem; 
-    bottom: calc(12rem + env(safe-area-inset-bottom)); 
-    width: min(92vw, 360px); 
-  }
+/* ================= TABLET (≥576px and <992px) ================= */
+@media (min-width: 576px) and (max-width: 991.98px) {
+.fab-menu {
+right: 1rem;
+bottom: calc(6rem + env(safe-area-inset-bottom));
+}
+/* Keep the mini panel fully within the viewport and anchored to the right */
+.fab-menu-panel {
+right: 1rem;
+bottom: calc(12rem + env(safe-area-inset-bottom));
+width: min(92vw, 360px);
+max-width: calc(100vw - 2rem); /* hard cap to avoid horizontal scroll */
+left: auto; /* force right anchoring */
+overflow-x: hidden; /* trim any accidental wide children */
+}
 }
 
+
+/* ================= MOBILE (≤575.98px) ================= */
+@media (max-width: 575.98px) {
+.fab-menu {
+right: 1rem;
+bottom: calc(6rem + env(safe-area-inset-bottom));
+}
+/* Tighten width cap further for tiny screens; keep right anchoring */
+.fab-menu-panel {
+right: 1rem;
+bottom: calc(12rem + env(safe-area-inset-bottom));
+width: min(92vw, 360px);
+max-width: calc(100vw - 1.5rem); /* stricter cap for very small widths */
+left: auto; /* ensure no left offset creeps in */
+overflow-x: hidden; /* no horizontal overflow inside panel */
+}
+}
