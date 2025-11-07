@@ -252,6 +252,14 @@ footer { background: linear-gradient(180deg, rgba(255,255,255,0.02) 0%, rgba(255
 
 /* Small screens: tweak spacing so it doesn't collide with safe areas */
 @media (max-width: 575.98px) {
-  .fab-menu { right: 1rem; bottom: 4rem; }
-  .fab-menu-panel { right: 1rem; bottom: 9.5rem; width: min(92vw, 360px); }
+  .fab-menu { 
+    right: 1rem; 
+    bottom: calc(6rem + env(safe-area-inset-bottom)); 
+  }
+  .fab-menu-panel { 
+    right: 1rem; 
+    bottom: calc(12rem + env(safe-area-inset-bottom)); 
+    width: min(92vw, 360px); 
+  }
 }
+
