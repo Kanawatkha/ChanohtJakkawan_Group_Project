@@ -1,9 +1,11 @@
 /* =========================================================
-   ChanohtJakkawan — main.js (UPDATED per improvement spec)
-   Scope of changes:
-   - Back-to-Top: use .show/.hide classes for animated appear/disappear
-   - Keep previous behaviors: smooth scroll, navbar shadow, auto-collapse, a11y for overlay View
-   - Do not alter unrelated logic
+   ChanohtJakkawan — main.js (UPDATED: desktop-enabled FAB + anti-overlap)
+   Scope kept from baseline; changes:
+   - FAB (floating hamburger) now works on ALL viewports (desktop/tablet/mobile)
+   - When FAB panel opens, temporarily hide/dim Back-to-Top to avoid overlap
+     on any size (restores automatically on close)
+   - All existing behaviors preserved: smooth scroll, navbar shadow, back-to-top
+     animation, auto-collapse mobile nav, a11y for overlay View buttons
    ========================================================= */
 
 (function () {
@@ -76,7 +78,6 @@
     else hideBackToTop();
   };
 
-  // Initialize back-to-top state
   if (backToTop) {
     backToTop.classList.add('hide'); // start hidden; CSS animates when toggled
     on(window, 'scroll', throttle(handleBackToTop, 80));
@@ -85,11 +86,10 @@
 
   // Click on back-to-top should also focus #top (a11y)
   if (backToTop) {
-    on(backToTop, 'click', (e) => {
+    on(backToTop, 'click', () => {
       const target = $('#top');
       if (target) {
         target.setAttribute('tabindex', '-1');
-        // Let browser jump via href; then focus after a tick
         setTimeout(() => target.focus({ preventScroll: true }), 50);
       }
     });
@@ -131,5 +131,106 @@
       }
     });
   });
+
+  // =========================================================
+  // Floating hamburger FAB + Mini overlay menu (ALL viewports)
+  // =========================================================
+  const fabBtn = $('#fabMenuBtn');
+  const fabPanel = $('#fabMenuPanel');
+  const header = $('.site-header');
+  let fabVisible = false;
+  let panelOpen = false;
+
+  const isHeaderOffScreen = () => {
+    if (!header) return window.scrollY > 160; // fallback threshold
+    const rect = header.getBoundingClientRect();
+    return rect.bottom <= 0; // header (navbar) is above viewport
+  };
+
+  const showFab = () => {
+    if (!fabBtn) return;
+    if (!fabVisible) {
+      fabBtn.classList.remove('hide');
+      fabBtn.classList.add('show');
+      fabVisible = true;
+    }
+  };
+
+  const hideFab = () => {
+    if (!fabBtn) return;
+    if (fabVisible) {
+      fabBtn.classList.remove('show');
+      fabBtn.classList.add('hide');
+      fabVisible = false;
+    }
+  };
+
+  const dimBackToTop = (dim) => {
+    if (!backToTop) return;
+    if (dim) {
+      backToTop.style.opacity = '0';
+      backToTop.style.pointerEvents = 'none';
+    } else {
+      backToTop.style.opacity = '';
+      backToTop.style.pointerEvents = '';
+    }
+  };
+
+  const openPanel = () => {
+    if (!fabPanel || !fabBtn) return;
+    fabPanel.classList.add('open');
+    fabPanel.setAttribute('aria-hidden', 'false');
+    fabBtn.setAttribute('aria-expanded', 'true');
+    panelOpen = true;
+    dimBackToTop(true); // prevent overlap/conflict while panel is open
+    // Focus first link for a11y
+    const firstLink = $('.fab-link', fabPanel);
+    if (firstLink) firstLink.focus({ preventScroll: true });
+  };
+
+  const closePanel = () => {
+    if (!fabPanel || !fabBtn) return;
+    fabPanel.classList.remove('open');
+    fabPanel.setAttribute('aria-hidden', 'true');
+    fabBtn.setAttribute('aria-expanded', 'false');
+    panelOpen = false;
+    dimBackToTop(false); // restore back-to-top visibility/interaction
+  };
+
+  const handleFabVisibility = () => {
+    if (!fabBtn) return;
+    // Show when header is off-screen and user scrolled a bit
+    if (window.scrollY > 160 && isHeaderOffScreen()) showFab();
+    else { hideFab(); closePanel(); }
+  };
+
+  if (fabBtn) {
+    fabBtn.classList.add('hide'); // start hidden
+    on(window, 'scroll', throttle(handleFabVisibility, 80));
+    on(window, 'resize', throttle(handleFabVisibility, 120));
+    handleFabVisibility();
+
+    // Toggle panel on FAB click
+    on(fabBtn, 'click', () => {
+      panelOpen ? closePanel() : openPanel();
+    });
+  }
+
+  // Close panel on outside click
+  on(document, 'click', (e) => {
+    if (!panelOpen) return;
+    if (!fabPanel || !fabBtn) return;
+    const isInsidePanel = fabPanel.contains(e.target);
+    const isFab = fabBtn.contains(e.target);
+    if (!isInsidePanel && !isFab) closePanel();
+  });
+
+  // Close panel on Esc
+  on(document, 'keydown', (e) => {
+    if (e.key === 'Escape') closePanel();
+  });
+
+  // Close panel when navigating via panel links
+  $$('.fab-menu-panel .fab-link').forEach(link => on(link, 'click', () => closePanel()));
 
 })();
