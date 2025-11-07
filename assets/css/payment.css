@@ -1,0 +1,58 @@
+/* =========================================================
+   ChanohtJakkawan — payment.css
+   Purpose: Style the Payment page to mirror index.css exactly (palette, radius,
+   shadow, animations, responsive). No new design language is introduced.
+   NOTE: This file assumes index.css is also loaded so we only add
+   page-specific hooks and minimal overrides.
+   ========================================================= */
+
+/* 1) Base page spacing mirrors index: generous vertical rhythm */
+.page-payment main section { padding-top: 3rem; padding-bottom: 3rem; }
+@media (min-width: 992px) {
+  .page-payment main section { padding-top: 4rem; padding-bottom: 4rem; }
+}
+
+/* 2) Payment card uses the same visual language as .product-card but scaled up */
+.product-card.giant-card {
+  background: radial-gradient(900px 450px at 50% -40%, rgba(154,116,255,0.14) 0%, rgba(26,39,70,0.68) 60%), var(--card-700);
+  border: 1px solid var(--border-600);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
+  transition: transform var(--transition-slow), box-shadow var(--transition-slow);
+}
+.product-card.giant-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 25px 50px rgba(10,15,28,.66);
+}
+
+/* 3) Media block (QR) responsiveness and maximum size */
+.product-card.giant-card .product-media img {
+  max-width: 520px; /* larger than index cards for visual impact */
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  border-radius: var(--radius-md);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.06);
+}
+
+/* 4) Typography for totals (inherits Urbanist; sizing tuned for hierarchy) */
+#payTotal {
+  letter-spacing: 0.25px;
+}
+
+/* 5) Button row behavior: matches hero buttons from index */
+/* Use Bootstrap utility classes from the HTML for layout; ensure no overflow */
+@media (max-width: 575.98px) {
+  .page-payment .btn { width: 100%; }
+}
+
+/* 6) Safety: prevent any accidental horizontal overflow on this page only */
+.page-payment #payment, .page-payment .container { overflow-x: clip; }
+
+/* 7) Back-to-Top spacing harmony with FAB (same as index adjustments) */
+@media (min-width: 992px) {
+  .back-to-top { bottom: 1.25rem; }
+}
+
+/* 8) Footer link wrapping (mirror index rules) */
+.footer-contact a[href^="mailto:"] { word-break: break-word; overflow-wrap: anywhere; }
