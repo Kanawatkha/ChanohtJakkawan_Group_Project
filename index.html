@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <!-- Viewport: lock zoom-out, allow zoom-in on mobile (kept from baseline) -->
-  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=5, viewport-fit=cover" />
+  <!-- Viewport: lock zoom-out and prevent horizontal panning (per spec) -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
   <title>ChanohtJakkawan — Solar System Set</title>
   <meta name="description" content="Be the owner of the entire Solar System Set! Explore features and discover items. Buy now or order single planets.">
   <link rel="icon" href="assets/img/logo.png" />
@@ -115,30 +115,30 @@
     </section>
 
     <!-- ===================== SOLAR SYSTEM DEED (kept/new) ===================== -->
-  <section id="deed" class="py-5 py-lg-6 deed-section">
-    <div class="container">
-      <div class="row mb-4">
-        <div class="col-12 text-center">
-          <h2 class="section-title">Solar System Deed</h2>
-          <p class="section-subtitle">TextTextTextTextText TextTextTextTextText.</p>
+    <section id="deed" class="py-5 py-lg-6 deed-section">
+      <div class="container">
+        <div class="row mb-4">
+          <div class="col-12 text-center">
+            <h2 class="section-title">Solar System Deed</h2>
+            <p class="section-subtitle">TextTextTextTextText TextTextTextTextText.</p>
+          </div>
+        </div>
+        <div class="row align-items-center g-5">
+          <div class="col-12 col-lg-6 text-center">
+            <figure class="hero-figure mb-3 mb-lg-0">
+              <img src="assets/img/Deed.jpg" class="img-fluid hero-img d-block mx-auto" alt="Solar System Deed visual" loading="lazy" />
+            </figure>
+          </div>
+          <div class="col-12 col-lg-6 text-center text-lg-start">
+            <h3 class="h4 mb-3">Own the charter to the cosmos</h3>
+            <p class="mb-3">TextTextTextTextText TextTextTextTextText TextTextTextTextText.</p>
+            <p class="mb-4">TextTextTextTextText TextTextTextTextText TextTextTextTextText.</p>
+          </div>
         </div>
       </div>
-      <div class="row align-items-center g-5">
-        <div class="col-12 col-lg-6 text-center">
-          <figure class="hero-figure mb-3 mb-lg-0">
-            <img src="assets/img/Deed.jpg" class="img-fluid hero-img d-block mx-auto" alt="Solar System Deed visual" loading="lazy" />
-          </figure>
-        </div>
-        <div class="col-12 col-lg-6 text-center text-lg-start">
-          <h3 class="h4 mb-3">Own the charter to the cosmos</h3>
-          <p class="mb-3">TextTextTextTextText TextTextTextTextText TextTextTextTextText.</p>
-          <p class="mb-4">TextTextTextTextText TextTextTextTextText TextTextTextTextText.</p>
-        </div>
-      </div>
-    </div>
-  </section>
+    </section>
 
-    <!-- ===================== DISCOVER / PRODUCTS (kept) ===================== -->
+    <!-- ===================== DISCOVER / PRODUCTS (kept + updated) ===================== -->
     <section id="discover" class="py-5 py-lg-6">
       <div id="objects"></div>
       <div class="container">
@@ -247,78 +247,88 @@
           </div>
         </div>
 
-        <!-- Gas Giants (kept) -->
+        <!-- Gas Giants (UPDATED: now only Jupiter & Saturn; big cards as a 2-col row) -->
         <div class="row mt-5 mb-2">
           <div class="col-12">
             <h3 class="category-title mb-1">Gas Giants</h3>
             <p class="section-subtitle mb-3">Massive outer planets. TextTextTextTextText.</p>
           </div>
         </div>
-        <div class="row g-4">
+        <div class="row g-4 justify-content-center giant-row">
           <!-- Jupiter -->
-          <div class="col-12 col-sm-6 col-lg-3">
-            <article class="product-card h-100">
+          <div class="col-12 col-md-6 col-lg-6">
+            <article class="product-card h-100 giant-card">
               <div class="product-media">
                 <img src="assets/img/Jupiter.png" alt="Jupiter" class="img-fluid planet-img" loading="lazy">
                 <a href="Login_html/View_html/jupiter.html" class="card-overlay-btn" aria-label="View Jupiter" tabindex="0"></a>
               </div>
-              <div class="product-body p-3 d-flex flex-column">
-                <h4 class="h6 mb-1">Jupiter</h4>
+              <div class="product-body p-4 d-flex flex-column">
+                <h4 class="h5 mb-2">Jupiter</h4>
                 <p class="small flex-grow-1">TextTextTextText</p>
                 <div class="d-flex align-items-center justify-content-between">
                   <span class="price mb-0">$Text</span>
-                  <a href="Login_html/order.html" class="btn btn-sm btn-primary">Buy</a>
+                  <a href="Login_html/order.html" class="btn btn-primary">Buy</a>
                 </div>
               </div>
             </article>
           </div>
           <!-- Saturn -->
-          <div class="col-12 col-sm-6 col-lg-3">
-            <article class="product-card h-100">
+          <div class="col-12 col-md-6 col-lg-6">
+            <article class="product-card h-100 giant-card">
               <div class="product-media">
                 <img src="assets/img/Saturn.png" alt="Saturn" class="img-fluid planet-img" loading="lazy">
                 <a href="Login_html/View_html/saturn.html" class="card-overlay-btn" aria-label="View Saturn" tabindex="0"></a>
               </div>
-              <div class="product-body p-3 d-flex flex-column">
-                <h4 class="h6 mb-1">Saturn</h4>
+              <div class="product-body p-4 d-flex flex-column">
+                <h4 class="h5 mb-2">Saturn</h4>
                 <p class="small flex-grow-1">TextTextTextText</p>
                 <div class="d-flex align-items-center justify-content-between">
                   <span class="price mb-0">$Text</span>
-                  <a href="Login_html/order.html" class="btn btn-sm btn-primary">Buy</a>
+                  <a href="Login_html/order.html" class="btn btn-primary">Buy</a>
                 </div>
               </div>
             </article>
           </div>
+        </div>
+
+        <!-- Ice Giants (NEW: Uranus & Neptune; big cards as a 2-col row) -->
+        <div class="row mt-5 mb-2">
+          <div class="col-12">
+            <h3 class="category-title mb-1">Ice Giants</h3>
+            <p class="section-subtitle mb-3">Distant giants with icy compositions. TextTextTextTextText.</p>
+          </div>
+        </div>
+        <div class="row g-4 justify-content-center giant-row">
           <!-- Uranus -->
-          <div class="col-12 col-sm-6 col-lg-3">
-            <article class="product-card h-100">
+          <div class="col-12 col-md-6 col-lg-6">
+            <article class="product-card h-100 giant-card">
               <div class="product-media">
                 <img src="assets/img/Uranus.png" alt="Uranus" class="img-fluid planet-img" loading="lazy">
                 <a href="Login_html/View_html/uranus.html" class="card-overlay-btn" aria-label="View Uranus" tabindex="0"></a>
               </div>
-              <div class="product-body p-3 d-flex flex-column">
-                <h4 class="h6 mb-1">Uranus</h4>
+              <div class="product-body p-4 d-flex flex-column">
+                <h4 class="h5 mb-2">Uranus</h4>
                 <p class="small flex-grow-1">TextTextTextText</p>
                 <div class="d-flex align-items-center justify-content-between">
                   <span class="price mb-0">$Text</span>
-                  <a href="Login_html/order.html" class="btn btn-sm btn-primary">Buy</a>
+                  <a href="Login_html/order.html" class="btn btn-primary">Buy</a>
                 </div>
               </div>
             </article>
           </div>
           <!-- Neptune -->
-          <div class="col-12 col-sm-6 col-lg-3">
-            <article class="product-card h-100">
+          <div class="col-12 col-md-6 col-lg-6">
+            <article class="product-card h-100 giant-card">
               <div class="product-media">
                 <img src="assets/img/Neptune.png" alt="Neptune" class="img-fluid planet-img" loading="lazy">
                 <a href="Login_html/View_html/neptune.html" class="card-overlay-btn" aria-label="View Neptune" tabindex="0"></a>
               </div>
-              <div class="product-body p-3 d-flex flex-column">
-                <h4 class="h6 mb-1">Neptune</h4>
+              <div class="product-body p-4 d-flex flex-column">
+                <h4 class="h5 mb-2">Neptune</h4>
                 <p class="small flex-grow-1">TextTextTextText</p>
                 <div class="d-flex align-items-center justify-content-between">
                   <span class="price mb-0">$Text</span>
-                  <a href="Login_html/order.html" class="btn btn-sm btn-primary">Buy</a>
+                  <a href="Login_html/order.html" class="btn btn-primary">Buy</a>
                 </div>
               </div>
             </article>
@@ -441,7 +451,6 @@
   <a href="#top" class="back-to-top" aria-label="Back to top" data-animate="scale-fade"><i class="bi bi-arrow-up-short"></i></a>
 
   <!-- =============== FLOATING HAMBURGER + MINI OVERLAY MENU (HTML only) =============== -->
-  <!-- NOTE: This is HTML structure only. Styling & behavior will be added in CSS/JS steps. -->
   <button id="fabMenuBtn" class="fab-menu hide" aria-label="Open menu" aria-controls="fabMenuPanel" aria-expanded="false">
     <i class="bi bi-list"></i>
   </button>
