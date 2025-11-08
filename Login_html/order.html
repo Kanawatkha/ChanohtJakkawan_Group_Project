@@ -2,21 +2,24 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
+  <!-- viewport เหมือนหน้า index -->
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=5, viewport-fit=cover" />
   <title>Order — ChanohtJakkawan</title>
   <meta name="description" content="Order your Solar System objects or the complete set." />
   <link rel="icon" href="../assets/img/logo.png" />
-  <!-- Bootstrap CSS (kept) -->
+
+  <!-- Bootstrap (kept) -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   <!-- Bootstrap Icons (kept) -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" />
-  <!-- Shared index styles (palette, components, animations) -->
+
+  <!-- Shared index styles (palette/components/animations) -->
   <link rel="stylesheet" href="../assets/css/index.css" />
-  <!-- Page styles for Order only -->
+  <!-- Page styles for Order (อย่าแก้ในรอบนี้) -->
   <link rel="stylesheet" href="../assets/css/order.css" />
 </head>
 <body class="page-order d-flex flex-column min-vh-100" id="top">
-  <!-- ===================== NAVBAR (kept; matches index patterns) ===================== -->
+  <!-- ===================== NAVBAR (kept, จัดวาง/อนิเมชันตาม index) ===================== -->
   <header class="site-header sticky-top" aria-label="Main Navigation">
     <nav class="navbar navbar-expand-lg navbar-dark py-3" id="navbar">
       <div class="container">
@@ -46,7 +49,7 @@
   </header>
 
   <main class="flex-grow-1">
-    <!-- ===================== ORDER HERO (centered, larger image) ===================== -->
+    <!-- ===================== ORDER HERO (kept layout; เพิ่มระยะหายใจด้วย .order-container) ===================== -->
     <section id="order-hero" class="py-5 py-lg-6 position-relative overflow-hidden">
       <div class="container order-container">
         <div class="row align-items-center justify-content-center g-5">
@@ -63,12 +66,12 @@
       </div>
     </section>
 
-    <!-- ===================== ORDER FORM (single-column stack) ===================== -->
+    <!-- ===================== ORDER FORM (single-column; เพิ่มช่องว่างรอบบล็อก) ===================== -->
     <section id="order-form" class="py-5 py-lg-6">
       <div class="container order-container">
         <div class="row g-4 g-xl-5">
           <div class="col-12">
-            <!-- Customer Details Card -->
+            <!-- Customer Details -->
             <article class="surface-card hover-elevate p-4 p-lg-4 mb-4" aria-labelledby="customer-details-title">
               <h2 id="customer-details-title" class="h4 mb-3">Customer Details</h2>
               <div class="row g-3">
@@ -90,7 +93,7 @@
               </div>
             </article>
 
-            <!-- Shipping Address Card -->
+            <!-- Shipping Address -->
             <article class="surface-card hover-elevate p-4 p-lg-4 mb-4" aria-labelledby="shipping-address-title">
               <h2 id="shipping-address-title" class="h4 mb-3">Shipping Address</h2>
               <div class="row g-3">
@@ -127,7 +130,7 @@
               </div>
             </article>
 
-            <!-- Product Selection Card -->
+            <!-- Product Selection -->
             <article class="surface-card hover-elevate p-4 p-lg-4 mb-4" aria-labelledby="product-select-title">
               <h2 id="product-select-title" class="h4 mb-3">Product Selection</h2>
               <p class="small text-muted-300 mb-3">Choose individual objects or the full set. Prices shown in <em>million million million</em>.</p>
@@ -137,7 +140,7 @@
                 <span><i class="bi bi-bag me-2" aria-hidden="true"></i>Select Objects</span>
               </button>
 
-              <!-- Expandable area (push content down) -->
+              <!-- Expandable (push content down) -->
               <div id="productDropdown" class="expandable mt-3" hidden>
                 <div class="row g-3 product-select">
                   <!-- Solar System Set (select all) -->
@@ -239,7 +242,7 @@
               </div>
             </article>
 
-            <!-- Order Notes / Payment / Terms -->
+            <!-- Notes & Options -->
             <article class="surface-card hover-elevate p-4 p-lg-4 mb-4" aria-labelledby="notes-and-options-title">
               <h2 id="notes-and-options-title" class="h4 mb-3">Notes & Options</h2>
               <div class="mb-3">
@@ -257,7 +260,7 @@
               </div>
             </article>
 
-            <!-- Order Summary (moved below Notes & Options) -->
+            <!-- Order Summary (อยู่ใต้ Notes ตามสเปค) -->
             <aside class="product-card hover-elevate p-3 p-lg-4 mb-4" aria-labelledby="summary-title">
               <h2 id="summary-title" class="h5 mb-3">Order Summary</h2>
               <ul id="summaryList" class="list-unstyled small mb-3"></ul>
@@ -269,7 +272,7 @@
               <p class="small text-muted-300 mb-0">Your order will be processed after confirmation. QR payment is required.</p>
             </aside>
 
-            <!-- Action Buttons (always at the very bottom) -->
+            <!-- Action Buttons (ล่างสุดเสมอ) -->
             <div class="d-flex flex-column flex-sm-row gap-3">
               <a href="../index.html" class="btn btn-outline-light flex-sm-fill" aria-label="Back to Home">Back</a>
               <button id="confirmBtn" type="button" class="btn btn-primary cta-order flex-sm-fill" disabled aria-disabled="true" aria-label="Confirm Order and continue to payment">Confirm Order</button>
@@ -280,7 +283,7 @@
     </section>
   </main>
 
-  <!-- ===================== FOOTER (trimmed links) ===================== -->
+  <!-- ===================== FOOTER (kept; โครง/ระยะ/อนิเมชันเหมือน index) ===================== -->
   <footer class="mt-auto pt-5 pb-4">
     <div class="container order-container">
       <div class="row g-4">
@@ -331,7 +334,7 @@
   <!-- Back to Top (kept) -->
   <a href="#top" class="back-to-top" aria-label="Back to top" data-animate="scale-fade"><i class="bi bi-arrow-up-short"></i></a>
 
-  <!-- =============== FLOATING HAMBURGER + MINI OVERLAY MENU (kept/matched to index) =============== -->
+  <!-- =============== FLOATING HAMBURGER + MINI OVERLAY MENU (kept) =============== -->
   <button id="fabMenuBtn" class="fab-menu hide" aria-label="Open menu" aria-controls="fabMenuPanel" aria-expanded="false">
     <i class="bi bi-list"></i>
   </button>
@@ -349,7 +352,7 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
   <script src="../assets/js/main.js"></script>
 
-  <!-- Inline: order logic (selection, totals, validation, animated expand, selectAll color rule) -->
+  <!-- Inline: order selection/totals/validation + smooth expand -->
   <script>
   (function() {
     "use strict";
@@ -388,93 +391,94 @@
       const icon = expandBtn.querySelector('.bi');
       if (icon) { icon.classList.remove('bi-chevron-up'); icon.classList.add('bi-chevron-down'); }
     }
-
     if (expandBtn && panel) {
-      // ensure there is a chevron icon present
-      const span = expandBtn.querySelector('span');
-      if (span && !expandBtn.querySelector('.bi-chevron-down') && !expandBtn.querySelector('.bi-chevron-up')) {
-        const i = document.createElement('i');
-        i.className = 'bi bi-chevron-down ms-2';
-        span.appendChild(i);
+      // init chevron
+      const icon = expandBtn.querySelector('.bi');
+      if (icon && !icon.classList.contains('bi-chevron-down') && !icon.classList.contains('bi-chevron-up')) {
+        icon.classList.add('bi-chevron-down');
       }
       expandBtn.addEventListener('click', () => {
-        const expanded = expandBtn.getAttribute('aria-expanded') === 'true';
-        expanded ? closePanel() : openPanel();
+        (panel.hidden) ? openPanel() : closePanel();
       });
     }
 
-    // ===== Pricing / Selection state =====
+    // ===== Pricing / selection =====
     const selectAll = $('#selectAll');
-    const selectAllLabel = $('#selectAllLabel');
     const products = $$('.product');
     const totalEl = $('#totalPrice');
     const summaryList = $('#summaryList');
     const summaryTotal = $('#summaryTotal');
-    const accept = $('#accept');
     const payQR = $('#payQR');
+    const accept = $('#accept');
     const confirmBtn = $('#confirmBtn');
 
-    const UNIT = ' million million million';
-
-    function updateSelectAllVisual() {
-      const allChecked = products.every(p => p.checked);
-      selectAll.checked = allChecked;
-      selectAllLabel.classList.toggle('text-primary', allChecked);
-    }
-
-    function recalc() {
+    function updateTotals() {
       let total = 0;
       summaryList.innerHTML = '';
       products.forEach(p => {
         if (p.checked) {
           const price = Number(p.dataset.price || 0);
           total += price;
-          const name = document.querySelector(`label[for="${p.id}"]`).textContent;
           const li = document.createElement('li');
-          li.textContent = name;
+          li.textContent = `${p.id[0].toUpperCase()+p.id.slice(1)} — ${price}`;
           summaryList.appendChild(li);
         }
       });
-      totalEl.textContent = total > 0 ? (total + UNIT) : '0';
-      summaryTotal.textContent = total > 0 ? (total + UNIT) : '0';
-      updateSelectAllVisual();
+      totalEl.textContent = total || 0;
+      summaryTotal.textContent = total || 0;
+
+      // sync selectAll highlight & state (active only when all 9 are checked)
+      const allChecked = products.every(p => p.checked);
+      selectAll.checked = allChecked;
+      const allLabel = document.getElementById('selectAllLabel');
+      if (allLabel) {
+        allLabel.classList.toggle('text-primary', allChecked);
+      }
+
       validate();
     }
 
-    selectAll && selectAll.addEventListener('change', (e) => {
-      const checked = e.target.checked;
-      products.forEach(p => { p.checked = checked; });
-      recalc();
-    });
-
-    products.forEach(p => p.addEventListener('change', recalc));
-
     function validate() {
-      const requiredFilled = $('#fullName').value.trim().length >= 1
-        && $('#email').value.includes('@')
-        && $('#phone').value.trim().length >= 1
-        && $('#addr1').value.trim().length >= 1
-        && $('#city').value.trim().length >= 1
-        && $('#state').value.trim().length >= 1
-        && $('#zip').value.trim().length >= 1
-        && $('#country').value.trim().length >= 1;
+      const requiredFilled =
+        $('#fullName')?.value?.trim().length > 0 &&
+        $('#email')?.value?.includes('@') &&
+        $('#phone')?.value?.trim().length > 0 &&
+        $('#addr1')?.value?.trim().length > 0 &&
+        $('#city')?.value?.trim().length > 0 &&
+        $('#state')?.value?.trim().length > 0 &&
+        $('#zip')?.value?.trim().length > 0 &&
+        $('#country')?.value?.trim().length > 0;
+
       const anyProduct = products.some(p => p.checked);
-      const accepted = accept.checked && payQR.checked;
-      const enable = requiredFilled && anyProduct && accepted;
+      const termsOk = accept.checked;
+      const qrOk = payQR.checked;
+
+      const enable = requiredFilled && anyProduct && termsOk && qrOk;
       confirmBtn.disabled = !enable;
       confirmBtn.setAttribute('aria-disabled', String(!enable));
     }
 
-    $$('#order-form input, #order-form textarea').forEach(el => el.addEventListener('input', validate));
+    // select all toggle
+    if (selectAll) {
+      selectAll.addEventListener('change', () => {
+        products.forEach(p => p.checked = selectAll.checked);
+        updateTotals();
+      });
+    }
+    products.forEach(p => p.addEventListener('change', updateTotals));
+    ['fullName','email','phone','addr1','city','state','zip','country','accept','payQR']
+      .forEach(id => { const el = document.getElementById(id); el && el.addEventListener('input', validate); el && el.addEventListener('change', validate); });
 
-    confirmBtn && confirmBtn.addEventListener('click', () => {
-      if (!confirmBtn.disabled) {
-        window.location.href = 'payment.html';
-      }
+    // Confirm → payment (carry total via querystring)
+    confirmBtn.addEventListener('click', () => {
+      const total = Number(summaryTotal.textContent || 0);
+      if (confirmBtn.disabled) return;
+      const url = new URL('payment.html', window.location.href);
+      url.searchParams.set('total', String(total));
+      window.location.href = url.toString();
     });
 
-    // Init
-    recalc();
+    updateTotals();
   })();
   </script>
 </body>
