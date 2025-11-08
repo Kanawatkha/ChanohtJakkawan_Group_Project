@@ -15,11 +15,11 @@
 
   <!-- Shared index styles (palette/components/animations) -->
   <link rel="stylesheet" href="../assets/css/index.css" />
-  <!-- Page styles for Order (อย่าแก้ในรอบนี้) -->
+  <!-- Page styles for Order (kept) -->
   <link rel="stylesheet" href="../assets/css/order.css" />
 </head>
 <body class="page-order d-flex flex-column min-vh-100" id="top">
-  <!-- ===================== NAVBAR (kept, จัดวาง/อนิเมชันตาม index) ===================== -->
+  <!-- ===================== NAVBAR (kept) ===================== -->
   <header class="site-header sticky-top" aria-label="Main Navigation">
     <nav class="navbar navbar-expand-lg navbar-dark py-3" id="navbar">
       <div class="container">
@@ -49,7 +49,7 @@
   </header>
 
   <main class="flex-grow-1">
-    <!-- ===================== ORDER HERO (kept layout; เพิ่มระยะหายใจด้วย .order-container) ===================== -->
+    <!-- ===================== ORDER HERO (kept) ===================== -->
     <section id="order-hero" class="py-5 py-lg-6 position-relative overflow-hidden">
       <div class="container order-container">
         <div class="row align-items-center justify-content-center g-5">
@@ -66,7 +66,7 @@
       </div>
     </section>
 
-    <!-- ===================== ORDER FORM (single-column; เพิ่มช่องว่างรอบบล็อก) ===================== -->
+    <!-- ===================== ORDER FORM (kept structure) ===================== -->
     <section id="order-form" class="py-5 py-lg-6">
       <div class="container order-container">
         <div class="row g-4 g-xl-5">
@@ -133,7 +133,7 @@
             <!-- Product Selection -->
             <article class="surface-card hover-elevate p-4 p-lg-4 mb-4" aria-labelledby="product-select-title">
               <h2 id="product-select-title" class="h4 mb-3">Product Selection</h2>
-              <p class="small text-muted-300 mb-3">Choose individual objects or the full set. Prices shown in <em>million million million</em>.</p>
+              <p class="small text-muted-300 mb-3">Choose individual objects or the full set. Prices shown in <em>Googolplexianth</em>.</p>
 
               <!-- Toggler -->
               <button class="btn btn-secondary w-100 d-flex align-items-center justify-content-between" type="button" data-expand-target="#productDropdown" aria-expanded="false" aria-controls="productDropdown">
@@ -283,7 +283,7 @@
     </section>
   </main>
 
-  <!-- ===================== FOOTER (kept; โครง/ระยะ/อนิเมชันเหมือน index) ===================== -->
+  <!-- ===================== FOOTER (kept) ===================== -->
   <footer class="mt-auto pt-5 pb-4">
     <div class="container order-container">
       <div class="row g-4">
@@ -352,15 +352,15 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
   <script src="../assets/js/main.js"></script>
 
-  <!-- Inline: order selection/totals/validation + smooth expand -->
+  <!-- Inline: order selection/totals/validation + smooth expand + PERSISTENCE (Subtotal & form state) -->
   <script>
   (function() {
     "use strict";
     const $ = (s, c=document)=>c.querySelector(s);
     const $$ = (s, c=document)=>Array.from(c.querySelectorAll(s));
 
-    // ===== Expand/collapse with smooth height animation =====
-    const expandBtn = document.querySelector('[data-expand-target]');
+    // ===== Expand/collapse with smooth height animation (kept) =====
+    const expandBtn = document.querySelector('[\n      data-expand-target\n    ]');
     const expandId = expandBtn ? expandBtn.getAttribute('data-expand-target') : null;
     const panel = expandId ? document.querySelector(expandId) : null;
 
@@ -392,7 +392,6 @@
       if (icon) { icon.classList.remove('bi-chevron-up'); icon.classList.add('bi-chevron-down'); }
     }
     if (expandBtn && panel) {
-      // init chevron
       const icon = expandBtn.querySelector('.bi');
       if (icon && !icon.classList.contains('bi-chevron-down') && !icon.classList.contains('bi-chevron-up')) {
         icon.classList.add('bi-chevron-down');
@@ -402,7 +401,7 @@
       });
     }
 
-    // ===== Pricing / selection =====
+    // ===== Pricing / selection (kept) =====
     const selectAll = $('#selectAll');
     const products = $$('.product');
     const totalEl = $('#totalPrice');
@@ -411,6 +410,61 @@
     const payQR = $('#payQR');
     const accept = $('#accept');
     const confirmBtn = $('#confirmBtn');
+
+    // ===== Persistence keys =====
+    const LS_KEYS = {
+      total: 'orderTotal',            // numeric only
+      unit: 'orderUnit',              // string (e.g., "Googolplexianth")
+      fields: 'orderFields',          // JSON of text/checkbox values
+      products: 'orderProducts'       // JSON of selected product ids
+    };
+    const UNIT_TEXT = 'Googolplexianth';
+
+    function saveState() {
+      try {
+        // Save fields
+        const fieldIds = ['fullName','email','phone','addr1','addr2','city','state','zip','country','notes'];
+        const fields = {};
+        fieldIds.forEach(id => { const el = document.getElementById(id); if (el) fields[id] = el.value || ''; });
+        fields['payQR'] = !!(payQR && payQR.checked);
+        fields['accept'] = !!(accept && accept.checked);
+        localStorage.setItem(LS_KEYS.fields, JSON.stringify(fields));
+
+        // Save selected products
+        const selected = products.filter(p => p.checked).map(p => p.id);
+        localStorage.setItem(LS_KEYS.products, JSON.stringify(selected));
+
+        // Save totals
+        const total = Number(summaryTotal.textContent || 0);
+        localStorage.setItem(LS_KEYS.total, String(total));
+        localStorage.setItem(LS_KEYS.unit, UNIT_TEXT);
+      } catch (e) { /* silent */ }
+    }
+
+    function restoreState() {
+      try {
+        // Fields
+        const rawFields = localStorage.getItem(LS_KEYS.fields);
+        if (rawFields) {
+          const fields = JSON.parse(rawFields);
+          Object.entries(fields).forEach(([k,v]) => {
+            const el = document.getElementById(k);
+            if (!el) return;
+            if (typeof v === 'boolean') el.checked = v; else el.value = v;
+          });
+        }
+        // Products
+        const rawProds = localStorage.getItem(LS_KEYS.products);
+        if (rawProds) {
+          const ids = new Set(JSON.parse(rawProds));
+          products.forEach(p => p.checked = ids.has(p.id));
+          // auto open product panel if any selected for better UX
+          if (ids.size && panel && panel.hidden) openPanel();
+        }
+        // Totals
+        updateTotals();
+      } catch (e) { /* silent */ }
+    }
 
     function updateTotals() {
       let total = 0;
@@ -458,27 +512,29 @@
       confirmBtn.setAttribute('aria-disabled', String(!enable));
     }
 
-    // select all toggle
+    // select all toggle (kept)
     if (selectAll) {
       selectAll.addEventListener('change', () => {
         products.forEach(p => p.checked = selectAll.checked);
         updateTotals();
+        saveState();
       });
     }
-    products.forEach(p => p.addEventListener('change', updateTotals));
-    ['fullName','email','phone','addr1','city','state','zip','country','accept','payQR']
-      .forEach(id => { const el = document.getElementById(id); el && el.addEventListener('input', validate); el && el.addEventListener('change', validate); });
+    products.forEach(p => p.addEventListener('change', () => { updateTotals(); saveState(); }));
+    ['fullName','email','phone','addr1','addr2','city','state','zip','country','notes']
+      .forEach(id => { const el = document.getElementById(id); el && el.addEventListener('input', saveState); });
+    ['accept','payQR']
+      .forEach(id => { const el = document.getElementById(id); el && el.addEventListener('change', () => { validate(); saveState(); }); });
 
-    // Confirm → payment (carry total via querystring)
+    // Confirm → payment (STORE to localStorage, NO visible querystring)
     confirmBtn.addEventListener('click', () => {
-      const total = Number(summaryTotal.textContent || 0);
       if (confirmBtn.disabled) return;
-      const url = new URL('payment.html', window.location.href);
-      url.searchParams.set('total', String(total));
-      window.location.href = url.toString();
+      saveState();
+      window.location.href = 'payment.html';
     });
 
-    updateTotals();
+    // init
+    restoreState();
   })();
   </script>
 </body>

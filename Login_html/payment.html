@@ -34,7 +34,7 @@
             <li class="nav-item"><a class="nav-link" href="../index.html">Home</a></li>
             <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
             <li class="nav-item ms-lg-1">
-              <a class="btn btn-outline-light cta-login" href="Login_html/login.html">Login</a>
+              <a class="btn btn-outline-light cta-login" href="login.html">Login</a>
             </li>
           </ul>
         </div>
@@ -55,11 +55,12 @@
               </div>
 
               <div class="product-media d-flex justify-content-center mb-4">
+                <!-- Click QR to open the provided video URL -->
                 <a href="https://rick.nerial.uk/video.mp4" target="_blank" rel="noopener" aria-label="Open payment video in a new tab">
                   <img src="../assets/img/qr.png" alt="QR code for payment"
-                      class="img-fluid"
-                      style="max-width: 420px; width: 100%; height: auto; object-fit: contain;"
-                      loading="eager">
+                       class="img-fluid"
+                       style="max-width: 420px; width: 100%; height: auto; object-fit: contain;"
+                       loading="eager">
                 </a>
               </div>
 
@@ -70,10 +71,10 @@
                 <small class="text-muted-500">Amount carried over from your order</small>
               </div>
 
-              <!-- Action buttons -->
+              <!-- Action buttons (centered; stack on mobile) -->
               <div class="payment-actions d-flex flex-column flex-md-row gap-3 justify-content-center align-items-center text-center">
                 <a href="order.html" class="btn btn-outline-light btn-lg mx-auto">Back to Order</a>
-                <a href="../index.html#top" class="btn btn-primary btn-lg hero-buy mx-auto">Finish</a>
+                <a href="../index.html" class="btn btn-primary btn-lg hero-buy mx-auto">Finish</a>
               </div>
             </article>
           </div>
@@ -146,15 +147,15 @@
 
   <!-- Placeholder hook: main.js should populate #payTotal from localStorage/order state -->
   <script>
-    // Optional non-invasive hook (reads only). Real logic should live in main.js per project rules.
+    // Non-invasive read-only hook. Real persistence/restore logic remains in assets/js/main.js per project rules.
     (function(){
       try {
         var val = localStorage.getItem('orderTotal');
-        var unit = localStorage.getItem('orderUnit'); // e.g., "million million million"
+        var unit = localStorage.getItem('orderUnit'); // e.g., "Googolplexianth"
         var out = document.getElementById('payTotal');
         if (out) {
           if (val && !isNaN(Number(val))) {
-            out.textContent = unit ? `${Number(val)} ${unit}` : `${Number(val)}`;
+            out.textContent = unit ? (Number(val) + ' ' + unit) : String(Number(val));
           } else {
             out.textContent = '—';
           }
