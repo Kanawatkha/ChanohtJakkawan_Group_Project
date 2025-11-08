@@ -1,12 +1,9 @@
 /* =========================================================
-   ChanohtJakkawan — main.js (UPDATED: desktop-enabled FAB + anti-overlap + Payment total)
-   Scope kept from baseline; changes:
-   - FAB (floating hamburger) works on ALL viewports (desktop/tablet/mobile)
-   - When FAB panel opens, temporarily hide/dim Back-to-Top to avoid overlap
-   - Payment page total auto-population from localStorage (#payTotal)
-   - NEW: On payment page, clicking "Finish" clears stored order state then redirects
-   - All existing behaviors preserved: smooth scroll, navbar shadow, back-to-top
-     animation, auto-collapse mobile nav, a11y for overlay View buttons
+   ChanohtJakkawan — main.js (UPDATED)
+   Scope kept from baseline; changes in this patch ONLY:
+   - Index → Order preselect is now applied *after* restore logic with a short retry
+     to avoid timing/race issues. One‑shot via sessionStorage, then removed.
+   - Everything else is unchanged.
    ========================================================= */
 
 (function () {
@@ -232,12 +229,12 @@
   });
 
   // Close panel when navigating via panel links
-  $$('.fab-menu-panel .fab-link').forEach(link => on(link, 'click', () => closePanel()));
+  $$('.fab-menu-panel .fab-link').forEach(link => on(link, 'click', () => closePanel()))
 
   // =========================================================
   // Payment page: populate total from localStorage (non-invasive)
   // =========================================================
-  (function initPaymentTotal() {
+  ;(function initPaymentTotal() {
     const out = document.getElementById('payTotal');
     if (!out) return; // not on payment page
     try {
@@ -256,7 +253,7 @@
   // =========================================================
   // Payment page: Finish button clears stored order state, then redirects
   // =========================================================
-  (function initPaymentFinishClear(){
+  ;(function initPaymentFinishClear(){
     // Detect payment page via #payTotal presence
     const isPayment = !!document.getElementById('payTotal');
     if (!isPayment) return;
@@ -281,6 +278,99 @@
         window.location.href = href;
       }
     });
+  })();
+
+  // =========================================================
+  // Index → Order preselect capture on index (unchanged)
+  // =========================================================
+  ;(function initIndexBuyPreselect(){
+    const KEY = 'indexPreselectProduct';
+    // Capture clicks from HERO Buy Now and each planet Buy button
+    $$('.btn[data-role="index-buy"][data-product], a[data-role="index-buy"][data-product]').forEach(btn => {
+      on(btn, 'click', () => {
+        const prod = btn.getAttribute('data-product');
+        if (!prod) return;
+        try { sessionStorage.setItem(KEY, prod); } catch (_) {}
+      });
+    });
+  })();
+
+  // =========================================================
+  // Index → Order preselect apply (REPLACED with post-restore scheduling)
+  // =========================================================
+  ;(function scheduleOrderPreselect(){
+    const KEY = 'indexPreselectProduct';
+
+    // Run only on order page: require at least one [data-product] checkbox
+    const hasProducts = document.querySelector('input[type="checkbox"][data-product]');
+    if (!hasProducts) return;
+
+    let selected = null;
+    try { selected = sessionStorage.getItem(KEY); } catch(_) {}
+    if (!selected) return; // nothing to override
+
+    const productKeys = ['sun','mercury','venus','earth','mars','jupiter','saturn','uranus','neptune'];
+
+    const getCb = (k) => document.querySelector(
+      `input[type="checkbox"][data-product="${k}"], #prod-${k}, input[type="checkbox"][value="${k}"]`
+    );
+
+    const setCb = (k, checked) => {
+      const cb = getCb(k);
+      if (cb && cb.checked !== checked) {
+        cb.checked = checked;
+        cb.dispatchEvent(new Event('change', { bubbles: true }));
+      }
+    };
+
+    const setAll = (checked) => productKeys.forEach(k => setCb(k, checked));
+
+    const setMaster = (checked) => {
+      const master = document.querySelector(
+        'input[type="checkbox"][data-product="set"], #prod-set, input[type="checkbox"][value="set"]'
+      );
+      if (master && master.checked !== checked) {
+        master.checked = checked;
+        master.dispatchEvent(new Event('change', { bubbles: true }));
+      }
+    };
+
+    // Try after DOM & any restore() logic — retry briefly to beat timing races
+    let tries = 10;
+    const attempt = () => {
+      const ready = !!document.querySelector('input[type="checkbox"][data-product]');
+      if (!ready && --tries > 0) return setTimeout(attempt, 60);
+
+      // --- Override with latest intent from index ---
+      if (selected === 'set') {
+        setAll(true);
+        setMaster(true);
+      } else if (productKeys.includes(selected)) {
+        setAll(false);
+        setCb(selected, true);
+        setMaster(false);
+      }
+
+      // Open the product dropdown/collapse (if present) so user can see the result
+      const collapsible = document.getElementById('productDropdown') || document.querySelector('[data-product-dropdown]');
+      if (collapsible && collapsible.classList.contains('collapse')) {
+        try { new bootstrap.Collapse(collapsible, { toggle: true }); } catch (_) {}
+      }
+
+      // Recompute totals / persist latest state (call if functions exist)
+      try { if (typeof window.updateTotals === 'function') window.updateTotals(); } catch(_){ }
+      try { if (typeof window.saveState    === 'function') window.saveState(); } catch(_){ }
+      try { if (typeof window.validate     === 'function') window.validate(); } catch(_){ }
+
+      // One-shot: remove so refresh doesn't re-apply
+      try { sessionStorage.removeItem(KEY); } catch(_) {}
+    };
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', attempt, { once: true });
+    } else {
+      setTimeout(attempt, 0);
+    }
   })();
 
 })();
