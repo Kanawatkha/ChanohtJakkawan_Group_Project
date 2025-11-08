@@ -3,7 +3,8 @@
    Scope kept from baseline; changes:
    - FAB (floating hamburger) works on ALL viewports (desktop/tablet/mobile)
    - When FAB panel opens, temporarily hide/dim Back-to-Top to avoid overlap
-   - NEW: Payment page total auto-population from localStorage (#payTotal)
+   - Payment page total auto-population from localStorage (#payTotal)
+   - NEW: On payment page, clicking "Finish" clears stored order state then redirects
    - All existing behaviors preserved: smooth scroll, navbar shadow, back-to-top
      animation, auto-collapse mobile nav, a11y for overlay View buttons
    ========================================================= */
@@ -241,7 +242,7 @@
     if (!out) return; // not on payment page
     try {
       const raw  = localStorage.getItem('orderTotal');
-      const unit = localStorage.getItem('orderUnit'); // e.g., "million million million"
+      const unit = localStorage.getItem('orderUnit'); // e.g., "Googolplexianth"
       if (raw && !isNaN(Number(raw))) {
         out.textContent = unit ? `${Number(raw)} ${unit}` : String(Number(raw));
       } else {
@@ -250,6 +251,36 @@
     } catch (e) {
       out.textContent = '—';
     }
+  })();
+
+  // =========================================================
+  // Payment page: Finish button clears stored order state, then redirects
+  // =========================================================
+  (function initPaymentFinishClear(){
+    // Detect payment page via #payTotal presence
+    const isPayment = !!document.getElementById('payTotal');
+    if (!isPayment) return;
+
+    // Prefer the exact primary CTA used on payment page
+    const finishBtn = document.querySelector('.payment-actions .btn.btn-primary.hero-buy');
+    if (!finishBtn) return;
+
+    on(finishBtn, 'click', function(e){
+      // Keep default navigation only after we clear state
+      e.preventDefault();
+      try {
+        // Clear all keys we used for persistence
+        const keys = ['orderTotal','orderUnit','orderFields','orderProducts'];
+        keys.forEach(k => {
+          try { localStorage.removeItem(k); } catch(_) {}
+          try { sessionStorage.removeItem(k); } catch(_) {}
+        });
+      } finally {
+        // Redirect to original href after clearing
+        const href = finishBtn.getAttribute('href') || '../index.html';
+        window.location.href = href;
+      }
+    });
   })();
 
 })();
