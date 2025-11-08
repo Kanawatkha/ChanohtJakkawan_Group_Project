@@ -1,0 +1,88 @@
+/* =========================================================
+   ChanohtJakkawan — assets/css/order.css
+   Purpose: Order page presentation layer while INHERITING theme
+            (colors, fonts, radii, shadows, transitions) from index.css.
+   Scope: spacing, layout comfort, hero sizing, surface cards, expand/collapse,
+          product selection indentation, summary list, mobile stacking, and
+          overflow guards.  No palette changes here.
+   ========================================================= */
+
+/* ---- Anchor offsets so sticky navbar won't cover headings ---- */
+#order-hero,
+#order-form { scroll-margin-top: 84px; }
+@media (max-width: 991.98px) {
+  #order-hero,
+  #order-form { scroll-margin-top: 72px; }
+}
+
+/* ---- Container side space (match generous breathing of index) ---- */
+.order-container { padding-left: 2rem; padding-right: 2rem; }
+@media (max-width: 991.98px) { .order-container { padding-inline: 1.5rem; } }
+@media (max-width: 575.98px) { .order-container { padding-inline: 1.25rem; } }
+
+/* ---- Hero image: larger than index but same visual treatment ---- */
+.order-hero-img {
+  border-radius: var(--radius-lg);
+  background: var(--grad-surface);
+  box-shadow: 0 40px 90px rgba(0,0,0,.5), 0 0 0 1px rgba(255,255,255,.05) inset;
+  max-height: 520px;
+  object-fit: contain;
+  margin-inline: auto;
+}
+@media (max-width: 991.98px) { .order-hero-img { max-height: 420px; } }
+@media (max-width: 575.98px) { .order-hero-img { max-height: 340px; } }
+
+/* ---- Surface cards (follow product/FAQ feel from index) ---- */
+.surface-card,
+.product-card {
+  background: radial-gradient(700px 320px at 20% -30%, rgba(128,86,255,0.10) 0%, rgba(26,39,70,0.60) 60%), var(--card-700);
+  border: 1px solid var(--border-600);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+/* Hover elevation (match transition tokens in index.css) */
+.hover-elevate:hover,
+.product-card:hover { transform: translateY(-2px) scale(1.01); box-shadow: var(--shadow-strong); }
+
+/* ---- Internal block spacing (comfortable breathing) ---- */
+.surface-card > * + *,
+.product-card > * + * { margin-top: 0.75rem; }
+
+/* ---- Helper text color (secondary tone from index variables) ---- */
+.form-hint { color: var(--text-500); font-size: .9rem; margin-top: .25rem; }
+
+/* ---- Expand/collapse (push-down slide, not overlay) ---- */
+.expandable[hidden] { display: block; max-height: 0; overflow: hidden; opacity: 0; }
+.expandable { max-height: 2000px; transition: max-height var(--transition-slow), opacity var(--transition-slow); opacity: 1; }
+
+/* ---- Product selection indentation (align nicely with label edges) ---- */
+.product-select { padding-left: 3rem; }
+.product-select .form-check { padding-left: .5rem; }
+
+/* Align the Select All (Solar System Set) flush with the block left edge */
+#selectAll { margin-left: 0; }
+#selectAllLabel { margin-left: .25rem; }
+
+/* ---- Summary list separators ---- */
+#summaryList li { padding: .25rem 0; border-bottom: 1px dashed rgba(255,255,255,.08); }
+#summaryList li:last-child { border-bottom: none; }
+
+/* ---- Action buttons: full-width on very small screens ---- */
+@media (max-width: 575.98px) {
+  .page-order .btn { width: 100%; }
+}
+
+/* ---- Overflow guards (prevent horizontal scroll on small screens) ---- */
+#order-hero,
+#order-form,
+.site-header { overflow-x: clip; }
+img, svg, video, canvas { max-width: 100%; height: auto; }
+.container, .container-fluid { max-width: 100%; }
+
+/* ---- Nice focus-ring for accessibility (reuse tokens via :root in index.css) ---- */
+:where(a, button, [role="button"], .btn):focus-visible {
+  outline: 2px solid var(--accent-500);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(45, 212, 255, 0.2);
+}
