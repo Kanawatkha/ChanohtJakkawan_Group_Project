@@ -1,86 +1,97 @@
 /* =========================================================
-   ChanohtJakkawan — assets/css/order.css
-   Purpose: Order page presentation layer while INHERITING theme
-            (colors, fonts, radii, shadows, transitions) from index.css.
-   Scope: spacing, layout comfort, hero sizing, surface cards, expand/collapse,
-          product selection indentation, summary list, mobile stacking, and
-          overflow guards.  No palette changes here.
+   ChanohtJakkawan — assets/css/order.css (REBULT for NAVBAR parity)
+   Goal: Make Order page NAVBAR spacing/placement EXACTLY match index.css
+   Note: Palette/typography/shadows/transitions are inherited from index.css
+   Only layout/spacing rules are defined here (+ previously kept order styles)
    ========================================================= */
 
-/* ---- Anchor offsets so sticky navbar won't cover headings ---- */
-#order-hero,
-#order-form { scroll-margin-top: 84px; }
-@media (max-width: 991.98px) {
-  #order-hero,
-  #order-form { scroll-margin-top: 72px; }
-}
+/* ---------------- NAVBAR: exact vertical + horizontal rhythm ---------------- */
+.site-header .navbar { background: rgba(18, 27, 48, 0.7); backdrop-filter: blur(8px); border-bottom: 1px solid rgba(255, 255, 255, 0.06); padding-top: 1rem; padding-bottom: 1rem; }
+@media (max-width: 991.98px) { .site-header .navbar { padding-top: .75rem; padding-bottom: .75rem; } }
 
-/* ---- Container side space (match generous breathing of index) ---- */
-.order-container { padding-left: 2rem; padding-right: 2rem; }
-@media (max-width: 991.98px) { .order-container { padding-inline: 1.5rem; } }
-@media (max-width: 575.98px) { .order-container { padding-inline: 1.25rem; } }
+/* Container breathing — copy index behavior: mobile/tablet has side padding; desktop none */
+.site-header .navbar > .container { padding-left: 1rem; padding-right: 1rem; }
+@media (min-width: 576px) { .site-header .navbar > .container { padding-left: 1.25rem; padding-right: 1.25rem; } }
+@media (min-width: 768px) { .site-header .navbar > .container { padding-left: 1.5rem; padding-right: 1.5rem; } }
+@media (min-width: 992px) { .site-header .navbar > .container { padding-left: 0; padding-right: 0; } }
 
-/* ---- Hero image: larger than index but same visual treatment ---- */
-.order-hero-img {
-  border-radius: var(--radius-lg);
-  background: var(--grad-surface);
-  box-shadow: 0 40px 90px rgba(0,0,0,.5), 0 0 0 1px rgba(255,255,255,.05) inset;
-  max-height: 520px;
-  object-fit: contain;
-  margin-inline: auto;
-}
-@media (max-width: 991.98px) { .order-hero-img { max-height: 420px; } }
-@media (max-width: 575.98px) { .order-hero-img { max-height: 340px; } }
+/* Brand + items alignment (mirror index) */
+.navbar-brand span { font-weight: 700; }
+.site-header .navbar .navbar-brand { display: inline-flex; align-items: center; }
+.site-header .navbar .navbar-brand img { margin-right: .5rem; }
 
-/* ---- Surface cards (follow product/FAQ feel from index) ---- */
-.surface-card,
-.product-card {
+/* Link colors + hover (keep parity with index theme) */
+.navbar-dark .navbar-nav .nav-link { color: var(--text-300); }
+.navbar-dark .navbar-nav .nav-link:hover,
+.navbar-dark .navbar-nav .nav-link:focus { color: var(--text-100); }
+
+/* Nav links internal padding + desktop gap */
+.site-header .navbar .nav-link { padding: .5rem .75rem; }
+@media (min-width: 992px) { .site-header .navbar .navbar-nav { column-gap: .5rem; align-items: center; } }
+
+/* CTA buttons parity */
+.cta-order.btn { background: var(--grad-primary); border: none; color: #fff; border-radius: 999px; padding-inline: 1.1rem; box-shadow: 0 10px 20px rgba(106, 61, 240, 0.35); transition: transform var(--transition-fast), box-shadow var(--transition-fast), filter var(--transition-fast); }
+.cta-order.btn:hover { transform: translateY(-1px); filter: brightness(1.05); box-shadow: 0 16px 30px rgba(106,61,240,.45); }
+.cta-login.btn { border-radius: 999px; }
+@media (min-width: 992px) { .site-header .navbar .cta-order, .site-header .navbar .cta-login { margin-left: .25rem; } }
+
+/* Toggler hit-area & focus (match index) */
+.site-header .navbar .navbar-toggler { padding: .375rem .5rem; outline: none; }
+.site-header .navbar .navbar-toggler:focus { box-shadow: none; }
+
+/* ---------------- Page sections: keep prior order layout rules (unchanged) ---------------- */
+#order-hero, #order-form { scroll-margin-top: 84px; }
+@media (max-width: 991.98px) { #order-hero, #order-form { scroll-margin-top: 72px; } }
+
+/* Avoid horizontal overflow */
+#order-hero, #order-form, .site-header { overflow-x: clip; }
+img, svg, video, canvas { max-width: 100%; height: auto; }
+
+/* Container side space for main content — desktop aligns tight like index */
+.order-container { padding-inline: 1.5rem; }
+@media (min-width: 992px) { .order-container { padding-inline: 0; } }
+
+/* Surface cards (kept visual identity) */
+.surface-card, .product-card {
   background: radial-gradient(700px 320px at 20% -30%, rgba(128,86,255,0.10) 0%, rgba(26,39,70,0.60) 60%), var(--card-700);
   border: 1px solid var(--border-600);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-soft);
   transition: transform var(--transition-fast), box-shadow var(--transition-fast);
 }
-/* Hover elevation (match transition tokens in index.css) */
-.hover-elevate:hover,
-.product-card:hover { transform: translateY(-2px) scale(1.01); box-shadow: var(--shadow-strong); }
+.hover-elevate:hover, .product-card:hover { transform: translateY(-2px) scale(1.01); box-shadow: var(--shadow-strong); }
+.surface-card > * + *, .product-card > * + * { margin-top: .75rem; }
 
-/* ---- Internal block spacing (comfortable breathing) ---- */
-.surface-card > * + *,
-.product-card > * + * { margin-top: 0.75rem; }
+/* Hero image sizing (kept) */
+.order-hero-img {
+  border-radius: var(--radius-lg);
+  background: var(--grad-surface);
+  box-shadow: 0 30px 80px rgba(0,0,0,.45), 0 0 0 1px rgba(255,255,255,.04) inset;
+  max-height: 420px;
+  object-fit: contain;
+  display: block;
+  margin-inline: auto;
+}
+@media (max-width: 991.98px) { .order-hero-img { max-height: 320px; } }
 
-/* ---- Helper text color (secondary tone from index variables) ---- */
-.form-hint { color: var(--text-500); font-size: .9rem; margin-top: .25rem; }
-
-/* ---- Expand/collapse (push-down slide, not overlay) ---- */
+/* Expand/collapse (kept) */
 .expandable[hidden] { display: block; max-height: 0; overflow: hidden; opacity: 0; }
 .expandable { max-height: 2000px; transition: max-height var(--transition-slow), opacity var(--transition-slow); opacity: 1; }
 
-/* ---- Product selection indentation (align nicely with label edges) ---- */
+/* Product selection indentation (kept) */
 .product-select { padding-left: 3rem; }
 .product-select .form-check { padding-left: .5rem; }
-
-/* Align the Select All (Solar System Set) flush with the block left edge */
 #selectAll { margin-left: 0; }
 #selectAllLabel { margin-left: .25rem; }
 
-/* ---- Summary list separators ---- */
+/* Summary list separators (kept) */
 #summaryList li { padding: .25rem 0; border-bottom: 1px dashed rgba(255,255,255,.08); }
 #summaryList li:last-child { border-bottom: none; }
 
-/* ---- Action buttons: full-width on very small screens ---- */
-@media (max-width: 575.98px) {
-  .page-order .btn { width: 100%; }
-}
+/* Buttons full width on xs (kept) */
+@media (max-width: 575.98px) { .page-order .btn { width: 100%; } }
 
-/* ---- Overflow guards (prevent horizontal scroll on small screens) ---- */
-#order-hero,
-#order-form,
-.site-header { overflow-x: clip; }
-img, svg, video, canvas { max-width: 100%; height: auto; }
-.container, .container-fluid { max-width: 100%; }
-
-/* ---- Nice focus-ring for accessibility (reuse tokens via :root in index.css) ---- */
+/* Accessible focus ring (kept) */
 :where(a, button, [role="button"], .btn):focus-visible {
   outline: 2px solid var(--accent-500);
   outline-offset: 2px;
