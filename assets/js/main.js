@@ -1,9 +1,10 @@
 /* =========================================================
    ChanohtJakkawan — main.js (UPDATED)
    Scope kept from baseline; changes in this patch ONLY:
-   - Index → Order preselect is now applied *after* restore logic with a short retry
-     to avoid timing/race issues. One‑shot via sessionStorage, then removed.
-   - Everything else is unchanged.
+   - Payment page: Populate DEED PREVIEW (name, address, items, order no., issued at, images)
+   - NEW: When 2+ objects are selected, do NOT fallback to Solar.png
+   - FIX: Ensure #deedImage is unhidden (remove 'd-none'/hidden) for SET or SINGLE selections
+   - Non‑targeted logic remains identical to previous version
    ========================================================= */
 
 (function () {
@@ -20,7 +21,6 @@
       if (now - t >= wait) { t = now; fn.apply(null, args); }
     };
   };
-
   const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   // ---------- Year in footer ----------
@@ -251,6 +251,80 @@
   })();
 
   // =========================================================
+  // Payment page: DEED PREVIEW population (name, address, items, order no., issued at, images)
+  // =========================================================
+  ;(function initPaymentDeedPreview(){
+    // Detect payment page by presence of key preview fields
+    const nameEl = document.getElementById('deedName');
+    const addrEl = document.getElementById('deedAddress');
+    const itemsEl = document.getElementById('deedItems');
+    const titleEl = document.getElementById('deedTitle');
+    const orderNoEl = document.getElementById('deedOrderNo');
+    const issuedEl  = document.getElementById('deedIssuedAt');
+    const anyPreview = nameEl || addrEl || itemsEl || titleEl || orderNoEl || issuedEl;
+    if (!anyPreview) return; // not on payment page
+
+    // --- Load persisted data ---
+    let fields = {};
+    let products = [];
+    try { fields = JSON.parse(localStorage.getItem('orderFields') || '{}') || {}; } catch(_) { fields = {}; }
+    try { products = JSON.parse(localStorage.getItem('orderProducts') || '[]') || []; } catch(_) { products = []; }
+
+    // --- Name ---
+    if (nameEl) {
+      const full = (fields.fullName || '').toString().trim();
+      nameEl.textContent = full || '—';
+    }
+
+    // --- Address (combine gracefully) ---
+    if (addrEl) {
+      const parts = [fields.addr1, fields.addr2, fields.city, fields.state, fields.zip, fields.country]
+        .map(v => (v || '').toString().trim())
+        .filter(Boolean);
+      addrEl.textContent = parts.length ? parts.join(', ') : '—';
+    }
+
+    // --- Items text ---
+    const ALL = ['sun','mercury','venus','earth','mars','jupiter','saturn','uranus','neptune'];
+    const selected = Array.isArray(products) ? products.filter(k => ALL.includes(k)) : [];
+    if (itemsEl) {
+      let txt = '—';
+      if (selected.length === ALL.length) txt = 'Solar System Set (9 objects)';
+      else if (selected.length === 1) txt = cap(selected[0]);
+      else if (selected.length > 1) txt = selected.map(cap).join(', ');
+      itemsEl.textContent = txt;
+    }
+
+    // --- Title ---
+    if (titleEl) {
+      let title = 'Solar System Title Deed';
+      if (selected.length === 1) {
+        title = (selected[0] === 'sun') ? 'Star Title Deed' : `${cap(selected[0])} Title Deed`;
+      } else if (selected.length > 1 && selected.length < ALL.length) {
+        title = 'Multi‑Object Title Deed';
+      } else if (selected.length === 0) {
+        title = 'Title Deed Preview';
+      }
+      titleEl.textContent = title;
+    }
+
+    // --- Order No. (13 digits, group as 3 3 3 4). Persist per session so refresh keeps same ---
+    let orderNo = null;
+    try { orderNo = sessionStorage.getItem('deedOrderNo'); } catch(_) {}
+    if (!orderNo) {
+      orderNo = genOrderNo13();
+      try { sessionStorage.setItem('deedOrderNo', orderNo); } catch(_) {}
+    }
+    if (orderNoEl) orderNoEl.textContent = orderNo || '—';
+
+    // --- Issued At (always NOW when page is opened) ---
+    if (issuedEl) issuedEl.textContent = formatIssuedAt(new Date());
+
+    // --- Images ---
+    renderDeedImages(selected);
+  })();
+
+  // =========================================================
   // Payment page: Finish button clears stored order state, then redirects
   // =========================================================
   ;(function initPaymentFinishClear(){
@@ -267,7 +341,7 @@
       e.preventDefault();
       try {
         // Clear all keys we used for persistence
-        const keys = ['orderTotal','orderUnit','orderFields','orderProducts'];
+        const keys = ['orderTotal','orderUnit','orderFields','orderProducts','deedOrderNo'];
         keys.forEach(k => {
           try { localStorage.removeItem(k); } catch(_) {}
           try { sessionStorage.removeItem(k); } catch(_) {}
@@ -296,7 +370,7 @@
   })();
 
   // =========================================================
-  // Index → Order preselect apply (REPLACED with post-restore scheduling)
+  // Index → Order preselect apply (post-restore scheduling; unchanged apart from comments)
   // =========================================================
   ;(function scheduleOrderPreselect(){
     const KEY = 'indexPreselectProduct';
@@ -372,5 +446,127 @@
       setTimeout(attempt, 0);
     }
   })();
+
+  // ---------- Local helpers (used by payment DEED PREVIEW) ----------
+  function cap(k){ return k ? (k.charAt(0).toUpperCase() + k.slice(1)) : ''; }
+
+  function genOrderNo13(){
+    let s = '';
+    for (let i=0;i<13;i++) s += Math.floor(Math.random()*10);
+    return `${s.slice(0,3)} ${s.slice(3,6)} ${s.slice(6,9)} ${s.slice(9,13)}`;
+  }
+
+  function pad2(n){ return n < 10 ? '0'+n : ''+n; }
+  function formatIssuedAt(d){
+    const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    return `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()} ${pad2(d.getHours())}:${pad2(d.getMinutes())}`;
+  }
+
+  function planetSrc(key){
+    const c = cap(key);
+    // Try a few common paths; browser will fallback via handler below
+    return [
+      `../assets/img/${c}.png`,
+      `../assets/img/${c}.webp`,
+      `../assets/img/planets/${c}.png`,
+      `../assets/img/planets/${c}.webp`,
+      `../assets/img/${key}.png`,
+      `../assets/img/${key}.webp`,
+    ];
+  }
+
+  // PATCH: allow opting out of Solar.png fallback (used when multiple items are selected)
+  function setImgWithFallback(img, sources, opts){
+    const options = Object.assign({ fallbackToSolar: true, onFail: null }, opts);
+    let i = 0;
+    const tryNext = () => {
+      if (i >= sources.length) {
+        if (options.fallbackToSolar) {
+          img.src = '../assets/img/Solar.png';
+        } else {
+          // no fallback for multi-selection: remove or hide this image
+          if (typeof options.onFail === 'function') options.onFail(img);
+          else img.style.display = 'none';
+        }
+        return;
+      }
+      const src = sources[i++];
+      img.onerror = tryNext;
+      img.src = src;
+    };
+    tryNext();
+  }
+
+  function renderDeedImages(selected){
+    const single = document.getElementById('deedImage'); // may or may not exist
+    const parent = (single && single.parentElement) || $('#deedImage')?.parentElement || document.querySelector('.deed-visual') || document.querySelector('#deedPreview') || document.body;
+
+    const ALL = ['sun','mercury','venus','earth','mars','jupiter','saturn','uranus','neptune'];
+    const isSet = selected.length === ALL.length;
+
+    // Remove previous multi-group if any
+    const oldGroup = document.getElementById('deedImages');
+    if (oldGroup) oldGroup.remove();
+
+    // Helper to ensure single image element
+    const ensureSingle = () => {
+      let img = document.getElementById('deedImage');
+      if (!img) {
+        img = document.createElement('img');
+        img.id = 'deedImage';
+        img.className = 'img-fluid d-block mx-auto';
+        img.alt = 'Deed preview';
+        parent.prepend(img);
+      }
+      // NEW: make sure it's visible if markup had 'd-none' or 'hidden'
+      img.classList.remove('d-none', 'visually-hidden');
+      img.removeAttribute('hidden');
+      img.style.display = '';
+      // ensure centering classes
+      if (!img.classList.contains('mx-auto')) img.classList.add('mx-auto');
+      if (!img.classList.contains('d-block')) img.classList.add('d-block');
+      if (!img.classList.contains('img-fluid')) img.classList.add('img-fluid');
+      return img;
+    };
+
+    if (isSet || selected.length === 0) {
+      const img = ensureSingle();
+      img.alt = 'Solar System preview';
+      setImgWithFallback(img, ['../assets/img/Solar.png','../assets/img/solar.png'], { fallbackToSolar: true });
+      return;
+    }
+
+    if (selected.length === 1) {
+      const img = ensureSingle();
+      const key = selected[0];
+      img.alt = `${cap(key)} preview`;
+      setImgWithFallback(img, planetSrc(key), { fallbackToSolar: true });
+      return;
+    }
+
+    // Multiple images: hide single, create a centered wrap (NO Solar fallback)
+    if (single) {
+      single.classList.remove('mx-auto','d-block');
+      single.style.display = 'none';
+    }
+    const wrap = document.createElement('div');
+    wrap.id = 'deedImages';
+    wrap.className = 'deed-images d-flex flex-wrap justify-content-center align-items-center gap-3';
+
+    selected.forEach(key => {
+      const img = document.createElement('img');
+      img.className = 'img-fluid d-block';
+      img.style.maxWidth = '120px';
+      img.style.height = 'auto';
+      img.alt = `${cap(key)} preview`;
+      setImgWithFallback(img, planetSrc(key), {
+        fallbackToSolar: false,
+        onFail: (node) => node.remove()
+      });
+      wrap.appendChild(img);
+    });
+
+    parent.prepend(wrap);
+  }
 
 })();
