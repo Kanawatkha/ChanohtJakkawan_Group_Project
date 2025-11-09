@@ -1,11 +1,14 @@
 /* =========================================================
-   styles.css v3.1 — Consolidated stylesheet (Giants fix)
+   styles.css v3.2 — Consolidated stylesheet (Giants fix + FAB panel links)
    Source: index.css, about.css, contact.css, order.css, payment.css, login.css
    Strategy:
    - Keep global tokens/utilities light
    - Page-scoped rules for each page to avoid cross-page overrides
    - Login page fully scoped under body.login-page (no bleed)
    - FIX: Scope payment .giant-card; unify Giants image height in index
+   - NEW (v3.2): Restore Floating Hamburger + Mini Overlay Menu look
+     · Links inside panel are menu-like (no blue underline)
+     · Keep small floating block with blur, rounded corners
    ========================================================= */
 
 /* -------------------- Fonts -------------------- */
@@ -251,7 +254,7 @@ footer { background: linear-gradient(180deg, rgba(255,255,255,0.02) 0%, rgba(255
   .deed-section .hero-img { max-height: 320px; }
 }
 
-/* Floating Hamburger FAB + Mini Panel */
+/* -------------------- Floating Hamburger FAB + Mini Panel -------------------- */
 .fab-menu {
   position: fixed; right: 1.25rem; bottom: 4.5rem; width: 56px; height: 56px; display: grid; place-items: center;
   border-radius: 999px; border: none; cursor: pointer;
@@ -281,6 +284,37 @@ footer { background: linear-gradient(180deg, rgba(255,255,255,0.02) 0%, rgba(255
   left: auto;
 }
 .fab-menu-panel.open { opacity: 1; visibility: visible; transform: translateY(0) scale(1); }
+
+/* NEW (v3.2): Mini panel links reset & menu styles (scoped) */
+.fab-menu-panel .menu-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; }
+
+/* Style anchors as menu items; avoid default blue/underline */
+.fab-menu-panel a:not(.btn),
+.fab-menu-panel .fab-link,
+.fab-menu-panel .menu-item > a {
+  display: flex; align-items: center; gap: .6rem;
+  text-decoration: none; color: var(--text-100);
+  padding: .625rem .875rem; border-radius: .75rem;
+  background: transparent; border: 1px solid transparent;
+  line-height: 1.2;
+}
+.fab-menu-panel a:not(.btn) .bi,
+.fab-menu-panel .fab-link .bi,
+.fab-menu-panel .menu-item > a .bi { font-size: 1.05rem; line-height: 1; }
+
+.fab-menu-panel a:not(.btn):hover,
+.fab-menu-panel a:not(.btn):focus-visible,
+.fab-menu-panel .fab-link:hover,
+.fab-menu-panel .fab-link:focus-visible,
+.fab-menu-panel .menu-item > a:hover,
+.fab-menu-panel .menu-item > a:focus-visible {
+  background: rgba(255,255,255,.08);
+  border-color: rgba(255,255,255,.14);
+  box-shadow: 0 8px 18px rgba(0,0,0,.25);
+}
+/* If some items are accidentally rendered as .btn, normalize to menu look */
+.fab-menu-panel .btn { text-decoration: none; color: var(--text-100); background: transparent; border: 1px solid transparent; border-radius: .75rem; padding: .625rem .875rem; }
+.fab-menu-panel .btn:hover, .fab-menu-panel .btn:focus-visible { background: rgba(255,255,255,.08); border-color: rgba(255,255,255,.14); box-shadow: 0 8px 18px rgba(0,0,0,.25); }
 
 /* Desktop FAB spacing */
 @media (min-width: 992px) {
