@@ -128,7 +128,7 @@
           <div class="content">
             <h3>One of us ?</h3>
             <p>Welcome back! Sign in to continue your journey.</p>
-            <!-- เปลี่ยนจาก button → a; desktop/tablet = navigate, mobile = toggle back to sign-in -->
+            <!-- ลิงก์นี้จะถูก e.preventDefault() ทุกขนาด เพื่อเล่นแอนิเมชันกลับไป Sign in -->
             <a href="../index.html" class="btn transparent" id="sign-in-link" aria-controls="login-form">Sign in</a>
           </div>
           <img src="../assets/img/Solar.png" class="image" alt="Cosmic illustration" loading="lazy" />
@@ -139,7 +139,7 @@
     <!-- Project JS (global); main.js จะถูก Guard ด้วย data-inline-login ให้ไม่ยุ่งหน้านี้ -->
     <script src="../assets/js/main.js"></script>
 
-    <!-- Inline login logic (Option A): control toggle/validation/redirect; plus mobile-only behavior for panel link -->
+    <!-- Inline login logic (Option A): control toggle/validation/redirect -->
     <script>
     (() => {
       const inline = document.body.hasAttribute('data-inline-login');
@@ -148,7 +148,7 @@
       const container = document.querySelector('.container');
       const signUpBtn  = document.getElementById('sign-up-btn');
 
-      // Toggle panels: เฉพาะปุ่ม Sign up (แผงซ้าย)
+      // Toggle panels: ปุ่ม Sign up (แผงซ้าย)
       signUpBtn?.addEventListener('click', () => container?.classList.add('sign-up-mode'));
 
       // Visual cue for filled inputs
@@ -184,25 +184,22 @@
       signupForm?.addEventListener('input', () => syncBtn(signupForm), true);
       syncBtn(loginForm); syncBtn(signupForm);
 
-      // Mobile-first handling for right-panel Sign in link
+      // ปุ่ม Sign in ในแผงขวา: ป้องกันการออกหน้า "ทุกขนาดหน้าจอ" แล้วเล่นแอนิเมชันกลับไป Sign in
       const signInLink = document.getElementById('sign-in-link');
       signInLink?.addEventListener('click', (e) => {
-        const isMobile = window.matchMedia('(max-width: 768px)').matches;
-        if (isMobile) {
-          // บนมือถือ: ไม่ออกหน้า แต่สลับแผงกลับไป Sign in พร้อมโฟกัสช่องแรก
-          e.preventDefault();
-          container?.classList.remove('sign-up-mode');
-          loginForm?.querySelector('input')?.focus();
-        }
-        // desktop/tablet: ปล่อยให้ <a> นำทางตาม href ปกติ
+        e.preventDefault();
+        container?.classList.remove('sign-up-mode');
+        loginForm?.querySelector('input')?.focus();
       });
 
-      // Sign in (ภายในฟอร์ม) -> redirect ตามปลายทางของลิงก์ฝั่งขวา
+      // ปลายทางหลัง Sign in (ในฟอร์ม)
+      const SIGNIN_REDIRECT = '../index.html';
+
+      // Sign in (ภายในฟอร์ม) -> redirect
       loginForm?.addEventListener('submit', (e) => {
         e.preventDefault();
         if (!requiredFilled(loginForm)) return;
-        const dest = signInLink?.getAttribute('href') || '../index.html';
-        window.location.href = dest;
+        window.location.href = SIGNIN_REDIRECT;
       });
 
       // Sign up -> reset + flip back to sign in
