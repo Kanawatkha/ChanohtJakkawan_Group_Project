@@ -659,3 +659,107 @@
     }
   })();
 })();
+
+/* ===================== LOGIN PAGE APPEND =====================
+   Scope: Only runs on Login_html/login.html (body.login-page)
+   Purpose: Toggle sign-in/sign-up panels, manage submit enable state,
+            redirect to ../index.html on successful Sign in, and
+            reset + flip back to Sign in after successful Sign up.
+   Notes: Appended safely; guards ensure no effect on other pages. */
+
+(() => {
+  const isLogin = document.body.classList.contains('login-page');
+  if (!isLogin) return; // exit on non-login pages
+
+  // ===== Panel toggle (from template) =====
+  const container = document.querySelector('.container');
+  const signInBtn  = document.querySelector('#sign-in-btn');
+  const signUpBtn  = document.querySelector('#sign-up-btn');
+
+  if (signUpBtn && container) {
+    signUpBtn.addEventListener('click', () => {
+      container.classList.add('sign-up-mode');
+    });
+  }
+  if (signInBtn && container) {
+    signInBtn.addEventListener('click', () => {
+      container.classList.remove('sign-up-mode');
+    });
+  }
+
+  // ===== Visual cue for filled inputs =====
+  const allInputs = document.querySelectorAll('.input-field input, .input-field textarea, .input-field select');
+  allInputs.forEach((inp) => {
+    const wrap = inp.closest('.input-field');
+    const update = () => {
+      if (wrap) wrap.classList.toggle('has-value', inp.value.trim() !== '');
+    };
+    inp.addEventListener('input', update);
+    update();
+  });
+
+  // ===== Utilities =====
+  const getSubmitBtn = (form) => form && form.querySelector('button[type="submit"], input[type="submit"], .btn[type="submit"]');
+  const getCheckFields = (form) => {
+    // Prefer explicitly required fields; otherwise use all non-radio/checkbox inputs
+    const req = form.querySelectorAll('input[required], textarea[required], select[required]');
+    if (req.length) return req;
+    return form.querySelectorAll('input:not([type="checkbox"]):not([type="radio"]), textarea, select');
+  };
+  const syncBtnStateFor = (form) => {
+    if (!form) return;
+    const submitBtn = getSubmitBtn(form);
+    const fields = getCheckFields(form);
+    const ok = Array.from(fields).every((el) => (el.value || '').trim() !== '');
+    if (submitBtn) {
+      submitBtn.disabled = !ok;
+      submitBtn.classList.toggle('is-disabled', !ok);
+      submitBtn.setAttribute('aria-disabled', String(!ok));
+    }
+  };
+  const wireLiveValidation = (form) => {
+    if (!form) return;
+    form.addEventListener('input', () => syncBtnStateFor(form), true);
+    syncBtnStateFor(form); // initial
+  };
+
+  // ===== Sign-in form =====
+  const loginForm = document.querySelector('form.sign-in-form');
+  wireLiveValidation(loginForm);
+  if (loginForm) {
+    loginForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const submitBtn = getSubmitBtn(loginForm);
+      if (submitBtn && submitBtn.disabled) return; // guard
+      // Redirect per spec (no extra reload logic here)
+      window.location.href = '../index.html';
+    });
+  }
+
+  // ===== Sign-up form =====
+  const signupForm = document.querySelector('form.sign-up-form');
+  wireLiveValidation(signupForm);
+  if (signupForm) {
+    signupForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const submitBtn = getSubmitBtn(signupForm);
+      if (submitBtn && submitBtn.disabled) return; // guard
+
+      // Reset data
+      signupForm.reset();
+
+      // Clear visual cues after reset
+      signupForm.querySelectorAll('.input-field').forEach((w) => w.classList.remove('has-value'));
+
+      // Re-disable submit after reset
+      syncBtnStateFor(signupForm);
+
+      // Flip animation back to Sign in
+      if (container) container.classList.remove('sign-up-mode');
+
+      // Optional: focus the first input of sign in for better UX
+      const firstSignInInput = loginForm && loginForm.querySelector('input, textarea, select');
+      if (firstSignInInput) firstSignInInput.focus();
+    });
+  }
+})();
