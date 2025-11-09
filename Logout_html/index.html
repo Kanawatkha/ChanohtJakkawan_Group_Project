@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <!-- Viewport: lock zoom-out and prevent horizontal panning (per spec) -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+  <title>ChanohtJakkawan — Solar System Set</title>
+  <meta name="description" content="Be the owner of the entire Solar System Set! Explore features and discover items. Buy now or order single planets.">
+  <link rel="icon" href="../assets/img/logo.png" />
+  <!-- Bootstrap CSS (kept) -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <!-- Bootstrap Icons (kept) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" />
+  <!-- Page CSS (kept) -->
+  <link rel="stylesheet" href="../assets/css/styles.css" />
+</head>
+<body class="page-index d-flex flex-column min-vh-100">
+  <!-- ===================== NAVBAR (kept) ===================== -->
+  <header class="site-header sticky-top" aria-label="Main Navigation">
+    <nav class="navbar navbar-expand-lg navbar-dark py-3" id="navbar">
+      <div class="container">
+        <a class="navbar-brand d-flex align-items-center" href="index.html" aria-label="ChanohtJakkawan Home">
+          <img src="../assets/img/logo.png" alt="Site logo" width="32" height="32" class="me-2">
+          <span class="fw-bold">ChanohtJakkawan</span>
+        </a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu" aria-controls="navMenu" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navMenu">
+          <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
+            <li class="nav-item"><a class="nav-link" href="index.html" data-scroll>Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="#features" data-scroll>Features</a></li>
+            <li class="nav-item"><a class="nav-link" href="#objects" data-scroll>Objects</a></li>
+            <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
+            <li class="nav-item"><a class="nav-link active" aria-current="page" href="contact.html">Contact Us</a></li>
+            <li class="nav-item ms-lg-2 my-2 my-lg-0">
+              <a class="btn btn-primary cta-order" href="order.html">Order Now</a>
+            </li>
+            <li class="nav-item ms-lg-1">
+              <a class="btn btn-outline-light cta-login" href="../index.html">Logout</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main id="top" class="flex-grow-1">
+    <!-- ===================== HERO (kept) ===================== -->
+    <section id="hero" class="py-5 py-lg-6 position-relative overflow-hidden">
+      <div class="container">
+        <div class="row align-items-center g-5">
+          <!-- Hero Left -->
+          <div class="col-12 col-lg-6 order-2 order-lg-1">
+            <h1 class="display-5 fw-bold lh-1 mb-3">Be the owner of the entire Solar System Set!</h1>
+            <p class="lead mb-4">TextTextTextTextText TextTextTextTextText TextTextTextTextText.</p>
+            <div class="d-flex gap-3">
+              <!-- ADDED data-role & data-product -->
+              <a href="order.html" class="btn btn-primary btn-lg hero-buy" data-role="index-buy" data-product="set">Buy Now</a>
+              <a href="#features" class="btn btn-outline-light btn-lg" data-scroll>Learn More</a>
+            </div>
+          </div>
+          <!-- Hero Right -->
+          <div class="col-12 col-lg-6 text-center order-1 order-lg-2">
+            <figure class="hero-figure mb-3">
+              <img src="../assets/img/Solar.png" class="img-fluid hero-img" alt="Solar System overview" loading="eager" />
+            </figure>
+            <a href="View_html/solar.html" class="btn btn-secondary hero-view">View</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== FEATURES (kept) ===================== -->
+    <section id="features" class="py-5 py-lg-6">
+      <div class="container">
+        <div class="row mb-4">
+          <div class="col-12 text-center">
+            <h2 class="section-title">Key Features</h2>
+            <p class="section-subtitle">TextTextTextTextText TextTextTextTextText.</p>
+          </div>
+        </div>
+        <div class="row g-4">
+          <!-- Feature items (kept) -->
+          <div class="col-12 col-md-6 col-lg-3">
+            <div class="feature-card text-center h-100 p-4">
+              <img src="../assets/img/Features1.jpg" class="feature-img mb-3" alt="Feature 1" width="80" height="80" />
+              <h3 class="h5 mb-2">Feature One</h3>
+              <p class="mb-0">TextTextTextTextText TextTextTextTextText.</p>
+            </div>
+          </div>
+          <div class="col-12 col-md-6 col-lg-3">
+            <div class="feature-card text-center h-100 p-4">
+              <img src="../assets/img/Features2.jpg" class="feature-img mb-3" alt="Feature 2" width="80" height="80" />
+              <h3 class="h5 mb-2">Feature Two</h3>
+              <p class="mb-0">TextTextTextTextText TextTextTextTextText.</p>
+            </div>
+          </div>
+          <div class="col-12 col-md-6 col-lg-3">
+            <div class="feature-card text-center h-100 p-4">
+              <img src="../assets/img/Features3.jpg" class="feature-img mb-3" alt="Feature 3" width="80" height="80" />
+              <h3 class="h5 mb-2">Feature Three</h3>
+              <p class="mb-0">TextTextTextTextText TextTextTextTextText.</p>
+            </div>
+          </div>
+          <div class="col-12 col-md-6 col-lg-3">
+            <div class="feature-card text-center h-100 p-4">
+              <img src="../assets/img/Features4.jpg" class="feature-img mb-3" alt="Feature 4" width="80" height="80" />
+              <h3 class="h5 mb-2">Feature Four</h3>
+              <p class="mb-0">TextTextTextTextText TextTextTextTextText.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== SOLAR SYSTEM DEED (kept/new) ===================== -->
+    <section id="deed" class="py-5 py-lg-6 deed-section">
+      <div class="container">
+        <div class="row mb-4">
+          <div class="col-12 text-center">
+            <h2 class="section-title">Solar System Deed</h2>
+            <p class="section-subtitle">TextTextTextTextText TextTextTextTextText.</p>
+          </div>
+        </div>
+        <div class="row align-items-center g-5">
+          <div class="col-12 col-lg-6 text-center">
+            <figure class="hero-figure mb-3 mb-lg-0">
+              <img src="../assets/img/Deed.jpg" class="img-fluid hero-img d-block mx-auto" alt="Solar System Deed visual" loading="lazy" />
+            </figure>
+          </div>
+          <div class="col-12 col-lg-6 text-center text-lg-start">
+            <h3 class="h4 mb-3">Own the charter to the cosmos</h3>
+            <p class="mb-3">TextTextTextTextText TextTextTextTextText TextTextTextTextText.</p>
+            <p class="mb-4">TextTextTextTextText TextTextTextTextText TextTextTextTextText.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== DISCOVER / PRODUCTS (kept + updated) ===================== -->
+    <section id="discover" class="py-5 py-lg-6">
+      <div id="objects"></div>
+      <div class="container">
+        <div class="row align-items-end mb-4 g-3">
+          <div class="col-12 col-lg-8">
+            <h2 class="section-title">Solar System Objects</h2>
+            <p class="section-subtitle mb-0">Want just a single planet? Check below… TextTextTextTextText.</p>
+          </div>
+        </div>
+
+        <!-- Highlighted Sun Card (kept) -->
+        <div class="row g-4 mb-5">
+          <div class="col-12">
+            <article class="product-card featured d-flex flex-column flex-md-row align-items-stretch">
+              <div class="product-media">
+                <img src="../assets/img/Sun.png" alt="Sun" class="img-fluid planet-img" loading="lazy">
+                <a href="View_html/sun.html" class="card-overlay-btn" aria-label="View Sun" tabindex="0"></a>
+              </div>
+              <div class="product-body p-4 flex-fill d-flex flex-column">
+                <h3 class="h4 mb-2">Sun</h3>
+                <p class="mb-3">TextTextTextTextText TextTextTextTextText.</p>
+                <div class="mt-auto d-flex align-items-center justify-content-between">
+                  <span class="price h5 mb-0">$Text</span>
+                  <!-- ADDED data-role & data-product -->
+                  <a href="order.html" class="btn btn-primary" data-role="index-buy" data-product="sun">Buy</a>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <!-- Terrestrial Planets (kept) -->
+        <div class="row mt-5 mb-2">
+          <div class="col-12">
+            <h3 class="category-title mb-1">Terrestrial Planets</h3>
+            <p class="section-subtitle mb-3">Compact rocky worlds. TextTextTextTextText.</p>
+          </div>
+        </div>
+        <div class="row g-4 mb-5">
+          <!-- Mercury -->
+          <div class="col-12 col-sm-6 col-lg-3">
+            <article class="product-card h-100">
+              <div class="product-media">
+                <img src="../assets/img/Mercury.png" alt="Mercury" class="img-fluid planet-img" loading="lazy">
+                <a href="View_html/mercury.html" class="card-overlay-btn" aria-label="View Mercury" tabindex="0"></a>
+              </div>
+              <div class="product-body p-3 d-flex flex-column">
+                <h4 class="h6 mb-1">Mercury</h4>
+                <p class="small flex-grow-1">TextTextTextText</p>
+                <div class="d-flex align-items-center justify-content-between">
+                  <span class="price mb-0">$Text</span>
+                  <!-- ADDED data-role & data-product -->
+                  <a href="order.html" class="btn btn-sm btn-primary" data-role="index-buy" data-product="mercury">Buy</a>
+                </div>
+              </div>
+            </article>
+          </div>
+          <!-- Venus -->
+          <div class="col-12 col-sm-6 col-lg-3">
+            <article class="product-card h-100">
+              <div class="product-media">
+                <img src="../assets/img/Venus.png" alt="Venus" class="img-fluid planet-img" loading="lazy">
+                <a href="View_html/venus.html" class="card-overlay-btn" aria-label="View Venus" tabindex="0"></a>
+              </div>
+              <div class="product-body p-3 d-flex flex-column">
+                <h4 class="h6 mb-1">Venus</h4>
+                <p class="small flex-grow-1">TextTextTextText</p>
+                <div class="d-flex align-items-center justify-content-between">
+                  <span class="price mb-0">$Text</span>
+                  <!-- ADDED data-role & data-product -->
+                  <a href="order.html" class="btn btn-sm btn-primary" data-role="index-buy" data-product="venus">Buy</a>
+                </div>
+              </div>
+            </article>
+          </div>
+          <!-- Earth -->
+          <div class="col-12 col-sm-6 col-lg-3">
+            <article class="product-card h-100">
+              <div class="product-media">
+                <img src="../assets/img/Earth.png" alt="Earth" class="img-fluid planet-img" loading="lazy">
+                <a href="View_html/earth.html" class="card-overlay-btn" aria-label="View Earth" tabindex="0"></a>
+              </div>
+              <div class="product-body p-3 d-flex flex-column">
+                <h4 class="h6 mb-1">Earth</h4>
+                <p class="small flex-grow-1">TextTextTextText</p>
+                <div class="d-flex align-items-center justify-content-between">
+                  <span class="price mb-0">$Text</span>
+                  <!-- ADDED data-role & data-product -->
+                  <a href="order.html" class="btn btn-sm btn-primary" data-role="index-buy" data-product="earth">Buy</a>
+                </div>
+              </div>
+            </article>
+          </div>
+          <!-- Mars -->
+          <div class="col-12 col-sm-6 col-lg-3">
+            <article class="product-card h-100">
+              <div class="product-media">
+                <img src="../assets/img/Mars.png" alt="Mars" class="img-fluid planet-img" loading="lazy">
+                <a href="View_html/mars.html" class="card-overlay-btn" aria-label="View Mars" tabindex="0"></a>
+              </div>
+              <div class="product-body p-3 d-flex flex-column">
+                <h4 class="h6 mb-1">Mars</h4>
+                <p class="small flex-grow-1">TextTextTextText</p>
+                <div class="d-flex align-items-center justify-content-between">
+                  <span class="price mb-0">$Text</span>
+                  <!-- ADDED data-role & data-product -->
+                  <a href="order.html" class="btn btn-sm btn-primary" data-role="index-buy" data-product="mars">Buy</a>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <!-- Gas Giants (UPDATED: now only Jupiter & Saturn; big cards as a 2-col row) -->
+        <div class="row mt-5 mb-2">
+          <div class="col-12">
+            <h3 class="category-title mb-1">Gas Giants</h3>
+            <p class="section-subtitle mb-3">Massive outer planets. TextTextTextTextText.</p>
+          </div>
+        </div>
+        <div class="row g-4 justify-content-center giant-row">
+          <!-- Jupiter -->
+          <div class="col-12 col-md-6 col-lg-6">
+            <article class="product-card h-100 giant-card">
+              <div class="product-media">
+                <img src="../assets/img/Jupiter.png" alt="Jupiter" class="img-fluid planet-img" loading="lazy">
+                <a href="View_html/jupiter.html" class="card-overlay-btn" aria-label="View Jupiter" tabindex="0"></a>
+              </div>
+              <div class="product-body p-4 d-flex flex-column">
+                <h4 class="h5 mb-2">Jupiter</h4>
+                <p class="small flex-grow-1">TextTextTextText</p>
+                <div class="d-flex align-items-center justify-content-between">
+                  <span class="price mb-0">$Text</span>
+                  <!-- ADDED data-role & data-product -->
+                  <a href="rder.html" class="btn btn-primary" data-role="index-buy" data-product="jupiter">Buy</a>
+                </div>
+              </div>
+            </article>
+          </div>
+          <!-- Saturn -->
+          <div class="col-12 col-md-6 col-lg-6">
+            <article class="product-card h-100 giant-card">
+              <div class="product-media">
+                <img src="../assets/img/Saturn.png" alt="Saturn" class="img-fluid planet-img" loading="lazy">
+                <a href="View_html/saturn.html" class="card-overlay-btn" aria-label="View Saturn" tabindex="0"></a>
+              </div>
+              <div class="product-body p-4 d-flex flex-column">
+                <h4 class="h5 mb-2">Saturn</h4>
+                <p class="small flex-grow-1">TextTextTextText</p>
+                <div class="d-flex align-items-center justify-content-between">
+                  <span class="price mb-0">$Text</span>
+                  <!-- ADDED data-role & data-product -->
+                  <a href="order.html" class="btn btn-primary" data-role="index-buy" data-product="saturn">Buy</a>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <!-- Ice Giants (NEW: Uranus & Neptune; big cards as a 2-col row) -->
+        <div class="row mt-5 mb-2">
+          <div class="col-12">
+            <h3 class="category-title mb-1">Ice Giants</h3>
+            <p class="section-subtitle mb-3">Distant giants with icy compositions. TextTextTextTextText.</p>
+          </div>
+        </div>
+        <div class="row g-4 justify-content-center giant-row">
+          <!-- Uranus -->
+          <div class="col-12 col-md-6 col-lg-6">
+            <article class="product-card h-100 giant-card">
+              <div class="product-media">
+                <img src="../assets/img/Uranus.png" alt="Uranus" class="img-fluid planet-img" loading="lazy">
+                <a href="View_html/uranus.html" class="card-overlay-btn" aria-label="View Uranus" tabindex="0"></a>
+              </div>
+              <div class="product-body p-4 d-flex flex-column">
+                <h4 class="h5 mb-2">Uranus</h4>
+                <p class="small flex-grow-1">TextTextTextText</p>
+                <div class="d-flex align-items-center justify-content-between">
+                  <span class="price mb-0">$Text</span>
+                  <!-- ADDED data-role & data-product -->
+                  <a href="order.html" class="btn btn-primary" data-role="index-buy" data-product="uranus">Buy</a>
+                </div>
+              </div>
+            </article>
+          </div>
+          <!-- Neptune -->
+          <div class="col-12 col-md-6 col-lg-6">
+            <article class="product-card h-100 giant-card">
+              <div class="product-media">
+                <img src="../assets/img/Neptune.png" alt="Neptune" class="img-fluid planet-img" loading="lazy">
+                <a href="View_html/neptune.html" class="card-overlay-btn" aria-label="View Neptune" tabindex="0"></a>
+              </div>
+              <div class="product-body p-4 d-flex flex-column">
+                <h4 class="h5 mb-2">Neptune</h4>
+                <p class="small flex-grow-1">TextTextTextText</p>
+                <div class="d-flex align-items-center justify-content-between">
+                  <span class="price mb-0">$Text</span>
+                  <!-- ADDED data-role & data-product -->
+                  <a href="order.html" class="btn btn-primary" data-role="index-buy" data-product="neptune">Buy</a>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== FAQ / Q&A (kept) ===================== -->
+    <section id="faq" class="py-5 py-lg-6">
+      <div class="container">
+        <div class="row mb-4">
+          <div class="col-12 text-center">
+            <h2 class="section-title">Questions & Answers</h2>
+            <p class="section-subtitle">TextTextTextTextText TextTextTextTextText.</p>
+          </div>
+        </div>
+
+        <div class="accordion" id="faqAccordion">
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="q1">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#a1" aria-expanded="false" aria-controls="a1">
+                How do I buy a single planet?
+              </button>
+            </h2>
+            <div id="a1" class="accordion-collapse collapse" aria-labelledby="q1" data-bs-parent="#faqAccordion">
+              <div class="accordion-body">TextTextTextTextText TextTextTextTextText TextTextTextTextText.</div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="q2">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#a2" aria-expanded="false" aria-controls="a2">
+                What is included in the full Solar System Set?
+              </button>
+            </h2>
+            <div id="a2" class="accordion-collapse collapse" aria-labelledby="q2" data-bs-parent="#faqAccordion">
+              <div class="accordion-body">TextTextTextTextText TextTextTextTextText TextTextTextTextText.</div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="q3">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#a3" aria-expanded="false" aria-controls="a3">
+                Can I pay via QR code?
+              </button>
+            </h2>
+            <div id="a3" class="accordion-collapse collapse" aria-labelledby="q3" data-bs-parent="#faqAccordion">
+              <div class="accordion-body">TextTextTextTextText TextTextTextTextText TextTextTextTextText.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="text-center mt-4">
+          <a href="contact.html" class="btn btn-outline-light">Contact Us</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===================== FOOTER (kept) ===================== -->
+  <footer class="mt-auto pt-5 pb-4">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-12 col-lg-4">
+          <div class="d-flex align-items-center mb-3">
+            <img src="../assets/img/logo.png" alt="Footer logo" width="32" height="32" class="me-2">
+            <span class="fw-semibold">ChanohtJakkawan</span>
+          </div>
+          <p class="small mb-3">TextTextTextTextText TextTextTextTextText.</p>
+          <div class="d-flex align-items-center gap-2">
+            <a href="#" class="d-inline-block" aria-label="Download on the App Store"><img src="../assets/img/appstore.png" alt="App Store" height="36"></a>
+            <a href="#" class="d-inline-block" aria-label="Get it on Google Play"><img src="../assets/img/playstore.png" alt="Google Play" height="36"></a>
+          </div>
+        </div>
+        <div class="col-6 col-lg-2">
+          <h5 class="mb-3">Useful Links</h5>
+          <ul class="list-unstyled footer-links">
+            <li><a href="#top" data-scroll>Home</a></li>
+            <li><a href="#features" data-scroll>Features</a></li>
+            <li><a href="#objects" data-scroll>Objects</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="contact.html" aria-current="page">Contact Us</a></li>
+            <li><a href="order.html">Order Now</a></li>
+            <li><a href="../index.html">Logout</a></li>
+          </ul>
+        </div>
+        <div class="col-6 col-lg-3">
+          <h5 class="mb-3">Contact</h5>
+          <ul class="list-unstyled footer-contact">
+            <li class="mb-1"><i class="bi bi-envelope me-2" aria-hidden="true"></i>
+              <a class="text-break d-inline-block" style="max-width:100%" href="mailto:chanohtjakkawan@nft.com">chanohtjakkawan@nft.com</a>
+            </li>
+            <li><i class="bi bi-telephone me-2" aria-hidden="true"></i><a href="tel:+6612345678">+66 1 234 5678</a></li>
+            <li class="mt-2 d-flex gap-2" aria-label="Social media">
+              <a href="#" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+              <a href="#" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+              <a href="#" aria-label="Twitter"><i class="bi bi-twitter-x"></i></a>
+              <a href="#" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
+            </li>
+          </ul>
+        </div>
+        <div class="col-12 col-lg-3">
+          <h5 class="mb-3">About this site</h5>
+          <p class="small mb-0">TextTextTextTextText TextTextTextTextText.</p>
+        </div>
+      </div>
+
+      <hr class="my-4 opacity-25" />
+      <div class="d-flex flex-column flex-md-row align-items-center justify-content-between small">
+        <span>© <span id="year"></span> ChanohtJakkawan. All rights reserved.</span>
+        <ul class="list-inline mb-0">
+          <li class="list-inline-item"><a href="#">Privacy</a></li>
+          <li class="list-inline-item"><a href="#">Cooperation</a></li>
+          <li class="list-inline-item"><a href="#">Sponsorship</a></li>
+          <li class="list-inline-item"><a href="#">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Back to Top (kept) -->
+  <a href="#top" class="back-to-top" aria-label="Back to top" data-animate="scale-fade"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- =============== FLOATING HAMBURGER + MINI OVERLAY MENU (HTML only) =============== -->
+  <button id="fabMenuBtn" class="fab-menu hide" aria-label="Open menu" aria-controls="fabMenuPanel" aria-expanded="false">
+    <i class="bi bi-list"></i>
+  </button>
+
+  <nav id="fabMenuPanel" class="fab-menu-panel" role="menu" aria-hidden="true" aria-labelledby="fabMenuBtn">
+    <ul class="fab-menu-list list-unstyled mb-0" role="none">
+      <li role="none"><a role="menuitem" class="fab-link" href="#top" data-scroll>Home</a></li>
+      <li role="none"><a role="menuitem" class="fab-link" href="#features" data-scroll>Features</a></li>
+      <li role="none"><a role="menuitem" class="fab-link" href="#objects" data-scroll>Objects</a></li>
+      <li role="none"><a role="menuitem" class="fab-link" href="about.html">About Us</a></li>
+      <li role="none"><a role="menuitem" class="fab-link" href="contact.html" aria-current="page">Contact Us</a></li>
+      <li role="none"><a role="menuitem" class="fab-link" href="order.html">Order Now</a></li>
+      <li role="none"><a role="menuitem" class="fab-link" href="../index.html">Logout</a></li>
+    </ul>
+  </nav>
+
+  <!-- Bootstrap Bundle + Page JS (kept) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  <script src="../assets/js/main.js"></script>
+</body>
+</html>
