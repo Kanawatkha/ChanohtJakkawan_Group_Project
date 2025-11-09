@@ -4,6 +4,8 @@
    - Payment page: Populate DEED PREVIEW (name, address, items, order no., issued at, images)
    - NEW: When 2+ objects are selected, do NOT fallback to Solar.png
    - FIX: Ensure #deedImage is unhidden (remove 'd-none'/hidden) for SET or SINGLE selections
+   - NEW: Contact page — enable/disable Send, reset on submit, success tick flash
+   - PATCH: Contact page — robust selectors so #contactSend OR #contactSendBtn both work
    - Non‑targeted logic remains identical to previous version
    ========================================================= */
 
@@ -569,4 +571,91 @@
     parent.prepend(wrap);
   }
 
+  // =========================================================
+  // Contact page — enable/disable Send, reset on submit, success tick flash
+  // (Patched to be tolerant to HTML id variants: #contactSend OR #contactSendBtn)
+  // =========================================================
+  (function initContactForm() {
+    // รอให้ DOM พร้อม 100% (กันเคสโหลดสคริปต์เร็วกว่า DOM)
+    const boot = () => {
+      const form = document.getElementById('contactForm');
+      if (!form) return; // หน้าอื่น ๆ ที่ไม่มีฟอร์ม ให้ข้ามไป
+
+      // เลือก element แบบยืดหยุ่น: รองรับทั้ง id ตระกูล cName/... และ contactName/... และ name=""
+      const pick = (...sels) => {
+        for (const s of sels) {
+          if (!s) continue;
+          const el = form.querySelector(s) || document.querySelector(s);
+          if (el) return el;
+        }
+        return null;
+      };
+
+      const nameEl  = pick('#cName',  '#contactName',  '[name="name"]');
+      const phoneEl = pick('#cPhone', '#contactPhone', '[name="phone"]');
+      const mailEl  = pick('#cEmail', '#contactEmail', '[name="email"]');
+      const subjEl  = pick('#cSubject', '#contactSubject', '[name="subject"]');
+      const msgEl   = pick('#cMessage', '#contactMessage', 'textarea[name="message"]', '[name="message"]');
+
+      const sendBtn = pick('#contactSendBtn', '#contactSend');
+      const success = document.getElementById('contactSuccess');
+
+      // ตรวจครบ + อีเมลรูปแบบพื้นฐาน
+      const emailOk = v => /\S+@\S+\.\S+/.test((v || '').trim());
+      const filled  = el => !!(el && typeof el.value === 'string' && el.value.trim().length > 0);
+
+      const updateBtn = () => {
+        const ok =
+          filled(nameEl) &&
+          filled(phoneEl) &&
+          emailOk(mailEl && mailEl.value) &&
+          filled(subjEl) &&
+          filled(msgEl);
+
+        if (!sendBtn) return;
+        // เปิด/ปิดปุ่มอย่างถูกต้อง ทั้ง disabled attribute และคลาส bootstrap
+        sendBtn.disabled = !ok;
+        sendBtn.setAttribute('aria-disabled', String(!ok));
+        sendBtn.classList.toggle('disabled', !ok);
+      };
+
+      // ฟังทุกช่องแบบละเอียด + ฟังทั้งฟอร์ม (เผื่อ autofill/paste จาก browser)
+      const fields = [nameEl, phoneEl, mailEl, subjEl, msgEl].filter(Boolean);
+      ['input', 'change', 'keyup', 'paste'].forEach(ev => {
+        fields.forEach(el => el.addEventListener(ev, updateBtn, false));
+        form.addEventListener(ev, updateBtn, false);
+      });
+
+      // ส่งฟอร์ม (mock) — แสดงเครื่องหมายถูก, ล้างค่า, แล้วปิดปุ่มอีกครั้ง
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        updateBtn();
+        if (sendBtn && sendBtn.disabled) return;
+
+        // แสดง success tick สั้น ๆ
+        if (success) {
+          success.classList.remove('visually-hidden', 'd-none', 'hide');
+          success.classList.add('show');            // ตรงกับ index.css animations
+          setTimeout(() => success.classList.add('fade-in'), 10);
+          setTimeout(() => {
+            success.classList.remove('show', 'fade-in');
+            success.classList.add('visually-hidden');
+          }, 1500);
+        }
+
+        // รีเซ็ตค่า + ปิดปุ่มกลับเป็นจาง
+        form.reset();
+        updateBtn();
+      }, false);
+
+      // สถานะเริ่มต้น
+      updateBtn();
+    };
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', boot, { once: true });
+    } else {
+      boot();
+    }
+  })();
 })();
