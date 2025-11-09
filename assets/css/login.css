@@ -234,3 +234,43 @@ form.sign-in-form { z-index: 2; }
   .container:before { bottom: 72%; left: 50%; }
   .container.sign-up-mode:before { bottom: 28%; left: 50%; }
 }
+
+/* Normalize .btn for both <a> and <button> */
+a.btn,
+button.btn {
+  display: inline-flex;           /* ให้ width/height ทำงานกับ <a> */
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;          /* ตัดเส้นใต้ลิงก์ */
+  font: inherit;                  /* ขนาดฟอนต์เท่ากัน */
+  line-height: 1;                 /* ตัดส่วนเกินแนวตั้งของ <a> */
+  -webkit-appearance: none;       /* กัน default button style บน iOS */
+  appearance: none;
+  box-sizing: border-box;
+
+  /* ขนาดมาตรฐานเดียวกัน (ปรับตัวเลขให้ตรงธีมของคุณได้) */
+  --btn-w: 150px;
+  --btn-h: 49px;
+  min-width: var(--btn-w);
+  height: var(--btn-h);
+  padding: 0 1.25rem;
+  border-radius: 49px;
+}
+
+/* ให้สไตล์ปุ่มโปร่งใสเหมือนกันทั้งคู่ */
+.btn.transparent {
+  background: transparent;
+  border: 2px solid var(--btn-border, #fff);
+}
+
+/* ถ้าธีมตั้งน้ำหนักขอบไว้ไม่เท่ากัน ให้บังคับเท่ากัน */
+.panel .btn.transparent {
+  border-width: 2px;
+}
+
+/* ปรับสำหรับจอเล็ก เพื่อให้สองปุ่มกว้างพอ ๆ กัน */
+@media (max-width: 768px) {
+  .panels-container .panel .btn {
+    width: min(220px, 70vw);      /* ให้กว้างเท่ากันในสองแผง */
+  }
+}
