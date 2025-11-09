@@ -671,9 +671,13 @@
   const isLogin = document.body.classList.contains('login-page');
   if (!isLogin) return; // exit on non-login pages
 
+  // Inline override guard (Option A):
+  // ถ้า <body data-inline-login="true"> ให้ login.html จัดการเองทั้งหมด
+  if (document.body.hasAttribute('data-inline-login')) return;
+
   // ===== Panel toggle (from template) =====
   const container = document.querySelector('.container');
-  const signInBtn  = document.querySelector('#sign-in-btn');
+  const signInBtn  = document.querySelector('#sign-in-btn');   // อาจไม่มี ถ้าเปลี่ยนเป็นลิงก์
   const signUpBtn  = document.querySelector('#sign-up-btn');
 
   if (signUpBtn && container) {
@@ -692,20 +696,23 @@
   allInputs.forEach((inp) => {
     const wrap = inp.closest('.input-field');
     const update = () => {
-      if (wrap) wrap.classList.toggle('has-value', inp.value.trim() !== '');
+      if (wrap) wrap.classList.toggle('has-value', (inp.value || '').trim() !== '');
     };
     inp.addEventListener('input', update);
     update();
   });
 
   // ===== Utilities =====
-  const getSubmitBtn = (form) => form && form.querySelector('button[type="submit"], input[type="submit"], .btn[type="submit"]');
+  const getSubmitBtn = (form) =>
+    form && form.querySelector('button[type="submit"], input[type="submit"], .btn[type="submit"]');
+
   const getCheckFields = (form) => {
-    // Prefer explicitly required fields; otherwise use all non-radio/checkbox inputs
+    // ใช้ฟิลด์ที่มี required ก่อน ถ้าไม่มีค่อยเช็คอินพุตทั่วไป
     const req = form.querySelectorAll('input[required], textarea[required], select[required]');
     if (req.length) return req;
     return form.querySelectorAll('input:not([type="checkbox"]):not([type="radio"]), textarea, select');
   };
+
   const syncBtnStateFor = (form) => {
     if (!form) return;
     const submitBtn = getSubmitBtn(form);
@@ -717,6 +724,7 @@
       submitBtn.setAttribute('aria-disabled', String(!ok));
     }
   };
+
   const wireLiveValidation = (form) => {
     if (!form) return;
     form.addEventListener('input', () => syncBtnStateFor(form), true);
@@ -731,8 +739,11 @@
       e.preventDefault();
       const submitBtn = getSubmitBtn(loginForm);
       if (submitBtn && submitBtn.disabled) return; // guard
-      // Redirect per spec (no extra reload logic here)
-      window.location.href = '../index.html';
+
+      // ปลายทาง: อ่านจากลิงก์ #sign-in-link ถ้ามี, ไม่งั้น fallback ไป ../index.html
+      const link = document.getElementById('sign-in-link');
+      const dest = link?.getAttribute('href') || '../index.html';
+      window.location.href = dest;
     });
   }
 
@@ -757,7 +768,7 @@
       // Flip animation back to Sign in
       if (container) container.classList.remove('sign-up-mode');
 
-      // Optional: focus the first input of sign in for better UX
+      // Focus ช่องแรกของ Sign in เพื่อ UX ที่ดีขึ้น
       const firstSignInInput = loginForm && loginForm.querySelector('input, textarea, select');
       if (firstSignInInput) firstSignInInput.focus();
     });
