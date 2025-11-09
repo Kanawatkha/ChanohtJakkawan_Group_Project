@@ -134,7 +134,7 @@
             <!-- Product Selection -->
             <article class="surface-card hover-elevate p-4 p-lg-4 mb-4" aria-labelledby="product-select-title">
               <h2 id="product-select-title" class="h4 mb-3">Product Selection</h2>
-              <p class="small text-muted-300 mb-3">Choose individual objects or the full set. Prices shown in <em>Googolplexianth $</em>.</p>
+              <p class="small text-muted-300 mb-3">Choose individual objects or the full set. Prices shown in <em>Googolplex Dollars</em>.</p>
 
               <!-- Toggler -->
               <button class="btn btn-secondary w-100 d-flex align-items-center justify-content-between" type="button" data-expand-target="#productDropdown" aria-expanded="false" aria-controls="productDropdown">
@@ -417,11 +417,11 @@
     // ===== Persistence keys =====
     const LS_KEYS = {
       total: 'orderTotal',            // numeric only
-      unit: 'orderUnit',              // string (e.g., "Googolplexianth")
+      unit: 'orderUnit',              // string (e.g., "Googolplex Dollars")
       fields: 'orderFields',          // JSON of text/checkbox values
       products: 'orderProducts'       // JSON of selected product ids
     };
-    const UNIT_TEXT = 'Googolplexianth $';
+    const UNIT_TEXT = 'Googolplex Dollars';
 
     function saveState() {
       try {
