@@ -139,7 +139,7 @@
     <!-- Project JS (global); main.js จะถูก Guard ด้วย data-inline-login ให้ไม่ยุ่งหน้านี้ -->
     <script src="../assets/js/main.js"></script>
 
-    <!-- Inline login logic (Option A): control toggle/validation/redirect -->
+    <!-- Inline login logic (Option A): control toggle/validation/redirect + CLEAR ORDER STORAGE -->
     <script>
     (() => {
       const inline = document.body.hasAttribute('data-inline-login');
@@ -192,13 +192,20 @@
         loginForm?.querySelector('input')?.focus();
       });
 
-      // ปลายทางหลัง Sign in (ในฟอร์ม)
-      const SIGNIN_REDIRECT = '../index.html';
+      // ===== Clear Order storage before redirect =====
+      const clearOrderStorage = () => {
+        const keys = ['orderFields', 'orderProducts', 'orderTotal', 'orderUnit'];
+        keys.forEach((k) => { try { localStorage.removeItem(k); } catch (_) {} });
+      };
 
-      // Sign in (ภายในฟอร์ม) -> redirect
+      // ปลายทางหลัง Sign in (ในฟอร์ม)
+      const SIGNIN_REDIRECT = '../Logout_html/index.html';
+
+      // Sign in (ภายในฟอร์ม) -> CLEAR + redirect
       loginForm?.addEventListener('submit', (e) => {
         e.preventDefault();
         if (!requiredFilled(loginForm)) return;
+        clearOrderStorage();
         window.location.href = SIGNIN_REDIRECT;
       });
 
