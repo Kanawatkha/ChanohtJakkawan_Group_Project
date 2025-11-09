@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Lock responsive behavior per project standard -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login — ChanohtJakkawan</title>
+
+    <!-- Bootstrap Icons (real social icons) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" />
+
+    <!-- Page-specific styles (theme colors will match index via login.css) -->
+    <link rel="stylesheet" href="../assets/css/login.css" />
+  </head>
+  <body data-page="login" class="login-page">
+    <div class="container">
+      <div class="forms-container">
+        <div class="signin-signup">
+          <!-- ===================== Sign In ===================== -->
+          <form action="#" class="sign-in-form login-form" id="login-form" data-auth="signin" novalidate>
+            <h2 class="title">Sign in</h2>
+
+            <div class="input-field">
+              <i class="bi bi-envelope" aria-hidden="true"></i>
+              <input
+                type="email"
+                name="email"
+                placeholder="Email"
+                required
+                aria-label="Email"
+                autocomplete="email"
+              />
+            </div>
+
+            <div class="input-field">
+              <i class="bi bi-lock" aria-hidden="true"></i>
+              <input
+                type="password"
+                name="password"
+                placeholder="Password"
+                required
+                aria-label="Password"
+                autocomplete="current-password"
+              />
+            </div>
+
+            <button type="submit" class="btn solid is-disabled" aria-label="Sign in button" disabled aria-disabled="true">Sign in</button>
+
+            <p class="social-text">Or Sign in with social platforms</p>
+            <div class="social-media" aria-label="Social sign-in options">
+              <a href="#" class="social-icon" aria-label="Facebook"><i class="bi bi-facebook" aria-hidden="true"></i></a>
+              <a href="#" class="social-icon" aria-label="Twitter/X"><i class="bi bi-twitter-x" aria-hidden="true"></i></a>
+              <a href="#" class="social-icon" aria-label="Google"><i class="bi bi-google" aria-hidden="true"></i></a>
+              <a href="#" class="social-icon" aria-label="GitHub"><i class="bi bi-github" aria-hidden="true"></i></a>
+            </div>
+          </form>
+
+          <!-- ===================== Sign Up ===================== -->
+          <form action="#" class="sign-up-form" id="signup-form" data-auth="signup" novalidate>
+            <h2 class="title">Sign up</h2>
+
+            <div class="input-field">
+              <i class="bi bi-person" aria-hidden="true"></i>
+              <input
+                type="text"
+                name="signup_username"
+                placeholder="Username"
+                required
+                aria-label="New username"
+                autocomplete="username"
+              />
+            </div>
+
+            <div class="input-field">
+              <i class="bi bi-envelope" aria-hidden="true"></i>
+              <input
+                type="email"
+                name="signup_email"
+                placeholder="Email"
+                required
+                aria-label="Email"
+                autocomplete="email"
+              />
+            </div>
+
+            <div class="input-field">
+              <i class="bi bi-lock" aria-hidden="true"></i>
+              <input
+                type="password"
+                name="signup_password"
+                placeholder="Password"
+                required
+                aria-label="New password"
+                autocomplete="new-password"
+              />
+            </div>
+
+            <button type="submit" class="btn is-disabled" aria-label="Sign up button" disabled aria-disabled="true">Sign up</button>
+
+            <p class="social-text">Or Sign up with social platforms</p>
+            <div class="social-media" aria-label="Social sign-up options">
+              <a href="#" class="social-icon" aria-label="Facebook"><i class="bi bi-facebook" aria-hidden="true"></i></a>
+              <a href="#" class="social-icon" aria-label="Twitter/X"><i class="bi bi-twitter-x" aria-hidden="true"></i></a>
+              <a href="#" class="social-icon" aria-label="Google"><i class="bi bi-google" aria-hidden="true"></i></a>
+              <a href="#" class="social-icon" aria-label="GitHub"><i class="bi bi-github" aria-hidden="true"></i></a>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- ===================== Panels (Left / Right) ===================== -->
+      <div class="panels-container">
+        <div class="panel left-panel">
+          <div class="content">
+            <h3>New here ?</h3>
+            <p>Create your account to start exploring the cosmos with us.</p>
+            <button class="btn transparent" id="sign-up-btn" type="button" aria-controls="signup-form">Sign up</button>
+          </div>
+          <img src="../assets/img/Solar.png" class="image" alt="Cosmic illustration" loading="lazy" />
+        </div>
+
+        <div class="panel right-panel">
+          <div class="content">
+            <h3>One of us ?</h3>
+            <p>Welcome back! Sign in to continue your journey.</p>
+            <button class="btn transparent" id="sign-in-btn" type="button" aria-controls="login-form">Sign in</button>
+          </div>
+          <img src="../assets/img/Solar.png" class="image" alt="Cosmic illustration" loading="lazy" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Project JS (handles login toggles, validation, redirect, and sign-up reset) -->
+    <script src="../assets/js/main.js"></script>
+  </body>
+</html>
