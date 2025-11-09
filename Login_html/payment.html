@@ -43,6 +43,84 @@
   </header>
 
   <main class="flex-grow-1">
+    <!-- ===================== PAYMENT HERO (plain text, no card) ===================== -->
+    <section id="pay-hero" class="py-5 py-lg-6">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-12 col-lg-10 col-xl-8 text-center">
+            <h1 class="display-3 fw-bold mb-2">Congratulations</h1>
+            <p class="lead text-muted-500 mb-0">Below is a sample title deed that will be delivered to your home.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== DEED PREVIEW (new) ===================== -->
+    <section id="deed-preview" class="py-4 py-lg-5">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-12 col-lg-10 col-xl-8">
+            <article class="product-card giant-card p-3 p-md-4 card-hover">
+              <div class="text-center mb-4">
+                <!-- REPLACED default Solar.png <img> to avoid unwanted overlay -->
+                <img id="deedImage" alt="Selected object preview" class="img-fluid d-block mx-auto d-none" style="max-width: 480px; width: 100%; height: auto; object-fit: contain;" loading="lazy">
+                <!-- New grid container for multiple selections -->
+                <div id="deedImageGrid" class="d-flex flex-wrap justify-content-center gap-3"></div>
+              </div>
+
+              <div class="mb-2 text-center">
+                <h2 id="deedTitle" class="h3 fw-bold mb-0">Solar System Title Deed</h2>
+              </div>
+
+              <div class="row g-3 mt-3">
+                <div class="col-12">
+                  <!-- Center on all screen sizes -->
+                  <div class="d-flex flex-column align-items-center text-center">
+                    <div class="fw-semibold">Name</div>
+                    <div id="deedName" class="text-muted-500">—</div>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <!-- Center on all screen sizes -->
+                  <div class="d-flex flex-column align-items-center text-center">
+                    <div class="fw-semibold">Address</div>
+                    <div id="deedAddress" class="text-muted-500 text-break">—</div>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <!-- Center on all screen sizes -->
+                  <div class="d-flex flex-column align-items-center text-center">
+                    <div class="fw-semibold">Selected Objects</div>
+                    <div id="deedItems" class="text-muted-500">Solar System Set</div>
+                  </div>
+                </div>
+                <div class="col-12 col-md-6">
+                  <!-- Center on mobile, left on md+ -->
+                  <div class="d-flex flex-column align-items-center text-center align-items-md-start text-md-start">
+                    <div class="fw-semibold">Order No.</div>
+                    <div id="deedOrderNo" class="text-muted-500">—</div>
+                  </div>
+                </div>
+                <div class="col-12 col-md-6">
+                  <!-- Center on mobile, right on md+ -->
+                  <div class="d-flex flex-column align-items-center text-center align-items-md-end text-md-end">
+                    <div class="fw-semibold">Issued At</div>
+                    <div id="deedIssuedAt" class="text-muted-500">—</div>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <hr class="opacity-10 my-3" />
+                  <p id="deedCongrats" class="mb-0 text-center text-muted-500">
+                    Congratulations on your cosmic ownership. This deed symbolizes your exclusive claim over the selected celestial bodies—an enduring testament to curiosity, wonder, and exploration.
+                  </p>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- ===================== PAYMENT CARD (centered big card) ===================== -->
     <section id="payment" class="py-5 py-lg-6">
       <div class="container">
@@ -56,7 +134,7 @@
 
               <div class="product-media d-flex justify-content-center mb-4">
                 <!-- Click QR to open the provided video URL -->
-                <a href="https://rick.nerial.uk/video.mp4" target="_blank" rel="noopener" aria-label="Open payment video in a new tab">
+                <a href="https://rick.nerial.uk/video.mp4" target="=_blank" rel="noopener" aria-label="Open payment video in a new tab">
                   <img src="../assets/img/qr.png" alt="QR code for payment"
                        class="img-fluid"
                        style="max-width: 420px; width: 100%; height: auto; object-fit: contain;"
