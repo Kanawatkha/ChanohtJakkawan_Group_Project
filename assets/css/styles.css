@@ -1,5 +1,5 @@
 /* =========================================================
-   ChanohtJakkawan — Cosmic Luxury Theme (v5.2 Final - Content Enhanced)
+   ChanohtJakkawan — Cosmic Luxury Theme (v5.3 Final - UI/UX Polish)
    Refined for Density, Square Layouts & Mobile Perfection
    ========================================================= */
 
@@ -27,7 +27,7 @@
     /* Fonts */
     --font-serif: 'Playfair Display', serif;
     --font-sans: 'Montserrat', sans-serif;
-    --font-mono: 'Courier New', Courier, monospace; /* New for Stats */
+    --font-mono: 'Courier New', Courier, monospace;
 }
 
 /* -------------------- 2. Global Resets & Typography -------------------- */
@@ -55,9 +55,9 @@ button:focus { outline: none; }
 .text-muted-light { color: var(--text-muted) !important; }
 .text-gradient {
     background: linear-gradient(135deg, #fff 0%, var(--gold-primary) 100%);
-    background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 .ls-1 { letter-spacing: 1px; }
 
@@ -209,25 +209,32 @@ button:focus { outline: none; }
     align-items: center;
 }
 .feature-img-box {
-    width: 140px;  /* Increased size significantly */
-    height: 140px; /* Increased size significantly */
+    width: 140px;
+    height: 140px;
     display: flex; align-items: center; justify-content: center;
-    margin-bottom: 1.5rem !important; /* Slightly more space below image */
+    margin-bottom: 1.5rem !important;
 }
 .feature-img-box img {
     max-width: 100%;
     max-height: 100%;
     object-fit: contain;
-    transform: scale(1.1); /* Slight zoom to fill the box */
+    transform: scale(1.1);
 }
 
-/* -------------------- 7. Product & Team Cards (Hover View) -------------------- */
+/* -------------------- 7. Product & Team Cards -------------------- */
 .product-card, .team-card-sm, .team-card-md, .team-card-lg {
     border: 1px solid rgba(255,255,255,0.05);
+    position: relative; /* Ensure badges position correctly */
 }
 .product-card.featured {
     border-color: rgba(212, 175, 55, 0.3);
     background: radial-gradient(circle at top right, rgba(212,175,55,0.08), transparent);
+}
+
+/* Badge Styles (Fixed Overlap) */
+.product-card .badge {
+    z-index: 10;
+    white-space: nowrap;
 }
 
 /* Image Wrappers */
@@ -237,27 +244,20 @@ button:focus { outline: none; }
     border-radius: 12px;
 }
 
-/* Planet Animation for ALL planets (Inner & Giants) */
+/* Planet Animation */
 .planet-thumb { transition: transform 0.5s ease; }
-
-/* Apply hover effect to ANY product card containing planet-thumb */
 .product-card:hover .planet-thumb { 
     transform: scale(1.15) rotate(5deg); 
 }
 
-/* Specific Larger Studio Logo for About Page */
-.studio-logo {
-    width: 140px !important;
-    height: auto;
-}
-
-/* Avatar Sizes (UPDATED - Increased Sizes) */
-.avatar-lg { width: 140px; height: 140px; object-fit: cover; }  /* Was 100px */
-.avatar-xl { width: 180px; height: 180px; object-fit: cover; }  /* Was 140px */
-.avatar-xxl { width: 240px; height: 240px; object-fit: cover; } /* Was 180px */
+/* Avatar Sizes */
+.studio-logo { width: 140px !important; height: auto; }
+.avatar-lg { width: 140px; height: 140px; object-fit: cover; }
+.avatar-xl { width: 180px; height: 180px; object-fit: cover; }
+.avatar-xxl { width: 240px; height: 240px; object-fit: cover; }
 .shadow-glow { box-shadow: 0 0 20px rgba(212, 175, 55, 0.2); }
 
-/* View Button Overlay Logic */
+/* View Button Overlay */
 .view-overlay {
     position: absolute; top: 0; left: 0; 
     width: 100%; height: 100%;
@@ -268,8 +268,6 @@ button:focus { outline: none; }
     backdrop-filter: blur(4px);
     z-index: 10;
 }
-
-/* Trigger on Hover OR on '.active' class */
 .product-img-wrapper:hover .view-overlay,
 .team-img-wrapper:hover .view-overlay,
 .product-img-wrapper.tap-active .view-overlay,
@@ -292,9 +290,7 @@ button:focus { outline: none; }
     transform: translateY(20px);
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
-
 .btn-view-3d:hover { background: var(--gold-primary); color: #000; }
-
 .product-img-wrapper:hover .btn-view-3d,
 .team-img-wrapper:hover .btn-view-3d,
 .product-img-wrapper.tap-active .btn-view-3d,
@@ -303,7 +299,7 @@ button:focus { outline: none; }
     transform: translateY(0);
 }
 
-/* -------------------- 8. FAQ Accordion -------------------- */
+/* -------------------- 8. FAQ & Extras -------------------- */
 .glass-accordion .accordion-item {
     background: transparent;
     border: 1px solid rgba(255,255,255,0.1);
@@ -324,39 +320,24 @@ button:focus { outline: none; }
 .glass-accordion .accordion-button::after { filter: invert(1); opacity: 0.7; }
 .glass-accordion .accordion-body { color: var(--text-muted); background: rgba(0,0,0,0.2); }
 
-/* -------------------- 9. Back To Top Button -------------------- */
 .back-to-top {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    width: 50px;
-    height: 50px;
+    position: fixed; bottom: 30px; right: 30px; width: 50px; height: 50px;
     background: linear-gradient(45deg, var(--gold-primary), #b8860b);
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    color: #000;
-    font-size: 1.5rem;
-    z-index: 999;
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(20px);
-    transition: all 0.4s ease;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.5);
-    cursor: pointer;
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    color: #000; font-size: 1.5rem; z-index: 999;
+    opacity: 0; visibility: hidden; transform: translateY(20px);
+    transition: all 0.4s ease; box-shadow: 0 5px 20px rgba(0,0,0,0.5); cursor: pointer;
 }
 .back-to-top.show { opacity: 1; visibility: visible; transform: translateY(0); }
 .back-to-top:hover { transform: translateY(-5px); box-shadow: 0 10px 25px var(--gold-glow); }
 
-/* -------------------- 10. Success Modal -------------------- */
 #paymentSuccessModal { transition: opacity 0.3s ease; }
 .z-index-modal { z-index: 9999; }
 
-/* -------------------- 11. Page Logic & Transitions -------------------- */
+/* -------------------- 9. Page Transitions -------------------- */
 .page-section {
-    min-height: 100vh;
-    padding-top: 90px;
-    opacity: 0;
-    transform: translateY(20px);
+    min-height: 100vh; padding-top: 90px;
+    opacity: 0; transform: translateY(20px);
     transition: opacity 0.5s ease, transform 0.5s ease;
 }
 .page-section.active-section {
@@ -367,8 +348,6 @@ button:focus { outline: none; }
     from { opacity: 0; transform: translateY(15px); }
     to { opacity: 1; transform: translateY(0); }
 }
-
-/* Fade Utilities */
 .fade-in-up { opacity: 0; animation: fadeInUp 0.8s ease-out forwards; }
 .delay-100 { animation-delay: 0.1s; }
 @keyframes fadeInUp {
@@ -376,50 +355,20 @@ button:focus { outline: none; }
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* -------------------- 12. Enhanced Content Styles (New in Round 2) -------------------- */
-
-/* Cosmic Stats */
+/* -------------------- 10. Content & Stats -------------------- */
 .stats-number {
-    font-family: var(--font-mono);
-    letter-spacing: -2px;
+    font-family: var(--font-mono); letter-spacing: -2px;
     text-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
 }
+.partner-logos span { transition: opacity 0.3s; cursor: default; }
+.partner-logos:hover span { opacity: 1 !important; }
 
-/* Trusted Partners */
-.partner-logos span {
-    transition: opacity 0.3s;
-    cursor: default;
-}
-.partner-logos:hover span {
-    opacity: 1 !important;
-}
+.bg-gradient-dark { background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.4) 100%); }
+.testimonial-card { background: rgba(255, 255, 255, 0.02); }
 
-/* Testimonials */
-.bg-gradient-dark {
-    background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.4) 100%);
-}
-.testimonial-card {
-    background: rgba(255, 255, 255, 0.02); /* Slightly more transparent */
-}
+.timeline-item { min-width: 120px; }
 
-/* About Us Timeline */
-.timeline-item {
-    min-width: 120px;
-}
-@media (max-width: 768px) {
-    .timeline {
-        flex-direction: column;
-        gap: 1rem;
-    }
-    .timeline .position-absolute {
-        display: none; /* Hide connecting line on mobile */
-    }
-    .timeline-item {
-        width: 100%;
-    }
-}
-
-/* Responsive Adjustments */
+/* -------------------- 11. Responsive Fixes (The Key Update) -------------------- */
 @media (max-width: 991px) {
     .display-3 { font-size: 2.5rem; }
     .display-4 { font-size: 2rem; }
@@ -428,10 +377,42 @@ button:focus { outline: none; }
 }
 
 @media (max-width: 768px) {
+    /* General Mobile */
     .navbar-brand img { width: 28px; height: 28px; }
     .brand-text { font-size: 1.1rem; }
     .hero-title, .section-heading { text-align: center; }
     .py-5 { padding-top: 3rem !important; padding-bottom: 3rem !important; }
+    
+    /* Stats Spacing Fix */
+    #page-home .row.mt-5.pt-5 {
+        margin-top: 2rem !important;
+        padding-top: 2rem !important;
+    }
+    
+    /* Timeline Vertical Layout */
+    .timeline {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+    .timeline .position-absolute.d-md-none {
+        /* Vertical line adjustment */
+        height: 100%;
+        top: 0;
+        bottom: 0;
+    }
+    .timeline-item {
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+    
+    /* Badge Overlap Fix */
+    .product-card .badge {
+        font-size: 0.65rem !important;
+        padding: 0.35em 0.65em;
+        /* Ensure it stays readable on small screens */
+    }
+
+    /* Modals & Layouts */
     .back-to-top { width: 40px; height: 40px; bottom: 20px; right: 20px; font-size: 1.2rem; }
     #paymentSuccessModal .glass-card { padding: 2rem !important; }
 }
