@@ -1,0 +1,20 @@
+{
+  "name": "chanoht-jakkawan-shop",
+  "version": "1.0.0",
+  "description": "Cosmic Luxury Shop - Single Page Application",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js"
+  },
+  "keywords": [
+    "nodejs",
+    "express",
+    "ecommerce"
+  ],
+  "author": "ChanohtJakkawan",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
