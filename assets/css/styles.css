@@ -1,5 +1,5 @@
 /* =========================================================
-   ChanohtJakkawan — Cosmic Luxury Theme (v5.3 Final - UI/UX Polish)
+   ChanohtJakkawan — Cosmic Luxury Theme (v5.4 Final - Content Elevated)
    Refined for Density, Square Layouts & Mobile Perfection
    ========================================================= */
 
@@ -49,6 +49,7 @@ h1, h2, h3, h4, h5, h6, .font-serif {
 a { text-decoration: none; color: inherit; transition: var(--trans-fast); }
 ul { list-style: none; padding: 0; margin: 0; }
 button:focus { outline: none; }
+.cursor-pointer { cursor: pointer; }
 
 /* Text Utilities */
 .text-gold { color: var(--gold-primary) !important; }
@@ -139,7 +140,8 @@ button:focus { outline: none; }
     box-shadow: 0 15px 50px rgba(0,0,0,0.7);
 }
 
-.hover-lift:hover { transform: translateY(-5px); }
+.hover-lift { transition: transform 0.3s ease, border-color 0.3s ease; }
+.hover-lift:hover { transform: translateY(-5px); border-color: rgba(212, 175, 55, 0.5); }
 
 /* Glass Inputs */
 .glass-input {
@@ -148,13 +150,25 @@ button:focus { outline: none; }
     color: #fff;
     backdrop-filter: blur(5px);
 }
-.glass-input:focus {
+.glass-input:focus, .glass-input:checked {
     background: rgba(255, 255, 255, 0.1);
     border-color: var(--gold-primary);
     color: #fff;
     box-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
 }
 .glass-input::placeholder { color: rgba(255,255,255,0.3); }
+
+/* Add-on Checkbox Styling */
+.form-check.glass-input {
+    cursor: pointer;
+}
+.form-check.glass-input:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+.form-check-input:checked {
+    background-color: var(--gold-primary);
+    border-color: var(--gold-primary);
+}
 
 /* Buttons */
 .btn-luxury-primary {
@@ -184,9 +198,9 @@ button:focus { outline: none; }
     color: var(--gold-primary);
 }
 
-/* -------------------- 5. Navbar & Layout -------------------- */
+/* -------------------- 5. Navbar & Header -------------------- */
 #main-header { 
-    background: rgba(5, 7, 10, 0.85); 
+    background: rgba(5, 7, 10, 0.95); /* Slightly darker for ticker readability */
     backdrop-filter: blur(20px); 
     border-bottom: 1px solid rgba(255,255,255,0.05);
 }
@@ -199,6 +213,19 @@ button:focus { outline: none; }
     margin-left: 10px;
 }
 .navbar-toggler:focus { box-shadow: 0 0 0 2px var(--gold-primary); }
+
+/* NEW: Ticker Animation */
+.market-ticker { height: 32px; line-height: 24px; }
+.ticker-wrapper {
+    display: flex;
+    width: max-content;
+    animation: ticker 30s linear infinite;
+}
+.ticker-content { white-space: nowrap; }
+@keyframes ticker {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
 
 /* -------------------- 6. Features (Larger Images) -------------------- */
 .feature-card {
@@ -363,6 +390,18 @@ button:focus { outline: none; }
 .partner-logos span { transition: opacity 0.3s; cursor: default; }
 .partner-logos:hover span { opacity: 1 !important; }
 
+/* Grayscale effect for investor logos */
+.grayscale-hover > div {
+    transition: all 0.3s ease;
+    opacity: 0.6;
+    filter: grayscale(100%);
+}
+.grayscale-hover > div:hover {
+    opacity: 1;
+    filter: grayscale(0%);
+    transform: scale(1.05);
+}
+
 .bg-gradient-dark { background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.4) 100%); }
 .testimonial-card { background: rgba(255, 255, 255, 0.02); }
 
@@ -409,10 +448,57 @@ button:focus { outline: none; }
     .product-card .badge {
         font-size: 0.65rem !important;
         padding: 0.35em 0.65em;
-        /* Ensure it stays readable on small screens */
     }
 
     /* Modals & Layouts */
     .back-to-top { width: 40px; height: 40px; bottom: 20px; right: 20px; font-size: 1.2rem; }
     #paymentSuccessModal .glass-card { padding: 2rem !important; }
+}
+
+/* -------------------- 12. NEW: Newsletter Modal & Overlay -------------------- */
+.newsletter-overlay {
+    background: rgba(0, 0, 0, 0.6); /* Dark semi-transparent background */
+    backdrop-filter: blur(8px);      /* Blur effect behind the modal */
+    -webkit-backdrop-filter: blur(8px); /* Safari support */
+    transition: opacity 0.4s ease;
+}
+
+/* Modal Content Animation */
+.newsletter-overlay .glass-card {
+    box-shadow: 0 20px 60px rgba(0,0,0,0.8), 0 0 40px rgba(212, 175, 55, 0.2); /* Deep shadow + Gold glow */
+    border: 1px solid rgba(212, 175, 55, 0.3); /* Gold border */
+}
+
+/* Floating Animation for Icon inside Modal */
+.floating-anim {
+    animation: float 3s ease-in-out infinite;
+}
+
+/* Keyframes for Fade In Up (used by modal) */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translate3d(0, 40px, 0);
+    }
+    to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+/* Keyframes for Fade Out Down (for closing) */
+@keyframes fadeOutDown {
+    from {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+    to {
+        opacity: 0;
+        transform: translate3d(0, 40px, 0);
+    }
+}
+
+/* Class to apply exit animation */
+.fade-out-down {
+    animation: fadeOutDown 0.4s ease forwards;
 }
