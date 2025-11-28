@@ -25,6 +25,25 @@
     </div>
 
     <header id="main-header" class="fixed-top transition-all">
+        <div class="market-ticker bg-black border-bottom border-light border-opacity-10 py-1 overflow-hidden position-relative z-index-top">
+            <div class="ticker-wrapper d-flex">
+                <div class="ticker-content d-flex gap-5 text-gold small font-monospace px-4">
+                    <span><i class="bi bi-graph-up-arrow me-2"></i>Mars: +2.5%</span>
+                    <span><i class="bi bi-activity me-2"></i>Sector 7: High Activity</span>
+                    <span><i class="bi bi-currency-bitcoin me-2"></i>GD/USD: 1:500</span>
+                    <span><i class="bi bi-star-fill me-2"></i>New Asteroid Belt Listed</span>
+                    <span><i class="bi bi-arrow-up-right-circle-fill me-2"></i>Jupiter Stocks Soaring</span>
+                </div>
+                <div class="ticker-content d-flex gap-5 text-gold small font-monospace px-4">
+                    <span><i class="bi bi-graph-up-arrow me-2"></i>Mars: +2.5%</span>
+                    <span><i class="bi bi-activity me-2"></i>Sector 7: High Activity</span>
+                    <span><i class="bi bi-currency-bitcoin me-2"></i>GD/USD: 1:500</span>
+                    <span><i class="bi bi-star-fill me-2"></i>New Asteroid Belt Listed</span>
+                    <span><i class="bi bi-arrow-up-right-circle-fill me-2"></i>Jupiter Stocks Soaring</span>
+                </div>
+            </div>
+        </div>
+
         <nav class="navbar navbar-expand-lg navbar-dark py-3">
             <div class="container">
                 <a class="navbar-brand d-flex align-items-center" href="#" onclick="router('home')">
@@ -186,6 +205,22 @@
                 </div>
             </section>
 
+            <section class="py-5 border-top border-light border-opacity-10">
+                <div class="container">
+                    <div class="row justify-content-center fade-in-up">
+                        <div class="col-lg-8 text-center">
+                            <i class="bi bi-envelope-paper-heart fs-1 text-gold mb-3 d-block floating-anim"></i>
+                            <h3 class="font-serif">Subspace Transmissions</h3>
+                            <p class="text-muted-light mb-4">Subscribe for daily solar flare alerts and market updates.</p>
+                            <form class="d-flex flex-column flex-sm-row gap-3 justify-content-center">
+                                <input type="email" class="form-control glass-input w-100" id="newsletterEmail" placeholder="Enter cosmic frequency (email)">
+                                <button type="button" id="newsletterBtn" class="btn btn-luxury-primary px-4 text-nowrap">Subscribe</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
             <section id="deed" class="py-5">
                 <div class="container">
                     <div class="glass-card p-4 p-lg-5">
@@ -216,7 +251,6 @@
                             <div class="position-absolute top-0 start-0 m-3 z-index-top">
                                 <span class="badge bg-danger text-uppercase ls-1 px-3 py-2 shadow-glow">Only 1 Left in Stock</span>
                             </div>
-
                             <div class="row align-items-center">
                                 <div class="col-md-6 position-relative product-img-wrapper sun-wrapper">
                                     <img src="assets/img/Sun.png" alt="Sun" class="img-fluid d-block mx-auto floating-anim" style="max-height: 380px;">
@@ -454,6 +488,30 @@
                     <p class="lead">A cosmic craft studio beyond the horizon.</p>
                 </div>
 
+                <div class="row g-4 text-center mb-5 fade-in-up">
+                    <div class="col-md-4">
+                        <div class="glass-card p-4 h-100 hover-lift">
+                            <i class="bi bi-rocket-takeoff-fill fs-1 text-gold mb-3"></i>
+                            <h4 class="h5 font-serif text-white">Expansion</h4>
+                            <p class="small text-muted-light">Extending humanity's reach to the furthest stars.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="glass-card p-4 h-100 hover-lift">
+                            <i class="bi bi-recycle fs-1 text-gold mb-3"></i>
+                            <h4 class="h5 font-serif text-white">Sustainability</h4>
+                            <p class="small text-muted-light">Powered by 100% renewable Dyson Sphere energy.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="glass-card p-4 h-100 hover-lift">
+                            <i class="bi bi-bank fs-1 text-gold mb-3"></i>
+                            <h4 class="h5 font-serif text-white">Legacy</h4>
+                            <p class="small text-muted-light">Securing assets for your bloodline across centuries.</p>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="row justify-content-center mb-5 fade-in-up">
                     <div class="col-lg-8 text-center">
                         <div class="d-flex justify-content-center gap-4 align-items-center opacity-75">
@@ -475,11 +533,10 @@
                             <h3 class="font-serif text-gold text-center mb-4">Our Timeline</h3>
                             <div class="timeline d-flex flex-column flex-md-row justify-content-between text-center position-relative gap-4 gap-md-0">
                                 <div class="position-absolute top-50 start-0 w-100 border-top border-light border-opacity-25 z-0 d-none d-md-block" style="transform: translateY(-50%);"></div>
-                                
                                 <div class="position-absolute top-0 start-50 h-100 border-start border-light border-opacity-25 z-0 d-md-none" style="transform: translateX(-50%);"></div>
                                 
                                 <div class="timeline-item z-1 bg-dark p-2 rounded">
-                                    <span class="badge bg-secondary mb-2">2024</span>
+                                    <span class="badge bg-gold text-dark mb-2">2024</span>
                                     <p class="small text-muted-light mb-0">Studio Founded</p>
                                 </div>
                                 <div class="timeline-item z-1 bg-dark p-2 rounded">
@@ -496,6 +553,15 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+
+                <div class="text-center mb-5 fade-in-up">
+                    <h4 class="font-serif text-gold mb-4 small text-uppercase ls-1">Financial Backing</h4>
+                    <div class="d-flex justify-content-center flex-wrap gap-4 gap-md-5 opacity-75 grayscale-hover align-items-center">
+                        <div class="d-flex align-items-center gap-2"><i class="bi bi-infinity fs-2 text-white"></i> <span class="font-serif text-white h5 mb-0">Andromeda VC</span></div>
+                        <div class="d-flex align-items-center gap-2"><i class="bi bi-globe2 fs-2 text-white"></i> <span class="font-serif text-white h5 mb-0">Interstellar Bank</span></div>
+                        <div class="d-flex align-items-center gap-2"><i class="bi bi-safe2-fill fs-2 text-white"></i> <span class="font-serif text-white h5 mb-0">Void Fund</span></div>
                     </div>
                 </div>
                 
@@ -622,9 +688,11 @@
                     <h1 class="display-4 font-serif text-gold">Contact Us</h1>
                     <p class="lead">We value your feedback. Whether it's a feature request, a bug report, or a transmission from deep space, our communication channels are open.</p>
                 </div>
-                <div class="row g-4 justify-content-center">
-                    <div class="col-md-5 fade-in-up">
-                        <div class="glass-card p-0 mb-4 overflow-hidden h-100 position-relative">
+                
+                <div class="row g-5 justify-content-center mb-5">
+                    
+                    <div class="col-lg-8 fade-in-up">
+                        <div class="glass-card p-0 mb-4 overflow-hidden position-relative">
                             <div class="bg-black d-flex align-items-center justify-content-center" style="height: 300px; background-image: radial-gradient(#333 1px, transparent 1px); background-size: 20px 20px;">
                                 <div class="text-center">
                                     <i class="bi bi-geo-alt-fill text-danger fs-1 floating-anim"></i>
@@ -635,10 +703,35 @@
                                 <h6 class="text-gold mb-0"><i class="bi bi-map me-2"></i>Headquarters Coordinates</h6>
                             </div>
                         </div>
+                        
+                        <div class="glass-card p-4">
+                            <h6 class="text-gold font-serif mb-3 ps-2 border-start border-3 border-warning">Regional Offices</h6>
+                            <div class="row g-3">
+                                <div class="col-md-4">
+                                    <div class="d-flex align-items-start">
+                                        <i class="bi bi-geo-alt-fill text-gold me-2 mt-1"></i> 
+                                        <div class="small text-muted-light"><strong>Earth HQ:</strong><br>New York (Old World Sector)</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="d-flex align-items-start">
+                                        <i class="bi bi-geo-alt-fill text-gold me-2 mt-1"></i> 
+                                        <div class="small text-muted-light"><strong>Mars Branch:</strong><br>Olympus Mons Base Alpha</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="d-flex align-items-start">
+                                        <i class="bi bi-geo-alt-fill text-gold me-2 mt-1"></i> 
+                                        <div class="small text-muted-light"><strong>Moon Outpost:</strong><br>Sea of Tranquility Depot</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-md-7 fade-in-up delay-100">
+
+                    <div class="col-lg-8 fade-in-up delay-100">
                         <div class="glass-card p-4 p-md-5">
-                            <div class="d-flex flex-column flex-md-row mb-4 gap-3 gap-md-4">
+                            <div class="d-flex flex-column flex-md-row mb-4 gap-3 gap-md-4 justify-content-center text-center">
                                 <div><i class="bi bi-envelope text-gold me-2"></i> contact@chanohtjakkawan.com</div>
                                 <div><i class="bi bi-telephone text-gold me-2"></i> +66 12 345 678</div>
                             </div>
@@ -658,6 +751,12 @@
                                 <button type="submit" id="contactSendBtn" class="btn btn-luxury-primary w-100">Send Message</button>
                                 <div id="contactSuccess" class="text-center mt-3 text-success d-none"><i class="bi bi-check-circle"></i> Sent Successfully!</div>
                             </form>
+                            
+                            <div class="text-center mt-4 pt-3 border-top border-light border-opacity-10">
+                                <a href="#" class="text-decoration-none text-muted-light small hover-gold">
+                                    <i class="bi bi-person-workspace me-1"></i> Join the Fleet? We are hiring Warp Mechanics.
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -698,7 +797,6 @@
                             <h4 class="font-serif mb-3 text-gold">3. Select Objects</h4>
                             <div class="d-flex flex-column-reverse mb-3 gap-3">
                                 <button class="btn btn-sm btn-outline-light w-100" type="button" data-bs-toggle="collapse" data-bs-target="#productDropdown">Toggle Selection</button>
-                                
                                 <div class="form-check form-switch w-100 text-end">
                                     <input class="form-check-input" type="checkbox" id="selectAll">
                                     <label class="form-check-label" for="selectAll" id="selectAllLabel">Select All (Full Set)</label>
@@ -735,6 +833,34 @@
 
                         <div class="glass-card p-4">
                             <h4 class="font-serif mb-3 text-gold">Order Summary</h4>
+                            
+                            <div class="mb-3 pb-3 border-bottom border-light border-opacity-10">
+                                <h6 class="text-muted-light small mb-2 text-uppercase">Enhance Your Order</h6>
+                                <div class="d-flex flex-column gap-2">
+                                    <div class="form-check glass-input p-2 rounded ps-5 position-relative hover-lift">
+                                        <input class="form-check-input position-absolute top-50 start-0 translate-middle-y ms-2 product-addon" type="checkbox" id="addon-insurance" data-price="50">
+                                        <label class="form-check-label w-100 d-flex justify-content-between align-items-center cursor-pointer" for="addon-insurance">
+                                            <span><i class="bi bi-shield-check text-gold me-2"></i>Meteorite Insurance</span>
+                                            <span class="small text-muted">+50 GD</span>
+                                        </label>
+                                    </div>
+                                    <div class="form-check glass-input p-2 rounded ps-5 position-relative hover-lift">
+                                        <input class="form-check-input position-absolute top-50 start-0 translate-middle-y ms-2 product-addon" type="checkbox" id="addon-frame" data-price="20">
+                                        <label class="form-check-label w-100 d-flex justify-content-between align-items-center cursor-pointer" for="addon-frame">
+                                            <span><i class="bi bi-file-earmark-richtext text-gold me-2"></i>Framed Deed</span>
+                                            <span class="small text-muted">+20 GD</span>
+                                        </label>
+                                    </div>
+                                    <div class="form-check glass-input p-2 rounded ps-5 position-relative hover-lift">
+                                        <input class="form-check-input position-absolute top-50 start-0 translate-middle-y ms-2 product-addon" type="checkbox" id="addon-naming" data-price="500">
+                                        <label class="form-check-label w-100 d-flex justify-content-between align-items-center cursor-pointer" for="addon-naming">
+                                            <span><i class="bi bi-stars text-gold me-2"></i>Crater Naming Rights</span>
+                                            <span class="small text-muted">+500 GD</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
                             <ul id="summaryList" class="list-unstyled small mb-3 text-muted-light"></ul>
                             <div class="d-flex justify-content-between mb-3">
                                 <strong>Subtotal</strong>
@@ -791,6 +917,10 @@
                                 </p>
                             </div>
 
+                            <div class="mt-3 text-center">
+                                <button class="btn btn-sm btn-luxury-outline rounded-pill"><i class="bi bi-file-earmark-pdf-fill me-1"></i> Download Certificate</button>
+                            </div>
+
                             <div class="mt-4 pt-3">
                                 <p class="small text-muted-light mb-2">Share Your Conquest</p>
                                 <div class="d-flex justify-content-center gap-2">
@@ -822,6 +952,13 @@
                                 <li class="mb-2"><i class="bi bi-2-circle text-gold me-2"></i> Encrypted Key Transmission (~10 Light Minutes)</li>
                                 <li class="mb-2"><i class="bi bi-3-circle text-gold me-2"></i> Stasis Box Shipment Preparation</li>
                             </ul>
+                        </div>
+
+                        <div class="glass-card p-4 mt-4 text-center">
+                            <i class="bi bi-people-fill fs-3 text-gold mb-2"></i>
+                            <h5 class="font-serif">Referral Program</h5>
+                            <p class="small text-muted-light mb-3">Invite a fellow earthling and get 10% off your next nebula.</p>
+                            <button class="btn btn-sm btn-outline-light rounded-pill">Copy Referral Link</button>
                         </div>
 
                     </div>
@@ -866,7 +1003,13 @@
                                         <input type="password" class="form-control glass-input" placeholder="Security Token">
                                     </div>
                                     <button class="btn btn-luxury-primary w-100 rounded-pill mb-3">Sign In</button>
-                                    <p class="text-muted-light">Or sign in with social platforms</p>
+                                    
+                                    <div class="mt-4 text-muted-light small d-flex justify-content-center gap-3 align-items-center">
+                                        <span><i class="bi bi-fingerprint text-gold"></i> Biometric Scan</span>
+                                        <span><i class="bi bi-shield-lock text-gold"></i> Quantum Encrypted</span>
+                                    </div>
+
+                                    <p class="text-muted-light mt-4">Or sign in with social platforms</p>
                                     <div class="d-flex justify-content-center gap-3">
                                         <a href="#" class="social-icon"><i class="bi bi-facebook"></i></a>
                                         <a href="#" class="social-icon"><i class="bi bi-twitter-x"></i></a>
@@ -955,6 +1098,17 @@
             <h2 class="font-serif text-gold mb-3">Transaction Complete</h2>
             <p class="text-muted-light mb-4">Your ownership has been recorded in the Galactic Ledger. Thank you for choosing ChanohtJakkawan.</p>
             <button class="btn btn-luxury-primary w-100 rounded-pill" onclick="finishOrder()">Done</button>
+        </div>
+    </div>
+
+    <div id="newsletterModal" class="d-none position-fixed top-0 start-0 w-100 h-100 z-index-modal d-flex align-items-center justify-content-center newsletter-overlay">
+        <div class="glass-card p-5 text-center fade-in-up" style="max-width: 500px; width: 90%;">
+            <div class="mb-4">
+                <i class="bi bi-broadcast-pin fs-1 text-gold floating-anim"></i>
+            </div>
+            <h2 class="font-serif text-gold mb-3">Transmission Received</h2>
+            <p class="text-muted-light mb-4">You have successfully joined the Subspace Network. Expect daily solar flare alerts and market updates directly to your neural link.</p>
+            <button class="btn btn-luxury-primary w-100 rounded-pill" id="newsletterDoneBtn">Done</button>
         </div>
     </div>
 
