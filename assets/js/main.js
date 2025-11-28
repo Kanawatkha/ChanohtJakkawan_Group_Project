@@ -1,6 +1,6 @@
 /* =========================================================
-   ChanohtJakkawan — main.js (v5.3 Final - Content Enhanced)
-   Full Stack SPA Logic: Router, Live Stats, Social Share
+   ChanohtJakkawan — main.js (v5.4 Final - Add-on Logic)
+   Full Stack SPA Logic: Calculator, Add-ons, Ticker
    ========================================================= */
 
 (function () {
@@ -28,7 +28,6 @@
         const target = $(`#page-${pageName}`);
         if (target) {
             target.classList.remove('d-none');
-            // Tiny delay to trigger CSS transition
             setTimeout(() => {
                 target.classList.add('active-section');
             }, 10);
@@ -41,7 +40,6 @@
         const navbar = $('#main-header');
         const footer = $('#main-footer');
         
-        // Hide on Login, 3D View, or Payment Success Modal
         if (pageName === 'login' || pageName === 'view-3d') {
             navbar.style.display = 'none';
             if(footer) footer.style.display = 'none';
@@ -69,37 +67,26 @@
         const navMenu = $('#navMenu');
         const toggler = $('.navbar-toggler');
         
-        // If menu is open, and click is NOT on menu and NOT on toggler
         if (navMenu && navMenu.classList.contains('show') && 
             !navMenu.contains(e.target) && !toggler.contains(e.target)) {
-            toggler.click(); // Close it
+            toggler.click();
         }
     });
 
     // ---------------------------------------------------------
-    // 4. Mobile Touch Interaction (Tap to Show Overlay)
+    // 4. Mobile Touch Interaction
     // ---------------------------------------------------------
-    // On mobile, hover doesn't work well. We use 'tap-active' class.
     const touchCards = $$('.product-img-wrapper, .team-img-wrapper, .sun-wrapper');
     
     touchCards.forEach(card => {
         card.addEventListener('click', function(e) {
-            // If clicking the button itself, let it pass
             if (e.target.tagName === 'BUTTON' || e.target.tagName === 'A') return;
-            
-            // Toggle active class
             const isActive = this.classList.contains('tap-active');
-            
-            // Remove active from all others first (Exclusive selection)
             touchCards.forEach(c => c.classList.remove('tap-active'));
-            
-            if (!isActive) {
-                this.classList.add('tap-active');
-            }
+            if (!isActive) this.classList.add('tap-active');
         });
     });
 
-    // Click anywhere else to close all active cards
     document.addEventListener('click', function(e) {
         if (!e.target.closest('.product-img-wrapper') && 
             !e.target.closest('.team-img-wrapper') &&
@@ -109,28 +96,30 @@
     });
 
     // ---------------------------------------------------------
-    // 5. Order Logic (Calculation & Persistence)
+    // 5. Order Logic (Updated with Add-ons)
     // ---------------------------------------------------------
     const productCheckboxes = $$('.product'); 
+    const addonCheckboxes = $$('.product-addon'); // NEW: Select Add-on checkboxes
     const selectAllCheckbox = $('#selectAll');
     
     function updateOrderTotals() {
-        if (!productCheckboxes.length) return;
+        // if (!productCheckboxes.length) return; // Allow running even if no products checked (for reset)
 
         let total = 0;
         const summaryList = $('#summaryList');
         if (summaryList) summaryList.innerHTML = '';
         
         let selectedItems = [];
+        let selectedAddons = []; // Store selected addons
 
+        // 1. Calculate Products
         productCheckboxes.forEach(cb => {
             if (cb.checked) {
                 const price = parseInt(cb.getAttribute('data-price') || 0);
-                const name = cb.id; // sun, mercury, etc.
+                const name = cb.id;
                 total += price;
                 selectedItems.push(name);
 
-                // Add to summary
                 const li = document.createElement('li');
                 li.className = "d-flex justify-content-between text-muted-light";
                 li.innerHTML = `<span>${capitalize(name)}</span> <span class="text-gold">${price} GD</span>`;
@@ -138,24 +127,49 @@
             }
         });
 
-        // Update Text
+        // 2. Calculate Add-ons (NEW)
+        if (selectedItems.length > 0) { // Only allow addons if products exist
+            addonCheckboxes.forEach(cb => {
+                cb.disabled = false; // Enable if products selected
+                if (cb.checked) {
+                    const price = parseInt(cb.getAttribute('data-price') || 0);
+                    // Extract name from label text (simple way) or id
+                    const labelText = $(`label[for="${cb.id}"] span`).textContent;
+                    total += price;
+                    selectedAddons.push({ id: cb.id, name: labelText, price: price });
+
+                    const li = document.createElement('li');
+                    li.className = "d-flex justify-content-between text-info small fst-italic"; // Distinct style
+                    li.innerHTML = `<span>+ ${labelText}</span> <span>${price} GD</span>`;
+                    summaryList.appendChild(li);
+                }
+            });
+        } else {
+            // Disable addons if no product selected
+            addonCheckboxes.forEach(cb => {
+                cb.checked = false;
+                cb.disabled = true;
+            });
+        }
+
+        // Update UI
         $('#totalPrice').textContent = total;
         $('#summaryTotal').textContent = formatCurrency(total);
 
         // Update Select All State
         if (selectAllCheckbox) {
-            const allChecked = productCheckboxes.every(cb => cb.checked);
+            const allChecked = productCheckboxes.length > 0 && productCheckboxes.every(cb => cb.checked);
             selectAllCheckbox.checked = allChecked;
         }
 
-        // Save to LocalStorage
+        // Save to LocalStorage (Including Addons)
         const orderData = {
             items: selectedItems,
+            addons: selectedAddons, // Save addons
             total: total
         };
         localStorage.setItem('cj_order', JSON.stringify(orderData));
 
-        // Enable/Disable Confirm Button
         validateOrderForm();
     }
 
@@ -177,6 +191,7 @@
 
     // Listeners
     productCheckboxes.forEach(cb => cb.addEventListener('change', updateOrderTotals));
+    addonCheckboxes.forEach(cb => cb.addEventListener('change', updateOrderTotals)); // Listen for add-ons
 
     if (selectAllCheckbox) {
         selectAllCheckbox.addEventListener('change', function() {
@@ -186,16 +201,19 @@
         });
     }
 
-    // Input Validation Listeners
-    $$('.order-container input').forEach(input => {
+    $$('.order-container input:not([type="checkbox"])').forEach(input => {
         input.addEventListener('input', validateOrderForm);
         input.addEventListener('change', validateOrderForm);
     });
+    
+    // Privacy Checkbox
+    const acceptCheckbox = $('#accept');
+    if(acceptCheckbox) acceptCheckbox.addEventListener('change', validateOrderForm);
 
-    // "Buy Now" & "Preselect" Logic
+
     window.preselectAndGo = function(productId) {
-        // Reset all checks first
         productCheckboxes.forEach(cb => cb.checked = false);
+        addonCheckboxes.forEach(cb => cb.checked = false); // Reset addons
         
         if (productId === 'set') {
             if (selectAllCheckbox) {
@@ -211,55 +229,54 @@
         router('order');
     };
 
-    // Confirm Order -> Go to Payment
     const confirmBtn = $('#confirmBtn');
     if (confirmBtn) {
         confirmBtn.addEventListener('click', function() {
-            // Save Customer Info
             const customerData = {
                 name: $('#fullName').value,
                 address: `${$('#addr1').value}, ${$('#city').value}, ${$('#country').value}`,
                 orderNo: 'ORD-' + Math.floor(Math.random() * 1000000)
             };
             localStorage.setItem('cj_customer', JSON.stringify(customerData));
-            
             router('payment');
         });
     }
 
     // ---------------------------------------------------------
-    // 6. Payment & Deed Logic (Updated with Social Share)
+    // 6. Payment & Deed Logic
     // ---------------------------------------------------------
     function initPaymentPage() {
-        const orderData = JSON.parse(localStorage.getItem('cj_order') || '{"items":[], "total":0}');
+        const orderData = JSON.parse(localStorage.getItem('cj_order') || '{"items":[], "addons":[], "total":0}');
         const custData = JSON.parse(localStorage.getItem('cj_customer') || '{"name":"-", "address":"-", "orderNo":"-"}');
 
-        // Fill Deed Text
         $('#deedName').textContent = custData.name;
         $('#deedAddress').textContent = custData.address;
         $('#deedOrderNo').textContent = custData.orderNo;
-        $('#deedItems').textContent = orderData.items.map(capitalize).join(', ');
+        
+        // Display Items + Addons count
+        let itemsText = orderData.items.map(capitalize).join(', ');
+        if(orderData.addons && orderData.addons.length > 0) {
+            itemsText += ` (+ ${orderData.addons.length} Extras)`;
+        }
+        $('#deedItems').textContent = itemsText;
+        
         $('#payTotal').textContent = formatCurrency(orderData.total);
 
-        // Render Deed Images
         const grid = $('#deedImageGrid');
         const singleImg = $('#deedImage');
         grid.innerHTML = '';
         singleImg.classList.add('d-none');
 
-        // Special Case: Solar System (Full Set - 9 items)
         if (orderData.items.length === 9) {
             singleImg.src = "assets/img/Solar.png";
             singleImg.classList.remove('d-none');
-            $('#deedItems').textContent = "Complete Solar System Set (9 Objects)";
+            $('#deedItems').textContent = "Complete Solar System Set (+ Extras)";
         } 
         else if (orderData.items.length === 1) {
-            // Single Item
             singleImg.src = `assets/img/${capitalize(orderData.items[0])}.png`;
             singleImg.classList.remove('d-none');
         } 
         else if (orderData.items.length > 0) {
-            // Multiple Items Grid
             orderData.items.forEach(item => {
                 const img = document.createElement('img');
                 img.src = `assets/img/${capitalize(item)}.png`;
@@ -271,61 +288,65 @@
             });
         }
 
-        // Initialize Share Buttons Logic (Dynamic binding)
         initSocialShare();
+        initReferralCopy(); // Init referral button
     }
 
-    // Social Share Button Logic
     function initSocialShare() {
         const shareBtns = $$('#page-payment .btn-outline-light.rounded-pill');
         shareBtns.forEach(btn => {
-            // Avoid adding double listeners
             if(btn.dataset.hasListener) return;
-            
+            // Skip referral btn which is handled separately
+            if(btn.innerText.includes("Copy Referral")) return; 
+
             btn.addEventListener('click', function() {
-                const icon = this.innerHTML; // Keep original icon
-                const originalText = this.textContent.trim();
-                
-                // Simulation
+                const icon = this.innerHTML;
                 this.innerHTML = '<i class="bi bi-check2"></i> Sent!';
                 this.classList.replace('btn-outline-light', 'btn-light');
-                
                 setTimeout(() => {
                     this.innerHTML = icon;
                     this.classList.replace('btn-light', 'btn-outline-light');
-                    // Optional alert for fun
-                    // alert(`Successfully broadcasted to ${originalText}!`);
                 }, 2000);
             });
-            
             btn.dataset.hasListener = 'true';
         });
     }
 
-    // Payment Success Modal
+    // NEW: Referral Copy Logic
+    function initReferralCopy() {
+        const refBtns = $$('.btn-outline-light.rounded-pill'); // Select generic buttons
+        refBtns.forEach(btn => {
+            if(btn.textContent.includes("Copy Referral")) {
+                if(btn.dataset.hasListener) return;
+                btn.addEventListener('click', function() {
+                    const originalText = this.textContent;
+                    navigator.clipboard.writeText("Join ChanohtJakkawan with code: COSMOS-2025");
+                    this.textContent = "Copied!";
+                    this.classList.add('bg-white', 'text-dark');
+                    setTimeout(() => {
+                        this.textContent = originalText;
+                        this.classList.remove('bg-white', 'text-dark');
+                    }, 2000);
+                });
+                btn.dataset.hasListener = 'true';
+            }
+        });
+    }
+
     window.showPaymentSuccess = function() {
         const modal = $('#paymentSuccessModal');
         modal.classList.remove('d-none');
-        // Hide navbar just for cleaner look (optional)
         $('#main-header').style.display = 'none';
     };
 
-    // Reset All Data & Go Home
     window.finishOrder = function() {
-        // 1. Clear Storage
         localStorage.removeItem('cj_order');
         localStorage.removeItem('cj_customer');
-
-        // 2. Reset Forms
         $$('input').forEach(input => {
             if (input.type === 'checkbox') input.checked = false;
             else input.value = '';
         });
-
-        // 3. Hide Modal
         $('#paymentSuccessModal').classList.add('d-none');
-
-        // 4. Go Home
         router('home');
     };
 
@@ -335,10 +356,7 @@
     window.open3DView = function(planetId) {
         const title = $('#view-3d-title');
         const container = $('#3d-container');
-        
         if (title) title.textContent = planetId === 'solar' ? 'Solar System' : capitalize(planetId);
-        
-        // Mock Loading
         container.innerHTML = `
             <div class="text-center fade-in-up">
                 <div class="spinner-border text-gold mb-4" style="width: 3rem; height: 3rem;" role="status"></div>
@@ -349,7 +367,6 @@
                      style="max-height: 250px; filter: grayscale(0.5);">
             </div>
         `;
-        
         router('view-3d');
     };
 
@@ -379,7 +396,6 @@
         }
     };
 
-    // Login Submit
     $$('.login-form').forEach(form => {
         form.addEventListener('submit', function(e) {
             e.preventDefault();
@@ -387,23 +403,19 @@
         });
     });
 
-    // Contact Submit
     const contactForm = $('#contactForm');
     if (contactForm) {
         contactForm.addEventListener('submit', function(e) {
             e.preventDefault();
             const successMsg = $('#contactSuccess');
             const btn = $('#contactSendBtn');
-            
             btn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Transmitting...';
             btn.disabled = true;
-            
             setTimeout(() => {
                 successMsg.classList.remove('d-none');
                 btn.innerHTML = 'Send Message';
                 btn.disabled = false;
                 contactForm.reset();
-                
                 setTimeout(() => {
                     successMsg.classList.add('d-none');
                 }, 4000);
@@ -415,55 +427,94 @@
     // 9. Back To Top & Scroll Effects
     // ---------------------------------------------------------
     const backToTopBtn = $('.back-to-top');
-
     window.addEventListener('scroll', function() {
         const header = $('#main-header');
-        
-        // Navbar Frosted Effect
         if (window.scrollY > 50) header.classList.add('scrolled');
         else header.classList.remove('scrolled');
-
-        // Back to Top Visibility
         if (window.scrollY > 300) backToTopBtn.classList.add('show');
         else backToTopBtn.classList.remove('show');
     });
 
     // ---------------------------------------------------------
-    // 10. NEW: Live Cosmic Stats System
+    // 10. Live Cosmic Stats
     // ---------------------------------------------------------
     function initLiveStats() {
         const deedsEl = $('#stat-deeds');
         const popEl = $('#stat-pop');
-        const valEl = $('#stat-val');
+        if(!deedsEl || !popEl) return;
 
-        if(!deedsEl || !popEl || !valEl) return;
-
-        // 1. Deeds Increment (Slow)
         setInterval(() => {
-            if(Math.random() > 0.6) { // 40% chance to update
+            if(Math.random() > 0.6) { 
                 let val = parseInt(deedsEl.innerText.replace(/,/g, ''));
                 deedsEl.innerText = (val + 1).toLocaleString();
             }
         }, 3000);
 
-        // 2. Population Increment (Fast)
         setInterval(() => {
-            if(Math.random() > 0.3) { // 70% chance to update
+            if(Math.random() > 0.3) { 
                 let val = parseInt(popEl.innerText.replace(/,/g, ''));
-                const increase = Math.floor(Math.random() * 3) + 1; // +1 to +3
+                const increase = Math.floor(Math.random() * 3) + 1;
                 popEl.innerText = (val + increase).toLocaleString();
             }
         }, 2000);
-
-        // 3. Market Cap Fluctuation (Ticker Style)
-        // Static for now as "900T" implies stable huge value, 
-        // but we can make it blink occasionally to show "Live" status
     }
 
     // ---------------------------------------------------------
-    // 11. Initialization
+    // 11. Newsletter Logic (Validation & Modal)
+    // ---------------------------------------------------------
+    function initNewsletterLogic() {
+        const btn = $('#newsletterBtn');
+        const input = $('#newsletterEmail');
+        const modal = $('#newsletterModal');
+        const doneBtn = $('#newsletterDoneBtn');
+
+        if (!btn || !input || !modal || !doneBtn) return;
+
+        // Subscribe Click Event
+        btn.addEventListener('click', function() {
+            const email = input.value.trim();
+            
+            // Validation: Must not be empty and must contain '@'
+            if (email === '' || !email.includes('@')) {
+                // Visual feedback for error
+                input.style.borderColor = 'red';
+                input.classList.add('shake-anim'); // Optional: need css or just use simple feedback
+                input.focus();
+                
+                // Reset style after 2 seconds
+                setTimeout(() => {
+                    input.style.borderColor = '';
+                    input.classList.remove('shake-anim');
+                }, 2000);
+                return;
+            }
+
+            // Success: Show Modal
+            modal.classList.remove('d-none');
+            
+            // Clear Input
+            input.value = '';
+        });
+
+        // Done Button (Close Modal)
+        doneBtn.addEventListener('click', function() {
+            // Add exit animation to the content card
+            const content = modal.querySelector('.glass-card');
+            if(content) content.classList.add('fade-out-down');
+            
+            // Wait for animation to finish then hide
+            setTimeout(() => {
+                modal.classList.add('d-none');
+                if(content) content.classList.remove('fade-out-down');
+            }, 400); 
+        });
+    }
+    
+    // ---------------------------------------------------------
+    // 12. Initialization
     // ---------------------------------------------------------
     router('home');
-    initLiveStats(); // Start the numbers
+    initLiveStats();
+    initNewsletterLogic(); // Added this line
 
 })();
