@@ -1,6 +1,6 @@
 /* =========================================================
-   ChanohtJakkawan — main.js (v5.4 Final - Add-on Logic)
-   Full Stack SPA Logic: Calculator, Add-ons, Ticker
+   ChanohtJakkawan — main.js (v5.6 Final - Overhaul Edition)
+   Full Stack SPA Logic: Calculator, Dynamic ID Card, Ticker
    ========================================================= */
 
 (function () {
@@ -11,32 +11,39 @@
     // ---------------------------------------------------------
     const $ = (sel, ctx = document) => ctx.querySelector(sel);
     const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
-    const formatCurrency = (val) => `${val} GD`;
+    const formatCurrency = (val) => `${val.toLocaleString()} GD`;
     const capitalize = (str) => str ? str.charAt(0).toUpperCase() + str.slice(1) : '';
+
+    // NEW: Generate Random Galactic ID
+    const generateGalacticID = () => {
+        const segment = () => Math.floor(1000 + Math.random() * 9000);
+        return `${segment()}-${segment()}-${segment()}-${segment()}`;
+    };
+
+    // NEW: Random Planet Origin
+    const randomOrigin = () => {
+        const origins = ['TERRA', 'MARS COLONY', 'TITAN BASE', 'EUROPA', 'KEPLER-186F', 'ANDROMEDA STATION'];
+        return origins[Math.floor(Math.random() * origins.length)];
+    };
 
     // ---------------------------------------------------------
     // 2. Router System (Single Page Application Core)
     // ---------------------------------------------------------
     window.router = function(pageName) {
-        // 1. Hide all pages
         $$('.page-section').forEach(section => {
             section.classList.remove('active-section');
             section.classList.add('d-none');
         });
 
-        // 2. Show target page
         const target = $(`#page-${pageName}`);
         if (target) {
             target.classList.remove('d-none');
             setTimeout(() => {
                 target.classList.add('active-section');
             }, 10);
-            
-            // Scroll to top
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // 3. Navbar & Footer Visibility
         const navbar = $('#main-header');
         const footer = $('#main-footer');
         
@@ -48,11 +55,9 @@
             if(footer) footer.style.display = 'block';
         }
 
-        // 4. Trigger Specific Page Logic
         if (pageName === 'payment') initPaymentPage();
         if (pageName === 'order') updateOrderTotals();
         
-        // 5. Close mobile menu if open
         const navMenu = $('#navMenu');
         const toggler = $('.navbar-toggler');
         if (navMenu && navMenu.classList.contains('show')) {
@@ -61,23 +66,18 @@
     };
 
     // ---------------------------------------------------------
-    // 3. Hamburger Menu: Click Outside to Close
+    // 3. UI Interactions (Menu & Touch)
     // ---------------------------------------------------------
     document.addEventListener('click', function(e) {
         const navMenu = $('#navMenu');
         const toggler = $('.navbar-toggler');
-        
         if (navMenu && navMenu.classList.contains('show') && 
             !navMenu.contains(e.target) && !toggler.contains(e.target)) {
             toggler.click();
         }
     });
 
-    // ---------------------------------------------------------
-    // 4. Mobile Touch Interaction
-    // ---------------------------------------------------------
     const touchCards = $$('.product-img-wrapper, .team-img-wrapper, .sun-wrapper');
-    
     touchCards.forEach(card => {
         card.addEventListener('click', function(e) {
             if (e.target.tagName === 'BUTTON' || e.target.tagName === 'A') return;
@@ -96,23 +96,21 @@
     });
 
     // ---------------------------------------------------------
-    // 5. Order Logic (Updated with Add-ons)
+    // 4. Order Logic (Calculator & Storage)
     // ---------------------------------------------------------
     const productCheckboxes = $$('.product'); 
-    const addonCheckboxes = $$('.product-addon'); // NEW: Select Add-on checkboxes
+    const addonCheckboxes = $$('.product-addon');
     const selectAllCheckbox = $('#selectAll');
     
     function updateOrderTotals() {
-        // if (!productCheckboxes.length) return; // Allow running even if no products checked (for reset)
-
         let total = 0;
         const summaryList = $('#summaryList');
         if (summaryList) summaryList.innerHTML = '';
         
         let selectedItems = [];
-        let selectedAddons = []; // Store selected addons
+        let selectedAddons = [];
 
-        // 1. Calculate Products
+        // Products
         productCheckboxes.forEach(cb => {
             if (cb.checked) {
                 const price = parseInt(cb.getAttribute('data-price') || 0);
@@ -127,45 +125,44 @@
             }
         });
 
-        // 2. Calculate Add-ons (NEW)
-        if (selectedItems.length > 0) { // Only allow addons if products exist
+        // Add-ons
+        if (selectedItems.length > 0) { 
             addonCheckboxes.forEach(cb => {
-                cb.disabled = false; // Enable if products selected
+                cb.disabled = false;
                 if (cb.checked) {
                     const price = parseInt(cb.getAttribute('data-price') || 0);
-                    // Extract name from label text (simple way) or id
-                    const labelText = $(`label[for="${cb.id}"] span`).textContent;
+                    // Get text from label inside span
+                    let labelText = "Service";
+                    const labelSpan = $(`label[for="${cb.id}"] span`);
+                    if(labelSpan) labelText = labelSpan.innerText;
+
                     total += price;
                     selectedAddons.push({ id: cb.id, name: labelText, price: price });
 
                     const li = document.createElement('li');
-                    li.className = "d-flex justify-content-between text-info small fst-italic"; // Distinct style
+                    li.className = "d-flex justify-content-between text-info small fst-italic";
                     li.innerHTML = `<span>+ ${labelText}</span> <span>${price} GD</span>`;
                     summaryList.appendChild(li);
                 }
             });
         } else {
-            // Disable addons if no product selected
             addonCheckboxes.forEach(cb => {
                 cb.checked = false;
                 cb.disabled = true;
             });
         }
 
-        // Update UI
-        $('#totalPrice').textContent = total;
+        $('#totalPrice').textContent = total.toLocaleString();
         $('#summaryTotal').textContent = formatCurrency(total);
 
-        // Update Select All State
         if (selectAllCheckbox) {
             const allChecked = productCheckboxes.length > 0 && productCheckboxes.every(cb => cb.checked);
             selectAllCheckbox.checked = allChecked;
         }
 
-        // Save to LocalStorage (Including Addons)
         const orderData = {
             items: selectedItems,
-            addons: selectedAddons, // Save addons
+            addons: selectedAddons,
             total: total
         };
         localStorage.setItem('cj_order', JSON.stringify(orderData));
@@ -189,9 +186,8 @@
         }
     }
 
-    // Listeners
     productCheckboxes.forEach(cb => cb.addEventListener('change', updateOrderTotals));
-    addonCheckboxes.forEach(cb => cb.addEventListener('change', updateOrderTotals)); // Listen for add-ons
+    addonCheckboxes.forEach(cb => cb.addEventListener('change', updateOrderTotals));
 
     if (selectAllCheckbox) {
         selectAllCheckbox.addEventListener('change', function() {
@@ -206,14 +202,12 @@
         input.addEventListener('change', validateOrderForm);
     });
     
-    // Privacy Checkbox
     const acceptCheckbox = $('#accept');
     if(acceptCheckbox) acceptCheckbox.addEventListener('change', validateOrderForm);
 
-
     window.preselectAndGo = function(productId) {
         productCheckboxes.forEach(cb => cb.checked = false);
-        addonCheckboxes.forEach(cb => cb.checked = false); // Reset addons
+        addonCheckboxes.forEach(cb => cb.checked = false);
         
         if (productId === 'set') {
             if (selectAllCheckbox) {
@@ -233,7 +227,7 @@
     if (confirmBtn) {
         confirmBtn.addEventListener('click', function() {
             const customerData = {
-                name: $('#fullName').value,
+                name: $('#fullName').value || 'Unknown Citizen',
                 address: `${$('#addr1').value}, ${$('#city').value}, ${$('#country').value}`,
                 orderNo: 'ORD-' + Math.floor(Math.random() * 1000000)
             };
@@ -243,25 +237,34 @@
     }
 
     // ---------------------------------------------------------
-    // 6. Payment & Deed Logic
+    // 5. Payment Page Logic (Enhanced with ID Card)
     // ---------------------------------------------------------
     function initPaymentPage() {
         const orderData = JSON.parse(localStorage.getItem('cj_order') || '{"items":[], "addons":[], "total":0}');
         const custData = JSON.parse(localStorage.getItem('cj_customer') || '{"name":"-", "address":"-", "orderNo":"-"}');
 
+        // Fill Text Info
         $('#deedName').textContent = custData.name;
         $('#deedAddress').textContent = custData.address;
         $('#deedOrderNo').textContent = custData.orderNo;
         
-        // Display Items + Addons count
         let itemsText = orderData.items.map(capitalize).join(', ');
         if(orderData.addons && orderData.addons.length > 0) {
             itemsText += ` (+ ${orderData.addons.length} Extras)`;
         }
         $('#deedItems').textContent = itemsText;
-        
         $('#payTotal').textContent = formatCurrency(orderData.total);
 
+        // Fill Dynamic ID Card (NEW Logic)
+        const cardNameEl = $('#cardName');
+        const cardIDEl = $('#cardID');
+        const cardPlanetEl = $('#cardPlanet');
+        
+        if(cardNameEl) cardNameEl.textContent = custData.name.toUpperCase();
+        if(cardIDEl) cardIDEl.textContent = generateGalacticID();
+        if(cardPlanetEl) cardPlanetEl.textContent = randomOrigin();
+
+        // Render Product Images
         const grid = $('#deedImageGrid');
         const singleImg = $('#deedImage');
         grid.innerHTML = '';
@@ -289,14 +292,14 @@
         }
 
         initSocialShare();
-        initReferralCopy(); // Init referral button
+        initReferralCopy();
     }
 
+    // Social Share
     function initSocialShare() {
         const shareBtns = $$('#page-payment .btn-outline-light.rounded-pill');
         shareBtns.forEach(btn => {
             if(btn.dataset.hasListener) return;
-            // Skip referral btn which is handled separately
             if(btn.innerText.includes("Copy Referral")) return; 
 
             btn.addEventListener('click', function() {
@@ -312,15 +315,15 @@
         });
     }
 
-    // NEW: Referral Copy Logic
+    // Referral Copy
     function initReferralCopy() {
-        const refBtns = $$('.btn-outline-light.rounded-pill'); // Select generic buttons
+        const refBtns = $$('.btn-outline-light.rounded-pill');
         refBtns.forEach(btn => {
             if(btn.textContent.includes("Copy Referral")) {
                 if(btn.dataset.hasListener) return;
                 btn.addEventListener('click', function() {
                     const originalText = this.textContent;
-                    navigator.clipboard.writeText("Join ChanohtJakkawan with code: COSMOS-2025");
+                    navigator.clipboard.writeText("Join ChanohtJakkawan with code: COSMOS-2025").catch(err => {});
                     this.textContent = "Copied!";
                     this.classList.add('bg-white', 'text-dark');
                     setTimeout(() => {
@@ -351,7 +354,7 @@
     };
 
     // ---------------------------------------------------------
-    // 7. 3D View Logic
+    // 6. View & Login Logic
     // ---------------------------------------------------------
     window.open3DView = function(planetId) {
         const title = $('#view-3d-title');
@@ -374,9 +377,6 @@
         router('home');
     };
 
-    // ---------------------------------------------------------
-    // 8. Login & Contact Logic
-    // ---------------------------------------------------------
     window.toggleLoginMode = function() {
         const signInForm = $('.sign-in-form');
         const signUpForm = $('.sign-up-form');
@@ -416,15 +416,20 @@
                 btn.innerHTML = 'Send Message';
                 btn.disabled = false;
                 contactForm.reset();
-                setTimeout(() => {
-                    successMsg.classList.add('d-none');
-                }, 4000);
+                setTimeout(() => { successMsg.classList.add('d-none'); }, 4000);
             }, 1500);
         });
     }
 
+    const emergencyBtn = $('.btn-outline-danger');
+    if (emergencyBtn) {
+        emergencyBtn.addEventListener('click', function() {
+            alert('🚨 EMERGENCY ALERT BROADCASTED 🚨\n\nInterstellar Rescue Team has been dispatched to your coordinates.');
+        });
+    }
+
     // ---------------------------------------------------------
-    // 9. Back To Top & Scroll Effects
+    // 7. Scroll & Stats
     // ---------------------------------------------------------
     const backToTopBtn = $('.back-to-top');
     window.addEventListener('scroll', function() {
@@ -435,9 +440,6 @@
         else backToTopBtn.classList.remove('show');
     });
 
-    // ---------------------------------------------------------
-    // 10. Live Cosmic Stats
-    // ---------------------------------------------------------
     function initLiveStats() {
         const deedsEl = $('#stat-deeds');
         const popEl = $('#stat-pop');
@@ -459,9 +461,6 @@
         }, 2000);
     }
 
-    // ---------------------------------------------------------
-    // 11. Newsletter Logic (Validation & Modal)
-    // ---------------------------------------------------------
     function initNewsletterLogic() {
         const btn = $('#newsletterBtn');
         const input = $('#newsletterEmail');
@@ -470,51 +469,37 @@
 
         if (!btn || !input || !modal || !doneBtn) return;
 
-        // Subscribe Click Event
         btn.addEventListener('click', function() {
             const email = input.value.trim();
-            
-            // Validation: Must not be empty and must contain '@'
             if (email === '' || !email.includes('@')) {
-                // Visual feedback for error
-                input.style.borderColor = 'red';
-                input.classList.add('shake-anim'); // Optional: need css or just use simple feedback
+                input.style.borderColor = '#dc3545';
+                input.style.boxShadow = '0 0 10px rgba(220, 53, 69, 0.5)';
                 input.focus();
-                
-                // Reset style after 2 seconds
                 setTimeout(() => {
                     input.style.borderColor = '';
-                    input.classList.remove('shake-anim');
+                    input.style.boxShadow = '';
                 }, 2000);
                 return;
             }
-
-            // Success: Show Modal
             modal.classList.remove('d-none');
-            
-            // Clear Input
             input.value = '';
         });
 
-        // Done Button (Close Modal)
         doneBtn.addEventListener('click', function() {
-            // Add exit animation to the content card
             const content = modal.querySelector('.glass-card');
             if(content) content.classList.add('fade-out-down');
-            
-            // Wait for animation to finish then hide
             setTimeout(() => {
                 modal.classList.add('d-none');
                 if(content) content.classList.remove('fade-out-down');
             }, 400); 
         });
     }
-    
+
     // ---------------------------------------------------------
-    // 12. Initialization
+    // 8. Initialization
     // ---------------------------------------------------------
     router('home');
     initLiveStats();
-    initNewsletterLogic(); // Added this line
+    initNewsletterLogic();
 
 })();
