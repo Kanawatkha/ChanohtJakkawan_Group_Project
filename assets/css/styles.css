@@ -1,6 +1,6 @@
 /* =========================================================
-   ChanohtJakkawan — Cosmic Luxury Theme (v5.4 Final - Content Elevated)
-   Refined for Density, Square Layouts & Mobile Perfection
+   ChanohtJakkawan — Cosmic Luxury Theme (v5.6 Final - Overhaul Edition)
+   Refined for Density, Square Layouts, Mobile Perfection & Animations
    ========================================================= */
 
 /* -------------------- 1. Design Tokens -------------------- */
@@ -41,6 +41,12 @@ body {
     -webkit-tap-highlight-color: transparent; /* Remove blue highlight on mobile tap */
 }
 
+/* Custom Scrollbar for Legal Box and Body */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: #000; }
+::-webkit-scrollbar-thumb { background: rgba(212, 175, 55, 0.3); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--gold-primary); }
+
 h1, h2, h3, h4, h5, h6, .font-serif {
     font-family: var(--font-serif);
     letter-spacing: 0.02em;
@@ -50,6 +56,7 @@ a { text-decoration: none; color: inherit; transition: var(--trans-fast); }
 ul { list-style: none; padding: 0; margin: 0; }
 button:focus { outline: none; }
 .cursor-pointer { cursor: pointer; }
+.x-small { font-size: 0.65rem; }
 
 /* Text Utilities */
 .text-gold { color: var(--gold-primary) !important; }
@@ -161,6 +168,7 @@ button:focus { outline: none; }
 /* Add-on Checkbox Styling */
 .form-check.glass-input {
     cursor: pointer;
+    transition: background 0.2s;
 }
 .form-check.glass-input:hover {
     background: rgba(255, 255, 255, 0.08);
@@ -200,7 +208,7 @@ button:focus { outline: none; }
 
 /* -------------------- 5. Navbar & Header -------------------- */
 #main-header { 
-    background: rgba(5, 7, 10, 0.95); /* Slightly darker for ticker readability */
+    background: rgba(5, 7, 10, 0.95);
     backdrop-filter: blur(20px); 
     border-bottom: 1px solid rgba(255,255,255,0.05);
 }
@@ -214,7 +222,7 @@ button:focus { outline: none; }
 }
 .navbar-toggler:focus { box-shadow: 0 0 0 2px var(--gold-primary); }
 
-/* NEW: Ticker Animation */
+/* Ticker Animation */
 .market-ticker { height: 32px; line-height: 24px; }
 .ticker-wrapper {
     display: flex;
@@ -407,7 +415,21 @@ button:focus { outline: none; }
 
 .timeline-item { min-width: 120px; }
 
-/* -------------------- 11. Responsive Fixes (The Key Update) -------------------- */
+/* NEW: Gold Glow Badge */
+.badge-gold-glow {
+    background: linear-gradient(45deg, #d4af37, #f3e5ab);
+    color: #000;
+    box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+    font-weight: bold;
+    border: none;
+}
+
+/* NEW: Chart Colors */
+.bg-gold { background-color: var(--gold-primary) !important; }
+.bg-purple { background-color: #9d4edd !important; }
+.bg-cyan { background-color: #00b4d8 !important; }
+
+/* -------------------- 11. Responsive Fixes -------------------- */
 @media (max-width: 991px) {
     .display-3 { font-size: 2.5rem; }
     .display-4 { font-size: 2rem; }
@@ -416,89 +438,59 @@ button:focus { outline: none; }
 }
 
 @media (max-width: 768px) {
-    /* General Mobile */
     .navbar-brand img { width: 28px; height: 28px; }
     .brand-text { font-size: 1.1rem; }
     .hero-title, .section-heading { text-align: center; }
     .py-5 { padding-top: 3rem !important; padding-bottom: 3rem !important; }
     
-    /* Stats Spacing Fix */
     #page-home .row.mt-5.pt-5 {
         margin-top: 2rem !important;
         padding-top: 2rem !important;
     }
     
-    /* Timeline Vertical Layout */
     .timeline {
         flex-direction: column;
         gap: 1.5rem;
     }
     .timeline .position-absolute.d-md-none {
-        /* Vertical line adjustment */
-        height: 100%;
-        top: 0;
-        bottom: 0;
+        height: 100%; top: 0; bottom: 0;
     }
     .timeline-item {
-        width: 100%;
-        margin-bottom: 0.5rem;
+        width: 100%; margin-bottom: 0.5rem;
     }
     
-    /* Badge Overlap Fix */
     .product-card .badge {
         font-size: 0.65rem !important;
         padding: 0.35em 0.65em;
     }
 
-    /* Modals & Layouts */
     .back-to-top { width: 40px; height: 40px; bottom: 20px; right: 20px; font-size: 1.2rem; }
     #paymentSuccessModal .glass-card { padding: 2rem !important; }
 }
 
-/* -------------------- 12. NEW: Newsletter Modal & Overlay -------------------- */
+/* -------------------- 12. Newsletter Modal & Overlay (New) -------------------- */
 .newsletter-overlay {
-    background: rgba(0, 0, 0, 0.6); /* Dark semi-transparent background */
-    backdrop-filter: blur(8px);      /* Blur effect behind the modal */
-    -webkit-backdrop-filter: blur(8px); /* Safari support */
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     transition: opacity 0.4s ease;
 }
 
-/* Modal Content Animation */
 .newsletter-overlay .glass-card {
-    box-shadow: 0 20px 60px rgba(0,0,0,0.8), 0 0 40px rgba(212, 175, 55, 0.2); /* Deep shadow + Gold glow */
-    border: 1px solid rgba(212, 175, 55, 0.3); /* Gold border */
+    box-shadow: 0 20px 60px rgba(0,0,0,0.8), 0 0 40px rgba(212, 175, 55, 0.2);
+    border: 1px solid rgba(212, 175, 55, 0.3);
 }
 
-/* Floating Animation for Icon inside Modal */
-.floating-anim {
-    animation: float 3s ease-in-out infinite;
-}
+.floating-anim { animation: float 3s ease-in-out infinite; }
 
-/* Keyframes for Fade In Up (used by modal) */
 @keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translate3d(0, 40px, 0);
-    }
-    to {
-        opacity: 1;
-        transform: translate3d(0, 0, 0);
-    }
+    from { opacity: 0; transform: translate3d(0, 40px, 0); }
+    to { opacity: 1; transform: translate3d(0, 0, 0); }
 }
 
-/* Keyframes for Fade Out Down (for closing) */
 @keyframes fadeOutDown {
-    from {
-        opacity: 1;
-        transform: translate3d(0, 0, 0);
-    }
-    to {
-        opacity: 0;
-        transform: translate3d(0, 40px, 0);
-    }
+    from { opacity: 1; transform: translate3d(0, 0, 0); }
+    to { opacity: 0; transform: translate3d(0, 40px, 0); }
 }
 
-/* Class to apply exit animation */
-.fade-out-down {
-    animation: fadeOutDown 0.4s ease forwards;
-}
+.fade-out-down { animation: fadeOutDown 0.4s ease forwards; }
