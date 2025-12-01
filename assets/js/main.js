@@ -1,6 +1,6 @@
 /* =========================================================
-   ChanohtJakkawan — main.js (v5.6 Final - Overhaul Edition)
-   Full Stack SPA Logic: Calculator, Dynamic ID Card, Ticker
+   ChanohtJakkawan — main.js (v1.2 - Node.js Ready Logic)
+   Full Stack SPA Logic: Form Validation, Data Binding, & Simulation
    ========================================================= */
 
 (function () {
@@ -14,27 +14,23 @@
     const formatCurrency = (val) => `${val.toLocaleString()} GD`;
     const capitalize = (str) => str ? str.charAt(0).toUpperCase() + str.slice(1) : '';
 
-    // NEW: Generate Random Galactic ID
+    // Generate Random Galactic ID Segment (Fallback)
     const generateGalacticID = () => {
         const segment = () => Math.floor(1000 + Math.random() * 9000);
         return `${segment()}-${segment()}-${segment()}-${segment()}`;
-    };
-
-    // NEW: Random Planet Origin
-    const randomOrigin = () => {
-        const origins = ['TERRA', 'MARS COLONY', 'TITAN BASE', 'EUROPA', 'KEPLER-186F', 'ANDROMEDA STATION'];
-        return origins[Math.floor(Math.random() * origins.length)];
     };
 
     // ---------------------------------------------------------
     // 2. Router System (Single Page Application Core)
     // ---------------------------------------------------------
     window.router = function(pageName) {
+        // Hide all sections
         $$('.page-section').forEach(section => {
             section.classList.remove('active-section');
             section.classList.add('d-none');
         });
 
+        // Show target section
         const target = $(`#page-${pageName}`);
         if (target) {
             target.classList.remove('d-none');
@@ -44,6 +40,7 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
+        // Toggle Navbar/Footer visibility based on page
         const navbar = $('#main-header');
         const footer = $('#main-footer');
         
@@ -55,9 +52,11 @@
             if(footer) footer.style.display = 'block';
         }
 
+        // Trigger Page Specific Logic
         if (pageName === 'payment') initPaymentPage();
         if (pageName === 'order') updateOrderTotals();
         
+        // Auto-close mobile menu on navigation
         const navMenu = $('#navMenu');
         const toggler = $('.navbar-toggler');
         if (navMenu && navMenu.classList.contains('show')) {
@@ -68,6 +67,7 @@
     // ---------------------------------------------------------
     // 3. UI Interactions (Menu & Touch)
     // ---------------------------------------------------------
+    // Close menu when clicking outside
     document.addEventListener('click', function(e) {
         const navMenu = $('#navMenu');
         const toggler = $('.navbar-toggler');
@@ -77,6 +77,7 @@
         }
     });
 
+    // Mobile tap effect for cards
     const touchCards = $$('.product-img-wrapper, .team-img-wrapper, .sun-wrapper');
     touchCards.forEach(card => {
         card.addEventListener('click', function(e) {
@@ -96,12 +97,13 @@
     });
 
     // ---------------------------------------------------------
-    // 4. Order Logic (Calculator & Storage)
+    // 4. Order Logic (Calculator & Data Collection)
     // ---------------------------------------------------------
     const productCheckboxes = $$('.product'); 
     const addonCheckboxes = $$('.product-addon');
     const selectAllCheckbox = $('#selectAll');
     
+    // Calculate Total Price and Update Summary List
     function updateOrderTotals() {
         let total = 0;
         const summaryList = $('#summaryList');
@@ -110,7 +112,7 @@
         let selectedItems = [];
         let selectedAddons = [];
 
-        // Products
+        // Calculate Products
         productCheckboxes.forEach(cb => {
             if (cb.checked) {
                 const price = parseInt(cb.getAttribute('data-price') || 0);
@@ -125,7 +127,7 @@
             }
         });
 
-        // Add-ons
+        // Calculate Add-ons
         if (selectedItems.length > 0) { 
             addonCheckboxes.forEach(cb => {
                 cb.disabled = false;
@@ -152,14 +154,17 @@
             });
         }
 
+        // Update UI
         $('#totalPrice').textContent = total.toLocaleString();
         $('#summaryTotal').textContent = formatCurrency(total);
 
+        // Update Select All State
         if (selectAllCheckbox) {
             const allChecked = productCheckboxes.length > 0 && productCheckboxes.every(cb => cb.checked);
             selectAllCheckbox.checked = allChecked;
         }
 
+        // Save Temporary Order Data
         const orderData = {
             items: selectedItems,
             addons: selectedAddons,
@@ -170,22 +175,35 @@
         validateOrderForm();
     }
 
+    // New Validation Logic for 3 Blocks (Entity, Coordinates, Legacy)
     function validateOrderForm() {
         const confirmBtn = $('#confirmBtn');
         if (!confirmBtn) return;
 
         const hasItems = $$('.product:checked').length > 0;
-        const hasContact = $('#fullName').value.trim() !== '' && $('#email').value.trim() !== '';
-        const hasAddr = $('#addr1').value.trim() !== '' && $('#country').value.trim() !== '';
+        
+        // Block 1: Entity
+        const hasEntity = $('#entityName').value.trim() !== '' && 
+                          $('#entityHash').value.trim() !== '';
+
+        // Block 2: Coordinates
+        const hasCoords = $('#coordSystem').value.trim() !== '' && 
+                          $('#coordWormhole').value.trim() !== '';
+
+        // Block 3: Legacy
+        const hasLegacy = $('#legacyDynasty').value.trim() !== '' && 
+                          $('#legacyHeir').value.trim() !== '';
+
         const isAccepted = $('#accept').checked;
 
-        if (hasItems && hasContact && hasAddr && isAccepted) {
+        if (hasItems && hasEntity && hasCoords && hasLegacy && isAccepted) {
             confirmBtn.removeAttribute('disabled');
         } else {
             confirmBtn.setAttribute('disabled', 'true');
         }
     }
 
+    // Event Listeners for Calculator
     productCheckboxes.forEach(cb => cb.addEventListener('change', updateOrderTotals));
     addonCheckboxes.forEach(cb => cb.addEventListener('change', updateOrderTotals));
 
@@ -197,14 +215,13 @@
         });
     }
 
-    $$('.order-container input:not([type="checkbox"])').forEach(input => {
+    // Event Listeners for Validation
+    $$('.order-container input, .order-container select').forEach(input => {
         input.addEventListener('input', validateOrderForm);
         input.addEventListener('change', validateOrderForm);
     });
     
-    const acceptCheckbox = $('#accept');
-    if(acceptCheckbox) acceptCheckbox.addEventListener('change', validateOrderForm);
-
+    // Quick Buy Button Logic
     window.preselectAndGo = function(productId) {
         productCheckboxes.forEach(cb => cb.checked = false);
         addonCheckboxes.forEach(cb => cb.checked = false);
@@ -223,48 +240,79 @@
         router('order');
     };
 
+    // Confirm Order: Data Collection (Node.js Payload Preparation)
     const confirmBtn = $('#confirmBtn');
     if (confirmBtn) {
         confirmBtn.addEventListener('click', function() {
-            const customerData = {
-                name: $('#fullName').value || 'Unknown Citizen',
-                address: `${$('#addr1').value}, ${$('#city').value}, ${$('#country').value}`,
-                orderNo: 'ORD-' + Math.floor(Math.random() * 1000000)
+            // Collect Data into a Structured Object for Node.js
+            const payload = {
+                entity: {
+                    title: $('#entityTitle').value,
+                    name: $('#entityName').value,
+                    species: $('#entitySpecies').value,
+                    hash: $('#entityHash').value
+                },
+                coordinates: {
+                    quadrant: $('#coordQuadrant').value,
+                    system: $('#coordSystem').value,
+                    wormhole: $('#coordWormhole').value,
+                    timeline: $('#coordTimeline').value
+                },
+                legacy: {
+                    dynasty: $('#legacyDynasty').value,
+                    heir: $('#legacyHeir').value,
+                    succession: $('#legacySuccession').value,
+                    motto: $('#legacyMotto').value
+                },
+                meta: {
+                    orderId: 'ORD-' + Math.floor(Math.random() * 1000000),
+                    timestamp: new Date().toISOString()
+                }
             };
-            localStorage.setItem('cj_customer', JSON.stringify(customerData));
+            
+            // Save to LocalStorage (Simulating DB transmission)
+            localStorage.setItem('cj_payload', JSON.stringify(payload));
             router('payment');
         });
     }
 
     // ---------------------------------------------------------
-    // 5. Payment Page Logic (Enhanced with ID Card)
+    // 5. Payment Page Logic (Dynamic Rendering)
     // ---------------------------------------------------------
     function initPaymentPage() {
         const orderData = JSON.parse(localStorage.getItem('cj_order') || '{"items":[], "addons":[], "total":0}');
-        const custData = JSON.parse(localStorage.getItem('cj_customer') || '{"name":"-", "address":"-", "orderNo":"-"}');
+        const payload = JSON.parse(localStorage.getItem('cj_payload') || '{}');
 
-        // Fill Text Info
-        $('#deedName').textContent = custData.name;
-        $('#deedAddress').textContent = custData.address;
-        $('#deedOrderNo').textContent = custData.orderNo;
+        // Fallback if no data found
+        if (!payload.entity) return;
+
+        // 1. Fill Deed Information
+        // Combine Title + Name
+        $('#deedName').textContent = `${payload.entity.title} ${payload.entity.name}`;
         
+        // Dynamic Fields for Deed
+        if($('#deedDynasty')) $('#deedDynasty').textContent = payload.legacy.dynasty;
+        if($('#deedQuadrant')) $('#deedQuadrant').textContent = `${payload.coordinates.quadrant} [${payload.coordinates.wormhole}]`;
+        if($('#deedHeir')) $('#deedHeir').textContent = `${payload.legacy.heir} (${payload.legacy.succession})`;
+        
+        $('#deedOrderNo').textContent = payload.meta.orderId;
+        
+        // Format Items List
         let itemsText = orderData.items.map(capitalize).join(', ');
         if(orderData.addons && orderData.addons.length > 0) {
-            itemsText += ` (+ ${orderData.addons.length} Extras)`;
+            itemsText += ` (+ ${orderData.addons.length} Enhancements)`;
         }
         $('#deedItems').textContent = itemsText;
         $('#payTotal').textContent = formatCurrency(orderData.total);
 
-        // Fill Dynamic ID Card (NEW Logic)
-        const cardNameEl = $('#cardName');
-        const cardIDEl = $('#cardID');
-        const cardPlanetEl = $('#cardPlanet');
-        
-        if(cardNameEl) cardNameEl.textContent = custData.name.toUpperCase();
-        if(cardIDEl) cardIDEl.textContent = generateGalacticID();
-        if(cardPlanetEl) cardPlanetEl.textContent = randomOrigin();
+        // 2. Fill Galactic ID Card
+        if($('#cardName')) $('#cardName').textContent = payload.entity.name.toUpperCase();
+        // Use Hash or Generate ID
+        if($('#cardID')) $('#cardID').textContent = payload.entity.hash || generateGalacticID();
+        // Use Species or Planet System as Origin
+        if($('#cardPlanet')) $('#cardPlanet').textContent = payload.entity.species.toUpperCase();
 
-        // Render Product Images
+        // 3. Render Product Images
         const grid = $('#deedImageGrid');
         const singleImg = $('#deedImage');
         grid.innerHTML = '';
@@ -295,7 +343,7 @@
         initReferralCopy();
     }
 
-    // Social Share
+    // Social Share Button Effects
     function initSocialShare() {
         const shareBtns = $$('#page-payment .btn-outline-light.rounded-pill');
         shareBtns.forEach(btn => {
@@ -315,7 +363,7 @@
         });
     }
 
-    // Referral Copy
+    // Referral Copy Logic
     function initReferralCopy() {
         const refBtns = $$('.btn-outline-light.rounded-pill');
         refBtns.forEach(btn => {
@@ -336,15 +384,17 @@
         });
     }
 
+    // Complete Payment Modal
     window.showPaymentSuccess = function() {
         const modal = $('#paymentSuccessModal');
         modal.classList.remove('d-none');
         $('#main-header').style.display = 'none';
     };
 
+    // Reset and Finish
     window.finishOrder = function() {
         localStorage.removeItem('cj_order');
-        localStorage.removeItem('cj_customer');
+        localStorage.removeItem('cj_payload');
         $$('input').forEach(input => {
             if (input.type === 'checkbox') input.checked = false;
             else input.value = '';
@@ -377,6 +427,7 @@
         router('home');
     };
 
+    // Toggle Login/Register Forms
     window.toggleLoginMode = function() {
         const signInForm = $('.sign-in-form');
         const signUpForm = $('.sign-up-form');
@@ -403,6 +454,7 @@
         });
     });
 
+    // Contact Form Simulation
     const contactForm = $('#contactForm');
     if (contactForm) {
         contactForm.addEventListener('submit', function(e) {
@@ -421,15 +473,67 @@
         });
     }
 
-    const emergencyBtn = $('.btn-outline-danger');
-    if (emergencyBtn) {
-        emergencyBtn.addEventListener('click', function() {
-            alert('🚨 EMERGENCY ALERT BROADCASTED 🚨\n\nInterstellar Rescue Team has been dispatched to your coordinates.');
+    // ---------------------------------------------------------
+    // 7. Emergency & Newsletter Modals
+    // ---------------------------------------------------------
+    function initEmergencyLogic() {
+        const btn = $('#emergencyBtn');
+        const modal = $('#emergencyModal');
+        const doneBtn = $('#emergencyDoneBtn');
+
+        if (!btn || !modal || !doneBtn) return;
+
+        btn.addEventListener('click', function() {
+            modal.classList.remove('d-none');
+        });
+
+        doneBtn.addEventListener('click', function() {
+            const content = modal.querySelector('.glass-card');
+            if(content) content.classList.add('fade-out-down');
+            setTimeout(() => {
+                modal.classList.add('d-none');
+                if(content) content.classList.remove('fade-out-down');
+            }, 400); 
+        });
+    }
+
+    function initNewsletterLogic() {
+        const btn = $('#newsletterBtn');
+        const input = $('#newsletterEmail');
+        const modal = $('#newsletterModal');
+        const doneBtn = $('#newsletterDoneBtn');
+
+        if (!btn || !input || !modal || !doneBtn) return;
+
+        btn.addEventListener('click', function() {
+            const email = input.value.trim();
+            if (email === '' || !email.includes('@')) {
+                // Shake / Error effect
+                input.style.borderColor = '#dc3545';
+                input.style.boxShadow = '0 0 10px rgba(220, 53, 69, 0.5)';
+                input.focus();
+                setTimeout(() => {
+                    input.style.borderColor = '';
+                    input.style.boxShadow = '';
+                }, 2000);
+                return;
+            }
+            modal.classList.remove('d-none');
+            input.value = '';
+        });
+
+        doneBtn.addEventListener('click', function() {
+            const content = modal.querySelector('.glass-card');
+            if(content) content.classList.add('fade-out-down');
+            setTimeout(() => {
+                modal.classList.add('d-none');
+                if(content) content.classList.remove('fade-out-down');
+            }, 400); 
         });
     }
 
     // ---------------------------------------------------------
-    // 7. Scroll & Stats
+    // 8. Scroll & Stats Logic
     // ---------------------------------------------------------
     const backToTopBtn = $('.back-to-top');
     window.addEventListener('scroll', function() {
@@ -461,45 +565,40 @@
         }, 2000);
     }
 
-    function initNewsletterLogic() {
-        const btn = $('#newsletterBtn');
-        const input = $('#newsletterEmail');
-        const modal = $('#newsletterModal');
-        const doneBtn = $('#newsletterDoneBtn');
+    // ---------------------------------------------------------
+    // 9. Bootstrap Carousel Initializers
+    // ---------------------------------------------------------
+    function initTestimonialCarousel() {
+        const carouselEl = document.querySelector('#testimonialCarousel');
+        if (carouselEl && window.bootstrap) {
+            const carousel = new bootstrap.Carousel(carouselEl, {
+                interval: 7000, wrap: true, touch: true, pause: 'hover'
+            });
+            carousel.cycle();
+        }
+    }
 
-        if (!btn || !input || !modal || !doneBtn) return;
-
-        btn.addEventListener('click', function() {
-            const email = input.value.trim();
-            if (email === '' || !email.includes('@')) {
-                input.style.borderColor = '#dc3545';
-                input.style.boxShadow = '0 0 10px rgba(220, 53, 69, 0.5)';
-                input.focus();
-                setTimeout(() => {
-                    input.style.borderColor = '';
-                    input.style.boxShadow = '';
-                }, 2000);
-                return;
-            }
-            modal.classList.remove('d-none');
-            input.value = '';
-        });
-
-        doneBtn.addEventListener('click', function() {
-            const content = modal.querySelector('.glass-card');
-            if(content) content.classList.add('fade-out-down');
-            setTimeout(() => {
-                modal.classList.add('d-none');
-                if(content) content.classList.remove('fade-out-down');
-            }, 400); 
-        });
+    function initAwardsCarousel() {
+        const carouselEl = document.querySelector('#awardsCarousel');
+        if (carouselEl && window.bootstrap) {
+            const carousel = new bootstrap.Carousel(carouselEl, {
+                interval: 4000, wrap: true, touch: true, pause: 'hover'
+            });
+            carousel.cycle();
+        }
     }
 
     // ---------------------------------------------------------
-    // 8. Initialization
+    // 10. Initialization
     // ---------------------------------------------------------
+    // Start at Home
     router('home');
+    
+    // Init all features
     initLiveStats();
     initNewsletterLogic();
+    initEmergencyLogic();
+    initTestimonialCarousel();
+    initAwardsCarousel();
 
 })();
