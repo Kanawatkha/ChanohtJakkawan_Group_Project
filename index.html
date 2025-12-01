@@ -206,7 +206,7 @@
                     <div class="glass-card p-4">
                         <div class="d-flex justify-content-between align-items-center mb-4 border-bottom border-light border-opacity-10 pb-3">
                             <h3 class="font-serif text-gold mb-0">Upcoming Celestial Events</h3>
-                            <span class="badge bg-luxury-primary text-dark">Live Feed</span>
+                            <span class="badge bg-danger bg-opacity-25 text-danger border border-danger border-opacity-50">Live Feed</span>
                         </div>
                         <div class="row g-3">
                             <div class="col-md-4">
@@ -250,43 +250,130 @@
                 </div>
             </section>
 
-            <section class="py-5 bg-gradient-dark">
-                <div class="container">
+            <section class="py-5 bg-gradient-dark position-relative overflow-hidden">
+                <div class="container position-relative z-1">
                     <div class="text-center mb-5">
                         <h2 class="section-heading font-serif">Voices from the Void</h2>
-                        <p class="text-muted-light">Hear what our owners have to say.</p>
+                        <p class="text-muted-light">Echoes of satisfaction from across the galaxy.</p>
+                        <div class="divider mx-auto bg-gold"></div>
                     </div>
-                    <div class="row g-4">
-                        <div class="col-md-4">
-                            <div class="glass-card p-4 h-100 testimonial-card">
-                                <div class="mb-3 text-gold fs-5"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
-                                <p class="text-light fst-italic">"Since acquiring Mars, the air traffic has significantly improved. The view of Olympus Mons from my balcony is worth every Galactic Dollar."</p>
-                                <div class="mt-4">
-                                    <h6 class="text-gold font-serif mb-0">Elon M.</h6>
-                                    <small class="text-muted-light">Owner of Mars</small>
+
+                    <div id="testimonialCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="7000">
+                        <div class="carousel-indicators mb-0">
+                            <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="0" class="active" aria-current="true"></button>
+                            <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="1"></button>
+                            <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="2"></button>
+                            <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="3"></button>
+                            <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="4"></button>
+                        </div>
+
+                        <div class="carousel-inner pb-5">
+                            
+                            <div class="carousel-item active">
+                                <div class="row justify-content-center">
+                                    <div class="col-lg-8">
+                                        <div class="glass-card p-5 text-center position-relative">
+                                            <i class="bi bi-quote fs-1 text-gold opacity-25 position-absolute top-0 start-0 m-4 display-1"></i>
+                                            <div class="mb-4">
+                                                <img src="assets/img/member1.jpg" alt="Elon M." class="rounded-circle border border-2 border-gold shadow-glow" width="100" height="100" style="object-fit: cover;">
+                                            </div>
+                                            <h4 class="font-serif text-white mb-1">Elon M.</h4>
+                                            <p class="text-gold small text-uppercase ls-1 mb-4">Owner of Mars & Technoking</p>
+                                            <p class="lead fst-italic text-light-50">"Acquiring Mars through ChanohtJakkawan was the single most efficient transaction of my life. The air traffic control over Olympus Mons has significantly improved since I took ownership. I'm now terraforming the southern hemisphere for a new hyper-loop track. The deed is quantum-secured, just as promised."</p>
+                                            <div class="mt-4 text-warning">
+                                                <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="glass-card p-4 h-100 testimonial-card">
-                                <div class="mb-3 text-gold fs-5"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
-                                <p class="text-light fst-italic">"The Sun shines brighter here than anywhere else. ChanohtJakkawan made the transfer of hydrogen rights seamless."</p>
-                                <div class="mt-4">
-                                    <h6 class="text-gold font-serif mb-0">High Amb. Zorg</h6>
-                                    <small class="text-muted-light">Galactic Diplomat</small>
+
+                            <div class="carousel-item">
+                                <div class="row justify-content-center">
+                                    <div class="col-lg-8">
+                                        <div class="glass-card p-5 text-center position-relative">
+                                            <i class="bi bi-quote fs-1 text-gold opacity-25 position-absolute top-0 start-0 m-4 display-1"></i>
+                                            <div class="mb-4">
+                                                <img src="assets/img/member1.jpg" alt="Zorg" class="rounded-circle border border-2 border-gold shadow-glow" width="100" height="100" style="object-fit: cover;">
+                                            </div>
+                                            <h4 class="font-serif text-white mb-1">High Amb. Zorg</h4>
+                                            <p class="text-gold small text-uppercase ls-1 mb-4">Galactic Diplomat</p>
+                                            <p class="lead fst-italic text-light-50">"The Sun shines brighter here than anywhere else in the quadrant. ChanohtJakkawan made the transfer of hydrogen rights seamless, allowing my fleet to refuel without bureaucratic delays. The Stasis Box packaging was an exquisite touch—my broodmates were thoroughly impressed."</p>
+                                            <div class="mt-4 text-warning">
+                                                <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="glass-card p-4 h-100 testimonial-card">
-                                <div class="mb-3 text-gold fs-5"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
-                                <p class="text-light fst-italic">"A perfect anniversary gift for my empress. We now own Saturn and spend our weekends surfing the rings."</p>
-                                <div class="mt-4">
-                                    <h6 class="text-gold font-serif mb-0">Emp. Kael'thas</h6>
-                                    <small class="text-muted-light">Ruler of Sector 7</small>
+
+                            <div class="carousel-item">
+                                <div class="row justify-content-center">
+                                    <div class="col-lg-8">
+                                        <div class="glass-card p-5 text-center position-relative">
+                                            <i class="bi bi-quote fs-1 text-gold opacity-25 position-absolute top-0 start-0 m-4 display-1"></i>
+                                            <div class="mb-4">
+                                                <img src="assets/img/member1.jpg" alt="Kael'thas" class="rounded-circle border border-2 border-gold shadow-glow" width="100" height="100" style="object-fit: cover;">
+                                            </div>
+                                            <h4 class="font-serif text-white mb-1">Emp. Kael'thas</h4>
+                                            <p class="text-gold small text-uppercase ls-1 mb-4">Ruler of Sector 7</p>
+                                            <p class="lead fst-italic text-light-50">"A perfect anniversary gift for my empress. We now own Saturn and spend our weekends surfing the ice rings. The legal team at ChanohtJakkawan handled the dispute with the Gas Giant Mining Corp perfectly. Truly a premium service for the elite ruler."</p>
+                                            <div class="mt-4 text-warning">
+                                                <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
+
+                            <div class="carousel-item">
+                                <div class="row justify-content-center">
+                                    <div class="col-lg-8">
+                                        <div class="glass-card p-5 text-center position-relative">
+                                            <i class="bi bi-quote fs-1 text-gold opacity-25 position-absolute top-0 start-0 m-4 display-1"></i>
+                                            <div class="mb-4">
+                                                <img src="assets/img/member1.jpg" alt="Lady Stardust" class="rounded-circle border border-2 border-gold shadow-glow" width="100" height="100" style="object-fit: cover;">
+                                            </div>
+                                            <h4 class="font-serif text-white mb-1">Lady Stardust</h4>
+                                            <p class="text-gold small text-uppercase ls-1 mb-4">Nebula Artist</p>
+                                            <p class="lead fst-italic text-light-50">"I needed a muse, so I bought Neptune. The deep blue storms provide endless inspiration for my sonic sculptures. The view from Triton is breathtaking. Thank you for making art possible on a planetary scale. Highly recommended for creative entities."</p>
+                                            <div class="mt-4 text-warning">
+                                                <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="carousel-item">
+                                <div class="row justify-content-center">
+                                    <div class="col-lg-8">
+                                        <div class="glass-card p-5 text-center position-relative">
+                                            <i class="bi bi-quote fs-1 text-gold opacity-25 position-absolute top-0 start-0 m-4 display-1"></i>
+                                            <div class="mb-4">
+                                                <img src="assets/img/member1.jpg" alt="Shepard" class="rounded-circle border border-2 border-gold shadow-glow" width="100" height="100" style="object-fit: cover;">
+                                            </div>
+                                            <h4 class="font-serif text-white mb-1">Cmdr. Shepard</h4>
+                                            <p class="text-gold small text-uppercase ls-1 mb-4">Alliance Navy</p>
+                                            <p class="lead fst-italic text-light-50">"I'm Commander Shepard, and this is my favorite store on the Extranet. Owning Earth gives me a nice retirement spot after saving the galaxy. The orbital defenses included in the package deal were a nice bonus."</p>
+                                            <div class="mt-4 text-warning">
+                                                <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
+
+                        <button class="carousel-control-prev" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
                     </div>
                 </div>
             </section>
@@ -598,21 +685,6 @@
                     </div>
                 </div>
 
-                <div class="row justify-content-center mb-5 fade-in-up">
-                    <div class="col-lg-8 text-center">
-                        <div class="d-flex justify-content-center gap-4 align-items-center opacity-75">
-                            <div class="border border-gold rounded p-3">
-                                <i class="bi bi-award fs-1 text-gold"></i>
-                                <p class="small mb-0 text-white mt-2">Best Interstellar Broker 2099</p>
-                            </div>
-                            <div class="border border-gold rounded p-3">
-                                <i class="bi bi-shield-check fs-1 text-gold"></i>
-                                <p class="small mb-0 text-white mt-2">ISO 9001: Galaxy Standard</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
                 <div class="row g-4 mb-5 fade-in-up">
                     <div class="col-md-6">
                         <div class="glass-card p-4 h-100">
@@ -627,6 +699,82 @@
                                 <div class="display-4 fw-bold text-success">5M+</div>
                                 <div class="small text-muted-light">Tons of CO2 saved by relocating heavy industries to the lunar surface.</div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row justify-content-center mb-5 pb-5 fade-in-up">
+                    <div class="col-lg-8">
+                        <div id="awardsCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="4000">
+                            <div class="carousel-indicators mb-0" style="bottom: -40px;">
+                                <button type="button" data-bs-target="#awardsCarousel" data-bs-slide-to="0" class="active"></button>
+                                <button type="button" data-bs-target="#awardsCarousel" data-bs-slide-to="1"></button>
+                                <button type="button" data-bs-target="#awardsCarousel" data-bs-slide-to="2"></button>
+                                <button type="button" data-bs-target="#awardsCarousel" data-bs-slide-to="3"></button>
+                                <button type="button" data-bs-target="#awardsCarousel" data-bs-slide-to="4"></button>
+                                <button type="button" data-bs-target="#awardsCarousel" data-bs-slide-to="5"></button>
+                            </div>
+
+                            <div class="carousel-inner">
+                                
+                                <div class="carousel-item active">
+                                    <div class="glass-card p-5 text-center award-card d-flex flex-column align-items-center justify-content-center">
+                                        <i class="bi bi-award fs-1 text-gold mb-3 display-3 floating-anim"></i>
+                                        <h3 class="font-serif text-white">Best Interstellar Broker 2099</h3>
+                                        <p class="text-muted-light mb-0">Awarded by the Galactic Trade Commission for highest volume of planetary assets sold.</p>
+                                    </div>
+                                </div>
+
+                                <div class="carousel-item">
+                                    <div class="glass-card p-5 text-center award-card d-flex flex-column align-items-center justify-content-center">
+                                        <i class="bi bi-shield-check fs-1 text-gold mb-3 display-3 floating-anim"></i>
+                                        <h3 class="font-serif text-white">ISO 9001: Galaxy Standard</h3>
+                                        <p class="text-muted-light mb-0">Certified for zero-defect vacuum sealing and quantum encryption protocols.</p>
+                                    </div>
+                                </div>
+
+                                <div class="carousel-item">
+                                    <div class="glass-card p-5 text-center award-card d-flex flex-column align-items-center justify-content-center">
+                                        <i class="bi bi-box-seam fs-1 text-gold mb-3 display-3 floating-anim"></i>
+                                        <h3 class="font-serif text-white">Zero-G Logistics Excellence</h3>
+                                        <p class="text-muted-light mb-0">Recognized for fastest warp-speed delivery of Stasis Boxes across the Outer Rim.</p>
+                                    </div>
+                                </div>
+
+                                <div class="carousel-item">
+                                    <div class="glass-card p-5 text-center award-card d-flex flex-column align-items-center justify-content-center">
+                                        <i class="bi bi-stars fs-1 text-gold mb-3 display-3 floating-anim"></i>
+                                        <h3 class="font-serif text-white">Type III Civilization Approved</h3>
+                                        <p class="text-muted-light mb-0">Officially endorsed by the Dyson Sphere Builders Union for sustainable star harvesting.</p>
+                                    </div>
+                                </div>
+
+                                <div class="carousel-item">
+                                    <div class="glass-card p-5 text-center award-card d-flex flex-column align-items-center justify-content-center">
+                                        <i class="bi bi-activity fs-1 text-gold mb-3 display-3 floating-anim"></i>
+                                        <h3 class="font-serif text-white">Dark Matter Safety Certified</h3>
+                                        <p class="text-muted-light mb-0">Highest safety rating for handling volatile cosmic anomalies and black hole deeds.</p>
+                                    </div>
+                                </div>
+
+                                <div class="carousel-item">
+                                    <div class="glass-card p-5 text-center award-card d-flex flex-column align-items-center justify-content-center">
+                                        <i class="bi bi-globe-americas fs-1 text-gold mb-3 display-3 floating-anim"></i>
+                                        <h3 class="font-serif text-white">Terraforming Guild Award</h3>
+                                        <p class="text-muted-light mb-0">Gold Star rating for selling the most habitable zones in the Kepler sector.</p>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <button class="carousel-control-prev" type="button" data-bs-target="#awardsCarousel" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#awardsCarousel" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -866,7 +1014,9 @@
                                 <a href="#" class="text-decoration-none text-muted-light small hover-gold">
                                     <i class="bi bi-person-workspace me-1"></i> Join the Fleet? We are hiring Warp Mechanics.
                                 </a>
-                                <button class="btn btn-sm btn-outline-danger border-opacity-25 text-muted-light"><i class="bi bi-exclamation-triangle me-1"></i> Report Meteorite Impact</button>
+                                <button type="button" id="emergencyBtn" class="btn btn-sm btn-outline-danger border-opacity-25 text-muted-light">
+                                    <i class="bi bi-exclamation-triangle me-1"></i> Report Meteorite Impact
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -877,35 +1027,123 @@
         <section id="page-order" class="page-section d-none">
             <div class="container py-5 mt-5 order-container">
                 <div class="text-center mb-5 fade-in-up">
-                    <h1 class="display-4 font-serif text-gold">Order Now</h1>
-                    <p class="lead">Choose single objects or the full set.</p>
+                    <h1 class="display-4 font-serif text-gold">Intergalactic Acquisition</h1>
+                    <p class="lead mb-4">Secure your celestial assets before the next timeline shift.</p>
+                    <div class="row justify-content-center">
+                        <div class="col-lg-8">
+                            <p class="text-muted-light small fst-italic">
+                                "Due to quantum fluctuations in the wormhole logistics network, precise genetic and dimensional data is required to prevent your title deed from drifting into the void. Please fill out the protocols below with absolute accuracy to ensure successful delivery via Interstellar Wormhole Logistics."
+                            </p>
+                        </div>
+                    </div>
                 </div>
                 
                 <div class="row g-4">
                     <div class="col-lg-8 mx-auto">
+                        
                         <div class="glass-card p-4 mb-4">
-                            <h4 class="font-serif mb-3 text-gold">1. Customer Details</h4>
+                            <div class="d-flex align-items-center mb-3">
+                                <span class="badge bg-gold text-dark rounded-circle me-3" style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;">1</span>
+                                <h4 class="font-serif text-gold mb-0">Entity Identification Protocols</h4>
+                            </div>
                             <div class="row g-3">
-                                <div class="col-12"><input type="text" class="form-control glass-input" id="fullName" placeholder="Full Name"></div>
-                                <div class="col-md-6"><input type="email" class="form-control glass-input" id="email" placeholder="Email"></div>
-                                <div class="col-md-6"><input type="tel" class="form-control glass-input" id="phone" placeholder="Phone"></div>
+                                <div class="col-md-4">
+                                    <label class="small text-muted mb-1">Galactic Title</label>
+                                    <select class="form-select glass-input" id="entityTitle">
+                                        <option value="Space Wanderer">Space Wanderer</option>
+                                        <option value="Grand Admiral">Grand Admiral</option>
+                                        <option value="High Priestess">High Priestess</option>
+                                        <option value="Cyborg Unit">Cyborg Unit 734</option>
+                                        <option value="Star Lord">Star Lord</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-8">
+                                    <label class="small text-muted mb-1">Legal Name (In Current Dimension)</label>
+                                    <input type="text" class="form-control glass-input" id="entityName" placeholder="e.g. John Doe-X12">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="small text-muted mb-1">Species / Origin</label>
+                                    <select class="form-select glass-input" id="entitySpecies">
+                                        <option value="Terran (Earth)">Terran (Earth)</option>
+                                        <option value="Martian Born">Martian Born</option>
+                                        <option value="Silicon-Based Lifeform">Silicon-Based Lifeform</option>
+                                        <option value="AI Construct">AI Construct</option>
+                                        <option value="Void Walker">Void Walker</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="small text-muted mb-1">Genetic Hash / ID Sequence</label>
+                                    <input type="text" class="form-control glass-input font-monospace" id="entityHash" placeholder="XX-999-YYYY-00">
+                                </div>
                             </div>
                         </div>
 
                         <div class="glass-card p-4 mb-4">
-                            <h4 class="font-serif mb-3 text-gold">2. Shipping Address</h4>
+                            <div class="d-flex align-items-center mb-3">
+                                <span class="badge bg-gold text-dark rounded-circle me-3" style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;">2</span>
+                                <h4 class="font-serif text-gold mb-0">Space-Time Delivery Coordinates</h4>
+                            </div>
                             <div class="row g-3">
-                                <div class="col-12"><input type="text" class="form-control glass-input" id="addr1" placeholder="Address Line 1"></div>
-                                <div class="col-12"><input type="text" class="form-control glass-input" id="addr2" placeholder="Address Line 2"></div>
-                                <div class="col-md-6"><input type="text" class="form-control glass-input" id="city" placeholder="City"></div>
-                                <div class="col-md-6"><input type="text" class="form-control glass-input" id="state" placeholder="State"></div>
-                                <div class="col-md-6"><input type="text" class="form-control glass-input" id="zip" placeholder="Zip Code"></div>
-                                <div class="col-md-6"><input type="text" class="form-control glass-input" id="country" placeholder="Country"></div>
+                                <div class="col-md-6">
+                                    <label class="small text-muted mb-1">Galactic Quadrant</label>
+                                    <select class="form-select glass-input" id="coordQuadrant">
+                                        <option value="Alpha Quadrant">Alpha Quadrant</option>
+                                        <option value="Beta Quadrant">Beta Quadrant</option>
+                                        <option value="Sector 7 (Outer Rim)">Sector 7 (Outer Rim)</option>
+                                        <option value="Andromeda Zone">Andromeda Zone</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="small text-muted mb-1">Planetary System</label>
+                                    <input type="text" class="form-control glass-input" id="coordSystem" placeholder="e.g. Solar System, Keplar-186">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="small text-muted mb-1">Wormhole Access Code (Zip)</label>
+                                    <input type="text" class="form-control glass-input" id="coordWormhole" placeholder="WH-00000">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="small text-muted mb-1">Delivery Timeline</label>
+                                    <select class="form-select glass-input" id="coordTimeline">
+                                        <option value="Present Timeline (2025)">Present Timeline (2025)</option>
+                                        <option value="Near Future (2050-2100)">Near Future (2050-2100)</option>
+                                        <option value="Post-Singularity Era">Post-Singularity Era</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="glass-card p-4 mb-4 border border-gold border-opacity-25" style="background: rgba(212, 175, 55, 0.02);">
+                            <div class="d-flex align-items-center mb-3">
+                                <span class="badge bg-gold text-dark rounded-circle me-3" style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;">3</span>
+                                <h4 class="font-serif text-gold mb-0">Imperial Decree & Legacy</h4>
+                            </div>
+                            <div class="row g-3">
+                                <div class="col-12">
+                                    <label class="small text-muted mb-1">Name of Your New Dynasty</label>
+                                    <input type="text" class="form-control glass-input" id="legacyDynasty" placeholder="e.g. The House of Atreides">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="small text-muted mb-1">Primary Heir</label>
+                                    <input type="text" class="form-control glass-input" id="legacyHeir" placeholder="Name of successor">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="small text-muted mb-1">Succession Type</label>
+                                    <select class="form-select glass-input" id="legacySuccession">
+                                        <option value="Biological Descendant">Biological Descendant</option>
+                                        <option value="Clone Replication">Clone Replication</option>
+                                        <option value="Uploaded Consciousness">Uploaded Consciousness</option>
+                                        <option value="AI Fork">AI Fork</option>
+                                    </select>
+                                </div>
+                                <div class="col-12">
+                                    <label class="small text-muted mb-1">Motto / Inscription on Deed</label>
+                                    <input type="text" class="form-control glass-input" id="legacyMotto" placeholder="e.g. Ad Astra Per Aspera">
+                                </div>
                             </div>
                         </div>
 
                         <div class="glass-card p-4 mb-4">
-                            <h4 class="font-serif mb-3 text-gold">3. Select Objects</h4>
+                            <h4 class="font-serif mb-3 text-gold">4. Select Cosmic Assets</h4>
                             <div class="d-flex flex-column-reverse mb-3 gap-3">
                                 <button class="btn btn-sm btn-outline-light w-100" type="button" data-bs-toggle="collapse" data-bs-target="#productDropdown">Toggle Selection</button>
                                 <div class="form-check form-switch w-100 text-end">
@@ -1024,15 +1262,17 @@
                             <img id="deedImage" class="img-fluid d-none mx-auto mb-4 border border-gold rounded" style="max-height: 300px;">
                             
                             <div class="text-start p-4 border border-light border-opacity-10 rounded glass-input">
-                                <p class="mb-2"><strong class="text-gold">Owner Name:</strong> <span id="deedName" class="text-white">—</span></p>
-                                <p class="mb-2"><strong class="text-gold">Galactic Address:</strong> <span id="deedAddress" class="text-white">—</span></p>
-                                <p class="mb-2"><strong class="text-gold">Assets Acquired:</strong> <span id="deedItems" class="text-white">—</span></p>
+                                <p class="mb-2"><strong class="text-gold">Owner:</strong> <span id="deedName" class="text-white">—</span></p>
+                                <p class="mb-2"><strong class="text-gold">Dynasty:</strong> <span id="deedDynasty" class="text-white">—</span></p>
+                                <p class="mb-2"><strong class="text-gold">Location:</strong> <span id="deedQuadrant" class="text-white">—</span></p>
+                                <p class="mb-2"><strong class="text-gold">Assets:</strong> <span id="deedItems" class="text-white">—</span></p>
+                                <p class="mb-2"><strong class="text-gold">Heir Apparent:</strong> <span id="deedHeir" class="text-white">—</span></p>
                                 <p class="mb-0"><strong class="text-gold">Transaction ID:</strong> <span id="deedOrderNo" class="text-white font-monospace">—</span></p>
                             </div>
 
                             <div class="mt-4 text-start border-top border-light border-opacity-10 pt-3">
                                 <p class="small text-muted-light" style="text-align: justify; font-size: 0.7rem; line-height: 1.4;">
-                                    BY VIRTUE OF THE INTERGALACTIC TREATY OF 2150 AND THE UNIVERSAL PROPERTY RIGHTS ACCORD, THIS DEED CERTIFIES THE ABSOLUTE AND PERPETUAL OWNERSHIP OF THE AFOREMENTIONED CELESTIAL BODIES. THE HOLDER OF THIS DOCUMENT IS GRANTED FULL SOVEREIGN RIGHTS, MINING PRIVILEGES, AND ATMOSPHERIC CONTROL OVER SAID TERRITORIES, RECOGNIZED BY THE UNITED FEDERATION OF PLANETS AND THE GALACTIC TRADE ORGANIZATION. THIS TITLE IS IMMUTABLE, TRANSFERABLE ONLY BY QUANTUM ENCRYPTED SIGNATURE, AND REMAINS VALID THROUGHOUT ALL DIMENSIONS OF SPACETIME. ANY UNAUTHORIZED SETTLEMENT OR RESOURCE EXTRACTION BY NON-OWNERS WILL BE SUBJECT TO INTERSTELLAR LITIGATION UNDER THE JURISDICTION OF THE HIGH COUNCIL OF ANDROMEDA. MAY THE STARS GUIDE YOUR PATH FOREVER.
+                                    BY VIRTUE OF THE INTERGALACTIC TREATY OF 2150 AND THE UNIVERSAL PROPERTY RIGHTS ACCORD, THIS DEED CERTIFIES THE ABSOLUTE AND PERPETUAL OWNERSHIP OF THE AFOREMENTIONED CELESTIAL BODIES. THE HOLDER OF THIS DOCUMENT IS GRANTED FULL SOVEREIGN RIGHTS, MINING PRIVILEGES, AND ATMOSPHERIC CONTROL OVER SAID TERRITORIES, RECOGNIZED BY THE UNITED FEDERATION OF PLANETS AND THE GALACTIC TRADE ORGANIZATION. THIS TITLE IS IMMUTABLE, TRANSFERABLE ONLY BY QUANTUM ENCRYPTED SIGNATURE, AND REMAINS VALID THROUGHOUT ALL DIMENSIONS OF SPACETIME.
                                 </p>
                             </div>
 
@@ -1274,6 +1514,17 @@
             <h2 class="font-serif text-gold mb-3">Transmission Received</h2>
             <p class="text-muted-light mb-4">You have successfully joined the Subspace Network. Expect daily solar flare alerts and market updates directly to your neural link.</p>
             <button class="btn btn-luxury-primary w-100 rounded-pill" id="newsletterDoneBtn">Done</button>
+        </div>
+    </div>
+
+    <div id="emergencyModal" class="d-none position-fixed top-0 start-0 w-100 h-100 z-index-modal d-flex align-items-center justify-content-center newsletter-overlay">
+        <div class="glass-card p-5 text-center fade-in-up border-danger-glow" style="max-width: 500px; width: 90%;">
+            <div class="mb-4">
+                <i class="bi bi-exclamation-triangle-fill fs-1 text-danger pulse-anim"></i>
+            </div>
+            <h2 class="font-serif text-danger mb-3">Emergency Broadcast Initiated</h2>
+            <p class="text-muted-light mb-4">Interstellar Rescue Team has been notified. Automated repair drones are en route to your coordinates. Please secure your oxygen mask and do not attempt to catch falling debris with your hands. Insurance Claim #METEOR-X99 has been auto-filed.</p>
+            <button class="btn btn-danger w-100 rounded-pill" id="emergencyDoneBtn">Done</button>
         </div>
     </div>
 
