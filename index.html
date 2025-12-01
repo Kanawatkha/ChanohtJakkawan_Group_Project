@@ -111,36 +111,37 @@
 
             <div class="container pb-5 fade-in-up">
                 <div class="glass-card p-4 p-md-5">
-                    <div class="row">
+                    <div class="row align-items-center">
                         <div class="col-lg-4 mb-4 mb-lg-0">
                             <h4 class="font-serif text-gold mb-2">Market Intelligence</h4>
-                            <p class="text-muted-light small mb-4">Comparative analysis of celestial assets based on ROI, Stability, and Resource Yield.</p>
-                            <div class="d-flex flex-column gap-2 small">
-                                <div class="d-flex align-items-center"><span class="badge rounded-circle p-1 me-2" style="background: var(--gold-primary)"> </span> ROI Potential</div>
-                                <div class="d-flex align-items-center"><span class="badge rounded-circle p-1 me-2" style="background: #9d4edd"> </span> Tech Stability</div>
-                                <div class="d-flex align-items-center"><span class="badge rounded-circle p-1 me-2" style="background: #00b4d8"> </span> Resource Yield</div>
+                            <p class="text-muted-light small mb-4">
+                                Comparative analysis of celestial assets based on ROI, Stability, and Resource Yield over the last 6 months.
+                            </p>
+                            
+                            <div class="d-flex flex-column gap-3 small border-start border-light border-opacity-10 ps-3">
+                                <div class="d-flex align-items-center">
+                                    <span class="badge rounded-circle p-1 me-3" style="background: var(--gold-primary); box-shadow: 0 0 10px var(--gold-primary);"> </span> 
+                                    <span class="text-white">ROI Potential</span>
+                                </div>
+                                <div class="d-flex align-items-center">
+                                    <span class="badge rounded-circle p-1 me-3" style="background: #9d4edd; box-shadow: 0 0 10px #9d4edd;"> </span> 
+                                    <span class="text-white">Tech Stability</span>
+                                </div>
+                                <div class="d-flex align-items-center">
+                                    <span class="badge rounded-circle p-1 me-3" style="background: #00b4d8; box-shadow: 0 0 10px #00b4d8;"> </span> 
+                                    <span class="text-white">Resource Yield</span>
+                                </div>
                             </div>
                         </div>
+
                         <div class="col-lg-8">
-                            <div class="cosmic-chart-container ps-3 border-start border-light border-opacity-10">
-                                <div class="chart-group mb-4">
-                                    <div class="d-flex justify-content-between text-white small mb-1"><span>Mars</span></div>
-                                    <div class="progress mb-1" style="height: 8px;"><div class="progress-bar bg-gold" style="width: 85%"></div></div>
-                                    <div class="progress mb-1" style="height: 8px;"><div class="progress-bar bg-purple" style="width: 65%"></div></div>
-                                    <div class="progress" style="height: 8px;"><div class="progress-bar bg-cyan" style="width: 45%"></div></div>
+                            <div class="ps-lg-4">
+                                <div class="d-flex justify-content-between align-items-end mb-3">
+                                    <h5 class="font-serif text-white mb-0">Performance History</h5>
+                                    <span class="badge bg-white bg-opacity-10 text-white fw-light border border-white border-opacity-10">6-Month Trend</span>
                                 </div>
-                                <div class="chart-group mb-4">
-                                    <div class="d-flex justify-content-between text-white small mb-1"><span>Titan</span></div>
-                                    <div class="progress mb-1" style="height: 8px;"><div class="progress-bar bg-gold" style="width: 60%"></div></div>
-                                    <div class="progress mb-1" style="height: 8px;"><div class="progress-bar bg-purple" style="width: 90%"></div></div>
-                                    <div class="progress" style="height: 8px;"><div class="progress-bar bg-cyan" style="width: 80%"></div></div>
-                                </div>
-                                <div class="chart-group">
-                                    <div class="d-flex justify-content-between text-white small mb-1"><span>Europa</span></div>
-                                    <div class="progress mb-1" style="height: 8px;"><div class="progress-bar bg-gold" style="width: 75%"></div></div>
-                                    <div class="progress mb-1" style="height: 8px;"><div class="progress-bar bg-purple" style="width: 50%"></div></div>
-                                    <div class="progress" style="height: 8px;"><div class="progress-bar bg-cyan" style="width: 95%"></div></div>
-                                </div>
+                                
+                                <div id="cosmicChartContainer" class="position-relative" style="height: 300px; width: 100%;"></div>
                             </div>
                         </div>
                     </div>
