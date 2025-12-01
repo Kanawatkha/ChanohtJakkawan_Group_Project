@@ -589,6 +589,100 @@
     }
 
     // ---------------------------------------------------------
+    // 16. NEW: Cosmic Line Chart Logic (SVG)
+    // ---------------------------------------------------------
+    function initCosmicChart() {
+        const container = document.getElementById('cosmicChartContainer');
+        if (!container) return;
+
+        // Configuration
+        const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'];
+        const data = {
+            roi: [20, 45, 30, 55, 40, 65],      // Gold Line
+            stability: [10, 25, 60, 45, 50, 40], // Purple Line
+            yield: [35, 20, 40, 30, 60, 55]      // Cyan Line
+        };
+        
+        // Setup SVG Dimensions
+        const width = container.offsetWidth;
+        const height = container.offsetHeight;
+        const padding = { top: 20, right: 20, bottom: 30, left: 30 };
+        const chartW = width - padding.left - padding.right;
+        const chartH = height - padding.top - padding.bottom;
+        const maxVal = 80; // Y-axis max scale
+
+        // Helper: Map data to coordinates
+        const getX = (index) => padding.left + (index * (chartW / (months.length - 1)));
+        const getY = (val) => height - padding.bottom - (val / maxVal * chartH);
+
+        // Helper: Generate Smooth Bezier Path (Catmull-Rom to Cubic Bezier)
+        const generatePath = (points) => {
+            if (points.length === 0) return "";
+            
+            // Start point
+            let d = `M ${points[0].x},${points[0].y}`;
+
+            for (let i = 0; i < points.length - 1; i++) {
+                const p0 = points[i > 0 ? i - 1 : i];
+                const p1 = points[i];
+                const p2 = points[i + 1];
+                const p3 = points[i + 2 < points.length ? i + 2 : i + 1];
+
+                const cp1x = p1.x + (p2.x - p0.x) / 6;
+                const cp1y = p1.y + (p2.y - p0.y) / 6;
+                const cp2x = p2.x - (p3.x - p1.x) / 6;
+                const cp2y = p2.y - (p3.y - p1.y) / 6;
+
+                d += ` C ${cp1x},${cp1y} ${cp2x},${cp2y} ${p2.x},${p2.y}`;
+            }
+            return d;
+        };
+
+        // Create SVG
+        let svgHTML = `<svg class="chart-svg" viewBox="0 0 ${width} ${height}">`;
+
+        // 1. Draw Grid Lines & Y-Labels
+        for(let i=0; i<=4; i++) {
+            const yVal = (i * 20);
+            const yPos = getY(yVal);
+            svgHTML += `<line x1="${padding.left}" y1="${yPos}" x2="${width-padding.right}" y2="${yPos}" class="chart-grid" />`;
+            // Optional: Add Y-Axis Numbers if needed
+        }
+
+        // 2. Draw X-Labels
+        months.forEach((m, i) => {
+            svgHTML += `<text x="${getX(i)}" y="${height - 5}" text-anchor="middle" class="chart-label">${m}</text>`;
+        });
+
+        // 3. Draw Lines & Dots Function
+        const drawSeries = (dataset, colorClass) => {
+            const points = dataset.map((val, i) => ({ x: getX(i), y: getY(val) }));
+            const pathD = generatePath(points);
+            
+            // Line
+            svgHTML += `<path d="${pathD}" class="chart-line ${colorClass}" />`;
+            
+            // Dots
+            points.forEach(p => {
+                svgHTML += `<circle cx="${p.x}" cy="${p.y}" class="chart-dot ${colorClass}" />`;
+            });
+        };
+
+        // Draw Data Layers
+        drawSeries(data.yield, 'cyan');
+        drawSeries(data.stability, 'purple');
+        drawSeries(data.roi, 'gold');
+
+        svgHTML += `</svg>`;
+        container.innerHTML = svgHTML;
+    }
+
+    // Call init inside the main loop
+    initCosmicChart();
+    // Re-draw on resize for responsiveness
+    window.addEventListener('resize', () => { setTimeout(initCosmicChart, 200); });
+
+    // ---------------------------------------------------------
     // 10. Initialization
     // ---------------------------------------------------------
     // Start at Home
