@@ -1,6 +1,7 @@
 /* =========================================================
-   ChanohtJakkawan — Cosmic Luxury Theme (v5.6 Final - Overhaul Edition)
+   ChanohtJakkawan — Cosmic Luxury Theme (v1.2 - Updated)
    Refined for Density, Square Layouts, Mobile Perfection & Animations
+   Includes New Order Form & Galactic ID Styles
    ========================================================= */
 
 /* -------------------- 1. Design Tokens -------------------- */
@@ -151,7 +152,7 @@ button:focus { outline: none; }
 .hover-lift:hover { transform: translateY(-5px); border-color: rgba(212, 175, 55, 0.5); }
 
 /* Glass Inputs */
-.glass-input {
+.glass-input, .form-select.glass-input {
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.1);
     color: #fff;
@@ -162,8 +163,15 @@ button:focus { outline: none; }
     border-color: var(--gold-primary);
     color: #fff;
     box-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
+    outline: none; /* Remove default outline */
 }
 .glass-input::placeholder { color: rgba(255,255,255,0.3); }
+
+/* Fix Select Options Background */
+.form-select.glass-input option {
+    background-color: var(--bg-deep);
+    color: #fff;
+}
 
 /* Add-on Checkbox Styling */
 .form-check.glass-input {
@@ -466,6 +474,10 @@ button:focus { outline: none; }
 
     .back-to-top { width: 40px; height: 40px; bottom: 20px; right: 20px; font-size: 1.2rem; }
     #paymentSuccessModal .glass-card { padding: 2rem !important; }
+    
+    /* NEW: ID Card Mobile Fix */
+    #id-card-container { max-width: 100%; }
+    #id-card-container .h5 { font-size: 1rem; }
 }
 
 /* -------------------- 12. Newsletter Modal & Overlay (New) -------------------- */
@@ -494,3 +506,208 @@ button:focus { outline: none; }
 }
 
 .fade-out-down { animation: fadeOutDown 0.4s ease forwards; }
+
+/* -------------------- 13. NEW: Emergency Modal Styles -------------------- */
+
+/* Red Glow Border for Danger Theme (Overrides Gold) */
+.border-danger-glow {
+    border: 1px solid #ff4d4d !important;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.9), 0 0 50px rgba(255, 77, 77, 0.4) !important;
+}
+
+/* Pulse Animation for Emergency Icon */
+.pulse-anim {
+    animation: pulse-red 1.5s infinite;
+}
+
+@keyframes pulse-red {
+    0% {
+        transform: scale(1);
+        text-shadow: 0 0 0 rgba(255, 77, 77, 0.7);
+    }
+    70% {
+        transform: scale(1.15);
+        text-shadow: 0 0 20px rgba(255, 77, 77, 0);
+    }
+    100% {
+        transform: scale(1);
+        text-shadow: 0 0 0 rgba(255, 77, 77, 0);
+    }
+}
+
+/* -------------------- 14. NEW: Testimonial Carousel Styling -------------------- */
+
+/* Custom Gold Arrows (Replace default white SVG) */
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background-image: none !important; /* Remove default Bootstrap arrow */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    border: 1px solid rgba(212, 175, 55, 0.3); /* Gold border faint */
+    transition: all 0.3s ease;
+}
+
+/* Inject Bootstrap Icons for Arrows */
+.carousel-control-prev-icon::after {
+    content: "\F284"; /* Code for Chevron Left */
+    font-family: "bootstrap-icons";
+    font-size: 1.5rem;
+    color: var(--gold-primary);
+}
+.carousel-control-next-icon::after {
+    content: "\F285"; /* Code for Chevron Right */
+    font-family: "bootstrap-icons";
+    font-size: 1.5rem;
+    color: var(--gold-primary);
+}
+
+/* Hover Effects for Arrows */
+.carousel-control-prev:hover .carousel-control-prev-icon,
+.carousel-control-next:hover .carousel-control-next-icon {
+    background: rgba(212, 175, 55, 0.1);
+    border-color: var(--gold-primary);
+    box-shadow: 0 0 15px var(--gold-glow);
+    transform: scale(1.1);
+}
+
+/* Custom Gold Indicators (Dots) */
+.carousel-indicators [data-bs-target] {
+    background-color: var(--gold-primary);
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin: 0 6px;
+    opacity: 0.3;
+    border: none;
+    transition: all 0.3s ease;
+}
+.carousel-indicators .active {
+    opacity: 1;
+    transform: scale(1.3);
+    box-shadow: 0 0 10px var(--gold-glow);
+}
+
+/* Big Quote Icon Styling */
+.bi-quote.display-1 {
+    font-family: serif; /* Make quote mark elegant */
+    z-index: 0;
+    pointer-events: none; /* Click through */
+    text-shadow: 0 0 20px rgba(212, 175, 55, 0.1);
+}
+
+/* Responsive Fixes for Carousel */
+@media (max-width: 768px) {
+    /* Hide arrows on mobile to save space (use swipe or dots) */
+    .carousel-control-prev, 
+    .carousel-control-next {
+        display: none;
+    }
+    
+    /* Adjust padding for mobile card */
+    #testimonialCarousel .glass-card {
+        padding: 2rem !important;
+    }
+    
+    /* Adjust Quote icon position on mobile */
+    .bi-quote.display-1 {
+        font-size: 4rem;
+        top: 10px !important;
+        left: 10px !important;
+    }
+}
+
+/* -------------------- 15. NEW: Awards Carousel Styling -------------------- */
+
+/* Award Card Styling */
+.award-card {
+    min-height: 350px; /* Force equal height for all award cards */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid rgba(212, 175, 55, 0.2); /* Faint gold border */
+    background: rgba(255, 255, 255, 0.02); /* Slightly darker glass */
+    transition: all 0.3s ease;
+}
+
+.award-card:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: var(--gold-primary);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.5), 0 0 20px rgba(212, 175, 55, 0.2);
+}
+
+/* Big Award Icon */
+.award-card i.display-3 {
+    font-size: 5rem; /* Super large icon */
+    background: -webkit-linear-gradient(45deg, #d4af37, #f3e5ab);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 15px rgba(212, 175, 55, 0.4));
+    margin-bottom: 1.5rem;
+}
+
+/* Adjust Carousel Indicators Position for Awards */
+#awardsCarousel .carousel-indicators {
+    bottom: -50px; /* Push dots further down to not overlap card */
+}
+
+/* Responsive adjustments for Awards */
+@media (max-width: 768px) {
+    .award-card {
+        min-height: 300px; /* Slightly smaller on mobile */
+        padding: 2rem !important;
+    }
+    
+    .award-card i.display-3 {
+        font-size: 4rem;
+    }
+    
+    /* Ensure indicators have space on mobile */
+    #awardsCarousel {
+        margin-bottom: 3rem;
+    }
+}
+
+/* -------------------- 16. NEW: Order Form Enhancements -------------------- */
+
+/* Imperial Decree Gold Block Styling */
+.border-gold { border-color: var(--gold-primary) !important; }
+
+.glass-card.border-gold {
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.05), inset 0 0 20px rgba(212, 175, 55, 0.05);
+    background: rgba(212, 175, 55, 0.02); /* Slight gold tint */
+}
+
+/* Number Badges for Order Steps */
+.badge.bg-gold {
+    background-color: var(--gold-primary) !important;
+    color: #000 !important;
+    font-weight: 700;
+}
+
+/* -------------------- 17. NEW: Payment & Deed Styling -------------------- */
+
+/* Galactic ID Card Styles */
+#id-card-container {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+#id-card-container:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.6), 0 0 25px rgba(212, 175, 55, 0.2);
+    border-color: rgba(212, 175, 55, 0.3);
+}
+
+/* Deed Data Text Styling */
+#deedName, #deedDynasty, #deedQuadrant, #deedHeir, #deedItems, #deedOrderNo {
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    color: #fff;
+}
+
+/* Helper for Monospace Data */
+.font-monospace { font-family: var(--font-mono); }
