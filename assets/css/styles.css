@@ -711,3 +711,71 @@ button:focus { outline: none; }
 
 /* Helper for Monospace Data */
 .font-monospace { font-family: var(--font-mono); }
+
+/* --- Cosmic Line Chart Styles --- */
+.chart-svg {
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+}
+
+/* Grid Lines */
+.chart-grid {
+    stroke: rgba(255, 255, 255, 0.1);
+    stroke-width: 1;
+    stroke-dasharray: 4 4;
+}
+
+/* Chart Text */
+.chart-label {
+    fill: var(--text-muted);
+    font-size: 12px;
+    font-family: var(--font-sans);
+}
+
+/* Line Animation */
+.chart-line {
+    fill: none;
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 3000;
+    stroke-dashoffset: 3000;
+    animation: drawLine 2.5s ease-out forwards;
+    filter: drop-shadow(0 0 8px rgba(0,0,0,0.5));
+}
+
+.chart-line.gold { stroke: var(--gold-primary); filter: drop-shadow(0 0 5px var(--gold-glow)); }
+.chart-line.purple { stroke: #9d4edd; filter: drop-shadow(0 0 5px rgba(157, 78, 221, 0.5)); }
+.chart-line.cyan { stroke: #00b4d8; filter: drop-shadow(0 0 5px rgba(0, 180, 216, 0.5)); }
+
+@keyframes drawLine {
+    to { stroke-dashoffset: 0; }
+}
+
+/* Dots */
+.chart-dot {
+    fill: var(--bg-deep);
+    stroke-width: 2;
+    r: 4;
+    transition: r 0.3s ease;
+}
+.chart-dot:hover { r: 6; cursor: crosshair; }
+.chart-dot.gold { stroke: var(--gold-primary); }
+.chart-dot.purple { stroke: #9d4edd; }
+.chart-dot.cyan { stroke: #00b4d8; }
+
+/* Tooltip (Optional) */
+.chart-tooltip {
+    position: absolute;
+    background: rgba(0,0,0,0.8);
+    border: 1px solid var(--gold-primary);
+    padding: 5px 10px;
+    border-radius: 4px;
+    color: #fff;
+    font-size: 12px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s;
+    z-index: 10;
+}
