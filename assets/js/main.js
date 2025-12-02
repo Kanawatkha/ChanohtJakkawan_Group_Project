@@ -678,9 +678,72 @@
     }
 
     // Call init inside the main loop
-    initCosmicChart();
+    
     // Re-draw on resize for responsiveness
     window.addEventListener('resize', () => { setTimeout(initCosmicChart, 200); });
+
+    // ---------------------------------------------------------
+    // 17. NEW: Infinite Marquee Logic
+    // ---------------------------------------------------------
+    function initInfiniteMarquee() {
+        const track = document.getElementById('trusted-marquee');
+        if (!track) return;
+
+        // รายชื่อบริษัทจริง (Real Entities)
+        const partners = [
+            "NASA", "SpaceX", "Blue Origin", "Virgin Galactic", 
+            "ESA", "JAXA", "Rocket Lab", "ULA", 
+            "Lockheed Martin", "Boeing Space"
+        ];
+
+        // ฟังก์ชันสร้าง HTML String ของรายชื่อ 1 ชุด
+        const generateSpans = () => {
+            return partners.map(name => `<span class="marquee-item">${name}</span>`).join('');
+        };
+
+        // ใส่ข้อมูลลงไป 2 ชุด (Original + Duplicate) เพื่อให้ Loop เนียน
+        // ชุดที่ 1: เลื่อนออกไป
+        // ชุดที่ 2: เลื่อนเข้ามาแทนที่ตำแหน่งเดิมของชุดที่ 1 ทันทีที่ชุด 1 หายไป
+        track.innerHTML = generateSpans() + generateSpans(); 
+    }
+
+    // ---------------------------------------------------------
+    // 18. NEW: Financial Marquee Logic
+    // ---------------------------------------------------------
+    function initFinancialMarquee() {
+        const track = document.getElementById('financial-marquee');
+        if (!track) return;
+
+        // รายชื่อสถาบันการเงินแห่งจักรวาล (ชื่อ + ไอคอน Bootstrap)
+        const banks = [
+            { name: "Andromeda VC", icon: "bi-infinity" },
+            { name: "Interstellar Bank", icon: "bi-globe2" },
+            { name: "Void Fund", icon: "bi-safe2-fill" },
+            { name: "Black Hole Capital", icon: "bi-record-circle-fill" },
+            { name: "Dyson Sphere Ventures", icon: "bi-sun-fill" },
+            { name: "Event Horizon Insurance", icon: "bi-shield-check" },
+            { name: "Nebula Crypto Exchange", icon: "bi-currency-bitcoin" },
+            { name: "Warp Speed Loans", icon: "bi-lightning-charge-fill" },
+            { name: "Galactic Credit Union", icon: "bi-people-fill" },
+            { name: "Dark Matter Holdings", icon: "bi-layers-fill" }
+        ];
+
+        // ฟังก์ชันสร้าง HTML (ไอคอนซ้าย + ชื่อขวา)
+        const generateContent = () => {
+            return banks.map(b => `
+                <div class="financial-item">
+                    <i class="bi ${b.icon}"></i>
+                    <span>${b.name}</span>
+                </div>
+            `).join('');
+        };
+
+        // ใส่ข้อมูล 2 ชุดเพื่อให้ Loop เนียน
+        track.innerHTML = generateContent() + generateContent();
+    }
+
+    // Call init (อย่าลืมบรรทัดนี้นะครับ!)
+    
 
     // ---------------------------------------------------------
     // 10. Initialization
@@ -694,5 +757,8 @@
     initEmergencyLogic();
     initTestimonialCarousel();
     initAwardsCarousel();
+    initCosmicChart();
+    initInfiniteMarquee();
+    initFinancialMarquee();
 
 })();
