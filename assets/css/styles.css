@@ -779,3 +779,100 @@ button:focus { outline: none; }
     transition: opacity 0.2s;
     z-index: 10;
 }
+
+/* --- Infinite Loop Marquee (Full Bleed) --- */
+
+/* 1. เทคนิคแหกกฎ Container ให้กว้างเต็มจอ (Full Bleed) */
+.marquee-breakout {
+    width: 100vw; 
+    margin-left: calc(50% - 50vw); /* ดันซ้ายให้สุดจอ */
+    overflow: hidden; /* ซ่อนส่วนเกิน */
+    position: relative;
+    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent); /* ไล่เฟดหัวท้ายสวยๆ */
+    -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+}
+
+/* 2. รางเลื่อน (Track) */
+.marquee-track {
+    display: flex;
+    width: max-content; /* กว้างตามเนื้อหาข้างใน */
+    gap: 4rem; /* ระยะห่างระหว่างชื่อบริษัท */
+    animation: marquee-scroll 40s linear infinite; /* ความเร็วในการเลื่อน */
+    padding-left: 2rem; /* ขยับเริ่มนิดหน่อย */
+}
+
+/* 3. หยุดเมื่อเอาเมาส์ชี้ (เฉพาะ Desktop) */
+.marquee-track:hover {
+    animation-play-state: paused;
+}
+
+/* 4. สไตล์ตัวอักษรบริษัท */
+.marquee-item {
+    font-family: var(--font-serif);
+    font-size: 2rem; /* ใหญ่สะใจ */
+    font-weight: 700;
+    white-space: nowrap; /* ห้ามตกบรรทัด */
+    color: rgba(255, 255, 255, 0.15); /* สีจางๆ ดูแพง */
+    transition: color 0.3s ease, transform 0.3s ease;
+    cursor: default;
+    text-transform: uppercase; /* ตัวพิมพ์ใหญ่ทั้งหมด */
+}
+
+/* Hover แล้วเด่นขึ้นมา */
+.marquee-item:hover {
+    color: var(--gold-primary);
+    transform: scale(1.05);
+}
+
+/* 5. Keyframes การเลื่อน */
+@keyframes marquee-scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); } /* เลื่อนไปแค่ครึ่งเดียว (เพราะเรามี 2 ชุด) แล้วมันจะวนลูปเนียนๆ */
+}
+
+/* Mobile Adjustment */
+@media (max-width: 768px) {
+    .marquee-item { font-size: 1.5rem; } /* ลดขนาดลงหน่อยในมือถือ */
+    .marquee-track { gap: 2rem; animation-duration: 20s; } /* เลื่อนเร็วขึ้นในมือถือ */
+}
+
+/* --- Financial Marquee Styles --- */
+
+.financial-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem; /* ระยะห่างระหว่างไอคอนกับชื่อ */
+    margin-right: 4rem; /* ระยะห่างระหว่างแต่ละบริษัท */
+    opacity: 0.6;
+    filter: grayscale(100%); /* ทำให้เป็นขาวดำ */
+    transition: all 0.3s ease;
+    cursor: default;
+}
+
+/* Hover แล้วชัดขึ้น + มีสี */
+.financial-item:hover {
+    opacity: 1;
+    filter: grayscale(0%);
+    transform: scale(1.05);
+}
+
+/* ตั้งค่าขนาดไอคอนให้เท่าของเดิม (fs-2) */
+.financial-item i {
+    font-size: 2rem; 
+    color: #fff;
+}
+
+/* ตั้งค่าขนาดตัวหนังสือให้เท่าของเดิม (h5) */
+.financial-item span {
+    font-family: var(--font-serif);
+    font-size: 1.25rem; 
+    color: #fff;
+    white-space: nowrap; /* ห้ามตกบรรทัด */
+}
+
+/* ปรับระยะห่างในมือถือ */
+@media (max-width: 768px) {
+    .financial-item { margin-right: 2rem; }
+    .financial-item i { font-size: 1.5rem; }
+    .financial-item span { font-size: 1rem; }
+}
